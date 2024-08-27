@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/button": "^2.0.37",
+    "@nextui-org/input": "^2.2.4",
+    "@nextui-org/navbar": "^2.0.36",
+    "@nextui-org/system": "^2.2.5",
+    "@nextui-org/theme": "^2.2.9",
     "dexie": "^4.0.8",
     "dexie-react-hooks": "^1.1.7",
+    "framer-motion": "^11.3.30",
     "next": "14.2.7",
+    "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18"
   },

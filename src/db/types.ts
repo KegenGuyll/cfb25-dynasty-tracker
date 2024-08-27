@@ -181,15 +181,15 @@ type GameStats = {
 type Game = {
   homeTeamId: number;
   awayTeamId: number;
-  finalScore: {
+  finalScore?: {
     home: number;
     away: number;
   }
   rivalryGame: boolean;
   site: GameSite;
   broadcast: GameBroadcast;
-  boxScore: BoxScore;
-  stats: GameStats | null;
+  boxScore?: BoxScore;
+  stats?: GameStats | null;
 }
 
 interface TeamStats {

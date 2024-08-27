@@ -32,8 +32,7 @@ export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const pathname = usePathname();
 
-  const isPathActive = useCallback((href: string) => pathname === href, [pathname]);
-
+  const isPathActive = useCallback((href: string) => pathname.includes(href), [pathname]);
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>

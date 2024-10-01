@@ -1,0 +1,1342 @@
+[
+  {
+    "school": "Boston College",
+    "nickname": "Eagles",
+    "city": "Chestnut Hill",
+    "state": "MA",
+    "conference": "ACC",
+    "primarycolor": "#98002E",
+    "secondaryColor": "#BC9B6A",
+    "teamId": 1
+  },
+  {
+    "school": "California",
+    "nickname": "Golden Bears",
+    "city": "Berkeley",
+    "state": "CA",
+    "conference": "ACC",
+    "primarycolor": "#003262",
+    "secondaryColor": "#FDB515",
+    "teamId": 2
+  },
+  {
+    "school": "Clemson",
+    "nickname": "Tigers",
+    "city": "Clemson",
+    "state": "SC",
+    "conference": "ACC",
+    "primarycolor": "#F56600",
+    "secondaryColor": "#522D80",
+    "teamId": 3
+  },
+  {
+    "school": "Duke",
+    "nickname": "Blue Devils",
+    "city": "Durham",
+    "state": "NC",
+    "conference": "ACC",
+    "primarycolor": "#003087",
+    "secondaryColor": "#ffffff",
+    "teamId": 4
+  },
+  {
+    "school": "Florida State",
+    "nickname": "Seminoles",
+    "city": "Tallahassee",
+    "state": "FL",
+    "conference": "ACC",
+    "primarycolor": "#782F40",
+    "secondaryColor": "#CEB888",
+    "teamId": 5
+  },
+  {
+    "school": "Georgia Tech",
+    "nickname": "Yellow Jackets",
+    "city": "Atlanta",
+    "state": "GA",
+    "conference": "ACC",
+    "primarycolor": "#B3A369",
+    "secondaryColor": "#003057",
+    "teamId": 6
+  },
+  {
+    "school": "Louisville",
+    "nickname": "Cardinals",
+    "city": "Louisville",
+    "state": "KY",
+    "conference": "ACC",
+    "primarycolor": "#AD0000",
+    "secondaryColor": "#000000",
+    "teamId": 7
+  },
+  {
+    "school": "Miami (FL)",
+    "nickname": "Hurricanes",
+    "city": "Coral Gables",
+    "state": "FL",
+    "conference": "ACC",
+    "primarycolor": "#F47321",
+    "secondaryColor": "#005030",
+    "teamId": 8
+  },
+  {
+    "school": "NC State",
+    "nickname": "Wolfpack",
+    "city": "Raleigh",
+    "state": "NC",
+    "conference": "ACC",
+    "primarycolor": "#CC0000",
+    "secondaryColor": "#000000",
+    "teamId": 9
+  },
+  {
+    "school": "North Carolina",
+    "nickname": "Tar Heels",
+    "city": "Chapel Hill",
+    "state": "NC",
+    "conference": "ACC",
+    "primarycolor": "#7BAFD4",
+    "secondaryColor": "#FFFFFF",
+    "teamId": 10
+  },
+  {
+    "school": "Pittsburgh",
+    "nickname": "Panthers",
+    "city": "Pittsburgh",
+    "state": "PA",
+    "conference": "ACC",
+    "primarycolor": "#003594",
+    "secondaryColor": "#FFB81C",
+    "teamId": 11
+  },
+  {
+    "school": "SMU",
+    "nickname": "Mustangs",
+    "city": "Dallas",
+    "state": "TX",
+    "conference": "ACC",
+    "primarycolor": "#0033A0",
+    "secondaryColor": "#C8102E",
+    "teamId": 12
+  },
+  {
+    "school": "Stanford",
+    "nickname": "Cardinal",
+    "city": "Stanford",
+    "state": "CA",
+    "conference": "ACC",
+    "primarycolor": "#8C1515",
+    "secondaryColor": "#ffffff",
+    "teamId": 13
+  },
+  {
+    "school": "Syracuse",
+    "nickname": "Orange",
+    "city": "Syracuse",
+    "state": "NY",
+    "conference": "ACC",
+    "primarycolor": "#F76900",
+    "secondaryColor": "#FFFFFF",
+    "teamId": 14
+  },
+  {
+    "school": "Virginia",
+    "nickname": "Cavaliers",
+    "city": "Charlottesville",
+    "state": "VA",
+    "conference": "ACC",
+    "primarycolor": "#232D4B",
+    "secondaryColor": "#F84C1E",
+    "teamId": 15
+  },
+  {
+    "school": "Virginia Tech",
+    "nickname": "Hokies",
+    "city": "Blacksburg",
+    "state": "VA",
+    "conference": "ACC",
+    "primarycolor": "#630031",
+    "secondaryColor": "#cf4420",
+    "teamId": 16
+  },
+  {
+    "school": "Wake Forest",
+    "nickname": "Demon Deacons",
+    "city": "Winston-Salem",
+    "state": "NC",
+    "conference": "ACC",
+    "primarycolor": "#9E7E38",
+    "secondaryColor": "#000000",
+    "teamId": 17
+  },
+  {
+    "school": "Army",
+    "nickname": "Black Knights",
+    "city": "West Point",
+    "state": "NY",
+    "conference": "American",
+    "primarycolor": "#D4BF91",
+    "secondaryColor": "#000000",
+    "teamId": 18
+  },
+  {
+    "school": "Charlotte",
+    "nickname": "49ers",
+    "city": "Charlotte",
+    "state": "NC",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 19
+  },
+  {
+    "school": "East Carolina",
+    "nickname": "Pirates",
+    "city": "Greenville",
+    "state": "NC",
+    "conference": "American",
+    "primarycolor": "#592A8A",
+    "secondaryColor": "#FDC82F",
+    "teamId": 20
+  },
+  {
+    "school": "Florida Atlantic",
+    "nickname": "Owls",
+    "city": "Boca Raton",
+    "state": "FL",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 21
+  },
+  {
+    "school": "Memphis",
+    "nickname": "Tigers",
+    "city": "Memphis",
+    "state": "TN",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 22
+  },
+  {
+    "school": "Navy",
+    "nickname": "Midshipmen",
+    "city": "Annapolis",
+    "state": "MD",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 23
+  },
+  {
+    "school": "North Texas",
+    "nickname": "Mean Green",
+    "city": "Denton",
+    "state": "TX",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 24
+  },
+  {
+    "school": "Rice",
+    "nickname": "Owls",
+    "city": "Houston",
+    "state": "TX",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 25
+  },
+  {
+    "school": "South Florida",
+    "nickname": "Bulls",
+    "city": "Tampa",
+    "state": "FL",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 26
+  },
+  {
+    "school": "Temple",
+    "nickname": "Owls",
+    "city": "Philadelphia",
+    "state": "PA",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 27
+  },
+  {
+    "school": "Tulane",
+    "nickname": "Green Wave",
+    "city": "New Orleans",
+    "state": "LA",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 28
+  },
+  {
+    "school": "Tulsa",
+    "nickname": "Golden Hurricane",
+    "city": "Tulsa",
+    "state": "OK",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 29
+  },
+  {
+    "school": "UAB",
+    "nickname": "Blazers",
+    "city": "Birmingham",
+    "state": "AL",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 30
+  },
+  {
+    "school": "UTSA",
+    "nickname": "Roadrunners",
+    "city": "San Antonio",
+    "state": "TX",
+    "conference": "American",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 31
+  },
+  {
+    "school": "Arizona",
+    "nickname": "Wildcats",
+    "city": "Tucson",
+    "state": "AZ",
+    "conference": "BIG 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 32
+  },
+  {
+    "school": "Arizona State",
+    "nickname": "Sun Devils",
+    "city": "Tempe",
+    "state": "AZ",
+    "conference": "BIG 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 33
+  },
+  {
+    "school": "Baylor",
+    "nickname": "Bears",
+    "city": "Waco",
+    "state": "TX",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 34
+  },
+  {
+    "school": "BYU",
+    "nickname": "Cougars",
+    "city": "Provo",
+    "state": "UT",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 35
+  },
+  {
+    "school": "Cincinnati",
+    "nickname": "Bearcats",
+    "city": "Cincinnati",
+    "state": "OH",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 36
+  },
+  {
+    "school": "Colorado",
+    "nickname": "Buffaloes",
+    "city": "Boulder",
+    "state": "CO",
+    "conference": "BIG 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 37
+  },
+  {
+    "school": "Houston",
+    "nickname": "Cougars",
+    "city": "Houston",
+    "state": "TX",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 38
+  },
+  {
+    "school": "Iowa State",
+    "nickname": "Cyclones",
+    "city": "Ames",
+    "state": "IA",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 39
+  },
+  {
+    "school": "Kansas",
+    "nickname": "Jayhawks",
+    "city": "Lawrence",
+    "state": "KS",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 40
+  },
+  {
+    "school": "Kansas State",
+    "nickname": "Wildcats",
+    "city": "Manhattan",
+    "state": "KS",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 41
+  },
+  {
+    "school": "Oklahoma State",
+    "nickname": "Cowboys",
+    "city": "Stillwater",
+    "state": "OK",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 42
+  },
+  {
+    "school": "TCU",
+    "nickname": "Horned Frogs",
+    "city": "Fort Worth",
+    "state": "TX",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 43
+  },
+  {
+    "school": "Texas Tech",
+    "nickname": "Red Raiders",
+    "city": "Lubbock",
+    "state": "TX",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 44
+  },
+  {
+    "school": "UCF",
+    "nickname": "Knights",
+    "city": "Orlando",
+    "state": "FL",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 45
+  },
+  {
+    "school": "Utah",
+    "nickname": "Utes",
+    "city": "Salt Lake City",
+    "state": "UT",
+    "conference": "BIG 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 46
+  },
+  {
+    "school": "West Virginia",
+    "nickname": "Mountaineers",
+    "city": "Morgantown",
+    "state": "WV",
+    "conference": "Big 12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 47
+  },
+  {
+    "school": "Illinois",
+    "nickname": "Fighting Illini",
+    "city": "Urbana–Champaign",
+    "state": "IL",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 48
+  },
+  {
+    "school": "Indiana",
+    "nickname": "Hoosiers",
+    "city": "Bloomington",
+    "state": "IN",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 49
+  },
+  {
+    "school": "Iowa",
+    "nickname": "Hawkeyes",
+    "city": "Iowa City",
+    "state": "IA",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 50
+  },
+  {
+    "school": "Maryland",
+    "nickname": "Terrapins",
+    "city": "College Park",
+    "state": "MD",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 51
+  },
+  {
+    "school": "Michigan",
+    "nickname": "Wolverines",
+    "city": "Ann Arbor",
+    "state": "MI",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 52
+  },
+  {
+    "school": "Michigan State",
+    "nickname": "Spartans",
+    "city": "East Lansing",
+    "state": "MI",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 53
+  },
+  {
+    "school": "Minnesota",
+    "nickname": "Golden Gophers",
+    "city": "Minneapolis",
+    "state": "MN",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 54
+  },
+  {
+    "school": "Nebraska",
+    "nickname": "Cornhuskers",
+    "city": "Lincoln",
+    "state": "NE",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 55
+  },
+  {
+    "school": "Northwestern",
+    "nickname": "Wildcats",
+    "city": "Evanston",
+    "state": "IL",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 56
+  },
+  {
+    "school": "Ohio State",
+    "nickname": "Buckeyes",
+    "city": "Columbus",
+    "state": "OH",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 57
+  },
+  {
+    "school": "Oregon",
+    "nickname": "Ducks",
+    "city": "Eugene",
+    "state": "OR",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 58
+  },
+  {
+    "school": "Penn State",
+    "nickname": "Nittany Lions",
+    "city": "University Park",
+    "state": "PA",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 59
+  },
+  {
+    "school": "Purdue",
+    "nickname": "Boilermakers",
+    "city": "West Lafayette",
+    "state": "IN",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 60
+  },
+  {
+    "school": "Rutgers",
+    "nickname": "Scarlet Knights",
+    "city": "Piscataway",
+    "state": "NJ",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 61
+  },
+  {
+    "school": "UCLA",
+    "nickname": "Bruins",
+    "city": "Los Angeles",
+    "state": "CA",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 62
+  },
+  {
+    "school": "USC",
+    "nickname": "Trojans",
+    "city": "Los Angeles",
+    "state": "CA",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 63
+  },
+  {
+    "school": "Washington",
+    "nickname": "Huskies",
+    "city": "Seattle",
+    "state": "WA",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 64
+  },
+  {
+    "school": "Wisconsin",
+    "nickname": "Badgers",
+    "city": "Madison",
+    "state": "WI",
+    "conference": "Big Ten",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 65
+  },
+  {
+    "school": "FIU",
+    "nickname": "Panthers",
+    "city": "Miami",
+    "state": "FL",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 66
+  },
+  {
+    "school": "Jacksonville State",
+    "nickname": "Gamecocks",
+    "city": "Jacksonville",
+    "state": "AL",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 67
+  },
+  {
+    "school": "Kennesaw State",
+    "nickname": "Owls",
+    "city": "Kennesaw",
+    "state": "GA",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 68
+  },
+  {
+    "school": "Liberty",
+    "nickname": "Flames",
+    "city": "Lynchburg",
+    "state": "VA",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 69
+  },
+  {
+    "school": "Louisiana Tech",
+    "nickname": "Bulldogs",
+    "city": "Ruston",
+    "state": "LA",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 70
+  },
+  {
+    "school": "Middle Tennessee",
+    "nickname": "Blue Raiders",
+    "city": "Murfreesboro",
+    "state": "TN",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 71
+  },
+  {
+    "school": "New Mexico State",
+    "nickname": "Aggies",
+    "city": "Las Cruces",
+    "state": "NM",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 72
+  },
+  {
+    "school": "Sam Houston",
+    "nickname": "Bearkats",
+    "city": "Huntsville",
+    "state": "TX",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 73
+  },
+  {
+    "school": "UTEP",
+    "nickname": "Miners",
+    "city": "El Paso",
+    "state": "TX",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 74
+  },
+  {
+    "school": "Western Kentucky",
+    "nickname": "Hilltoppers",
+    "city": "Bowling Green",
+    "state": "KY",
+    "conference": "C-USA",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 75
+  },
+  {
+    "school": "Notre Dame",
+    "nickname": "Fighting Irish",
+    "city": "South Bend",
+    "state": "IN",
+    "conference": "Independent",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 76
+  },
+  {
+    "school": "UConn",
+    "nickname": "Huskies",
+    "city": "Storrs",
+    "state": "CT",
+    "conference": "Independent",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 77
+  },
+  {
+    "school": "Akron",
+    "nickname": "Zips",
+    "city": "Akron",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 78
+  },
+  {
+    "school": "Ball State",
+    "nickname": "Cardinals",
+    "city": "Muncie",
+    "state": "IN",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 79
+  },
+  {
+    "school": "Bowling Green",
+    "nickname": "Falcons",
+    "city": "Bowling Green",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 80
+  },
+  {
+    "school": "Buffalo",
+    "nickname": "Bulls",
+    "city": "Buffalo",
+    "state": "NY",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 81
+  },
+  {
+    "school": "Central Michigan",
+    "nickname": "Chippewas",
+    "city": "Mount Pleasant",
+    "state": "MI",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 82
+  },
+  {
+    "school": "Eastern Michigan",
+    "nickname": "Eagles",
+    "city": "Ypsilanti",
+    "state": "MI",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 83
+  },
+  {
+    "school": "Kent State",
+    "nickname": "Golden Flashes",
+    "city": "Kent",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 84
+  },
+  {
+    "school": "Miami (OH)",
+    "nickname": "RedHawks",
+    "city": "Oxford",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 85
+  },
+  {
+    "school": "Northern Illinois",
+    "nickname": "Huskies",
+    "city": "DeKalb",
+    "state": "IL",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 86
+  },
+  {
+    "school": "Ohio",
+    "nickname": "Bobcats",
+    "city": "Athens",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 87
+  },
+  {
+    "school": "Toledo",
+    "nickname": "Rockets",
+    "city": "Toledo",
+    "state": "OH",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 88
+  },
+  {
+    "school": "UMass",
+    "nickname": "Minutemen",
+    "city": "Amherst",
+    "state": "MA",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 89
+  },
+  {
+    "school": "Western Michigan",
+    "nickname": "Broncos",
+    "city": "Kalamazoo",
+    "state": "MI",
+    "conference": "MAC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 90
+  },
+  {
+    "school": "Air Force",
+    "nickname": "Falcons",
+    "city": "USAF Academy",
+    "state": "CO",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 91
+  },
+  {
+    "school": "Boise State",
+    "nickname": "Broncos",
+    "city": "Boise",
+    "state": "ID",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 92
+  },
+  {
+    "school": "Colorado State",
+    "nickname": "Rams",
+    "city": "Fort Collins",
+    "state": "CO",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 93
+  },
+  {
+    "school": "Fresno State",
+    "nickname": "Bulldogs",
+    "city": "Fresno",
+    "state": "CA",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 94
+  },
+  {
+    "school": "Hawaii",
+    "nickname": "Rainbow Warriors",
+    "city": "Honolulu",
+    "state": "HI",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 95
+  },
+  {
+    "school": "Nevada",
+    "nickname": "Wolf Pack",
+    "city": "Reno",
+    "state": "NV",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 96
+  },
+  {
+    "school": "New Mexico",
+    "nickname": "Lobos",
+    "city": "Albuquerque",
+    "state": "NM",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 97
+  },
+  {
+    "school": "San Diego State",
+    "nickname": "Aztecs",
+    "city": "San Diego",
+    "state": "CA",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 98
+  },
+  {
+    "school": "San Jose State",
+    "nickname": "Spartans",
+    "city": "San Jose",
+    "state": "CA",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 99
+  },
+  {
+    "school": "UNLV",
+    "nickname": "Rebels",
+    "city": "Las Vegas",
+    "state": "NV",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 100
+  },
+  {
+    "school": "Utah State",
+    "nickname": "Aggies",
+    "city": "Logan",
+    "state": "UT",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 101
+  },
+  {
+    "school": "Wyoming",
+    "nickname": "Cowboys",
+    "city": "Laramie",
+    "state": "WY",
+    "conference": "Mountain West",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 102
+  },
+  {
+    "school": "Oregon State",
+    "nickname": "Beavers",
+    "city": "Corvallis",
+    "state": "OR",
+    "conference": "Pac-12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 103
+  },
+  {
+    "school": "Washington State",
+    "nickname": "Cougars",
+    "city": "Pullman",
+    "state": "WA",
+    "conference": "Pac-12",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 104
+  },
+  {
+    "school": "Alabama",
+    "nickname": "Crimson Tide",
+    "city": "Tuscaloosa",
+    "state": "AL",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 105
+  },
+  {
+    "school": "Arkansas",
+    "nickname": "Razorbacks",
+    "city": "Fayetteville",
+    "state": "AR",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 106
+  },
+  {
+    "school": "Auburn",
+    "nickname": "Tigers",
+    "city": "Auburn",
+    "state": "AL",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 107
+  },
+  {
+    "school": "Florida",
+    "nickname": "Gators",
+    "city": "Gainesville",
+    "state": "FL",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 108
+  },
+  {
+    "school": "Georgia",
+    "nickname": "Bulldogs",
+    "city": "Athens",
+    "state": "GA",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 109
+  },
+  {
+    "school": "Kentucky",
+    "nickname": "Wildcats",
+    "city": "Lexington",
+    "state": "KY",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 110
+  },
+  {
+    "school": "LSU",
+    "nickname": "Tigers",
+    "city": "Baton Rouge",
+    "state": "LA",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 111
+  },
+  {
+    "school": "Mississippi State",
+    "nickname": "Bulldogs",
+    "city": "Mississippi State",
+    "state": "MS",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 112
+  },
+  {
+    "school": "Missouri",
+    "nickname": "Tigers",
+    "city": "Columbia",
+    "state": "MO",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 113
+  },
+  {
+    "school": "Oklahoma",
+    "nickname": "Sooners",
+    "city": "Norman",
+    "state": "OK",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 114
+  },
+  {
+    "school": "Ole Miss",
+    "nickname": "Rebels",
+    "city": "University",
+    "state": "MS",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 115
+  },
+  {
+    "school": "South Carolina",
+    "nickname": "Gamecocks",
+    "city": "Columbia",
+    "state": "SC",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 116
+  },
+  {
+    "school": "Tennessee",
+    "nickname": "Volunteers",
+    "city": "Knoxville",
+    "state": "TN",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 117
+  },
+  {
+    "school": "Texas",
+    "nickname": "Longhorns",
+    "city": "Austin",
+    "state": "TX",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 118
+  },
+  {
+    "school": "Texas A&M",
+    "nickname": "Aggies",
+    "city": "College Station",
+    "state": "TX",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 119
+  },
+  {
+    "school": "Vanderbilt",
+    "nickname": "Commodores",
+    "city": "Nashville",
+    "state": "TN",
+    "conference": "SEC",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 120
+  },
+  {
+    "school": "Appalachian State",
+    "nickname": "Mountaineers",
+    "city": "Boone",
+    "state": "NC",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 121
+  },
+  {
+    "school": "Arkansas State",
+    "nickname": "Red Wolves",
+    "city": "Jonesboro",
+    "state": "AR",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 122
+  },
+  {
+    "school": "Coastal Carolina",
+    "nickname": "Chanticleers",
+    "city": "Conway",
+    "state": "SC",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 123
+  },
+  {
+    "school": "Georgia Southern",
+    "nickname": "Eagles",
+    "city": "Statesboro",
+    "state": "GA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 124
+  },
+  {
+    "school": "Georgia State",
+    "nickname": "Panthers",
+    "city": "Atlanta",
+    "state": "GA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 125
+  },
+  {
+    "school": "James Madison",
+    "nickname": "Dukes",
+    "city": "Harrisonburg",
+    "state": "VA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 126
+  },
+  {
+    "school": "Louisiana",
+    "nickname": "Ragin’ Cajuns",
+    "city": "Lafayette",
+    "state": "LA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 127
+  },
+  {
+    "school": "Louisiana–Monroe",
+    "nickname": "Warhawks",
+    "city": "Monroe",
+    "state": "LA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 128
+  },
+  {
+    "school": "Marshall",
+    "nickname": "Thundering Herd",
+    "city": "Huntington",
+    "state": "WV",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 129
+  },
+  {
+    "school": "Old Dominion",
+    "nickname": "Monarchs",
+    "city": "Norfolk",
+    "state": "VA",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 130
+  },
+  {
+    "school": "South Alabama",
+    "nickname": "Jaguars",
+    "city": "Mobile",
+    "state": "AL",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 131
+  },
+  {
+    "school": "Southern Miss",
+    "nickname": "Golden Eagles",
+    "city": "Hattiesburg",
+    "state": "MS",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 132
+  },
+  {
+    "school": "Texas State",
+    "nickname": "Bobcats",
+    "city": "San Marcos",
+    "state": "TX",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 133
+  },
+  {
+    "school": "Troy",
+    "nickname": "Trojans",
+    "city": "Troy",
+    "state": "AL",
+    "conference": "Sun Belt",
+    "primarycolor": "",
+    "secondaryColor": "",
+    "teamId": 134
+  }
+]

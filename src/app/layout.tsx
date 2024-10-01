@@ -22,8 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <Navigation/>
-          <main className="p-8">
-            {children}
+          <main className="p-8 flex justify-center w-full">
+            <div className="max-w-[800px] w-full">
+              {children}
+            </div>
           </main>
         </Providers>
       </body>

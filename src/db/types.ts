@@ -58,9 +58,10 @@ interface TeamSchedule {
   teamId: number;
   year: number;
   games: Game[];
+  team?: Team;
 }
 
-type GameSite = 'home' | 'away' | 'neutral';
+type GameLocation = 'home' | 'away' | 'neutral' | 'bye';
 
 type GameBroadcast = 'national' | 'local' | 'streaming'
 
@@ -179,17 +180,21 @@ type GameStats = {
 }
 
 type Game = {
+  week: number;
   homeTeamId: number;
   awayTeamId: number;
-  finalScore?: {
+  awayTeam?: Team;
+  homeTeam?: Team;
+  finalScore: {
     home: number;
     away: number;
-  }
+  } | null;
   rivalryGame: boolean;
-  site: GameSite;
+  stadium: string | null;
+  location: GameLocation;
   broadcast: GameBroadcast;
-  boxScore?: BoxScore;
-  stats?: GameStats | null;
+  boxScore: BoxScore | null;
+  stats: GameStats | null;
 }
 
 interface TeamStats {
@@ -267,6 +272,17 @@ type Turnovers = {
   fumRec: number;
 }
 
+interface Team {
+  id?: number;
+  teamId: number;
+  school: string;
+  nickname: string;
+  state: string;
+  conference: string;
+  primaryColor: string;
+  secondaryColor: string;
+}
+
 
 export type {
   Awards,
@@ -275,7 +291,7 @@ export type {
   RecruitingClass,
   TeamSchedule,
   Game,
-  GameSite,
+  GameLocation,
   GameBroadcast,
   BoxScore,
   GameStats,
@@ -284,5 +300,6 @@ export type {
   Defense,
   Conversions,
   Redzone,
-  Turnovers
+  Turnovers,
+  Team
 }

@@ -14,23 +14,51 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 const validationSchema = yup.object({
-  teamId: yup.string().required(),
-  year: yup.string().required(),
+  teamId: yup.string().required('Select a team schedule'),
+  year: yup
+    .string()
+    .required('Year is required')
+    .matches(/^\d{4}$/, 'Year must be 4 digits'),
   games: yup
     .array()
     .of(
       yup.object({
-        location: yup.string().required(),
+        location: yup.string().required('required'),
         opponent: yup.string().optional().nullable(),
         stadium: yup.string().optional().nullable(),
         result: yup.string().optional().nullable(),
         finalScore: yup
           .object({
-            score1: yup.number().required(),
-            score2: yup.number().required(),
+            score1: yup.number(),
+            score2: yup.number(),
           })
           .optional()
-          .nullable(),
+          .nullable()
+          .test((finalScore, ctx) => {
+            if (finalScore?.score1 && finalScore?.score2) {
+              // finalScore score1 and score2 must be greater than or equal to 0
+              if (finalScore.score1 <= 0 || finalScore.score2 <= 0) {
+                return ctx.createError({
+                  message: 'Score must be greater than or equal to 0',
+                })
+              }
+
+              // finalScore score1 must be greater than score2
+              if (finalScore.score1 < finalScore.score2) {
+                console.log(
+                  'score1 > score2',
+                  finalScore.score1,
+                  finalScore.score2,
+                  finalScore.score1 > finalScore.score2
+                )
+                return ctx.createError({
+                  message: 'Winning Score must be greater than Losing Score',
+                })
+              }
+            }
+
+            return ctx.resolve(true)
+          }),
       })
     )
     .default([]),
@@ -50,6 +78,7 @@ type CreateTeamScheduleForm = {
       score1: number
       score2: number
     }
+    result?: string | null
   }[]
 }
 
@@ -93,6 +122,8 @@ const CreateTeamSchedulePage = () => {
 
   const handleAddTeamSchedule = useCallback(
     async (data: CreateTeamScheduleFormData) => {
+      console.log('data', data)
+
       const teamSchedule: TeamSchedule = {
         teamId: Number(data.teamId),
         year: Number(data.year),
@@ -125,6 +156,8 @@ const CreateTeamSchedulePage = () => {
         })),
       }
 
+      console.log(teamSchedule)
+
       await db.teamSchedule.add(teamSchedule)
       router.push('/team-schedule')
     },
@@ -138,7 +171,7 @@ const CreateTeamSchedulePage = () => {
         onSubmit={handleSubmit(handleAddTeamSchedule)}
       >
         <div className="flex flex-col gap-2">
-          <div className="flex flex-row gap-4 items-end w-full">
+          <div className="flex flex-row gap-4 justify-center w-full">
             <Controller
               control={control}
               name="teamId"
@@ -155,7 +188,12 @@ const CreateTeamSchedulePage = () => {
                       (option) => option.value === value
                     )}
                     onChange={onChange}
+                    isInvalid={errors.teamId?.message ? true : false}
+                    isRequired
                   />
+                  <span className="text-xs text-danger">
+                    {errors.teamId?.message}
+                  </span>
                 </div>
               )}
             />
@@ -164,7 +202,7 @@ const CreateTeamSchedulePage = () => {
               name="year"
               render={({
                 field: { value, onChange },
-                formState: { errors },
+                formState: { errors, isValid },
               }) => (
                 <Input
                   id="year"
@@ -175,7 +213,10 @@ const CreateTeamSchedulePage = () => {
                   onChange={onChange}
                   placeholder="2024"
                   step={Number(value) >= 2000 ? 1 : 2000}
+                  isInvalid={errors.year?.message ? true : false}
                   errorMessage={errors.year?.message}
+                  isRequired
+                  required
                 />
               )}
             />

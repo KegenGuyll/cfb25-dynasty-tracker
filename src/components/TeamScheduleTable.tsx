@@ -35,17 +35,21 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
             <td className="px-4 py-3 text-center">
               <span className="w-full text-center">{week}</span>
             </td>
-            <td className="px-4 py-3 flex items-center justify-center">
+            <td className="px-4 py-3">
               <Controller
                 control={control}
                 name={`games.${i}.location`}
-                render={({ field }) => (
+                render={({ field, formState: { errors, isValid } }) => (
                   <Select
                     tabIndex={0}
-                    className="max-w-[80px]"
                     fullWidth
                     size="lg"
+                    isRequired
+                    isInvalid={
+                      errors.games?.[i]?.location?.message ? true : false
+                    }
                     {...field}
+                    errorMessage={errors.games?.[i]?.location?.message}
                   >
                     {['VS', 'AT', 'BYE'].map((location) => (
                       <SelectItem key={location} value={location}>
@@ -73,9 +77,9 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                 )}
               />
             </td>
-            <td className="px-4 py-3 flex items-center justify-center">
-              <div className="flex items-center flex-row gap-x-1">
-                <div className="max-w-[65px]">
+            <td className="px-4 py-3">
+              <div className="flex items-center justify-center flex-row gap-x-1 w-full">
+                <div className="max-w-[80px]">
                   <Controller
                     control={control}
                     name={`games.${i}.finalScore.score1`}
@@ -85,7 +89,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                         placeholder="0"
                         fullWidth
                         size="lg"
-                        value={value || ''}
+                        value={value}
                         onChange={onChange}
                         type="number"
                       />
@@ -93,7 +97,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                   />
                 </div>
                 <span className="font-bold text-xl">-</span>
-                <div className="max-w-[65px]">
+                <div className="max-w-[80px]">
                   <Controller
                     control={control}
                     name={`games.${i}.finalScore.score2`}
@@ -103,7 +107,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                         placeholder="0"
                         fullWidth
                         size="lg"
-                        value={value || ''}
+                        value={value}
                         onChange={onChange}
                         type="number"
                       />
@@ -115,16 +119,9 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
             <td className="px-4 py-3">
               <Controller
                 control={control}
-                name={`games.${i}.location`}
+                name={`games.${i}.result`}
                 render={({ field }) => (
-                  <Select
-                    tabIndex={0}
-                    id="Test Id2"
-                    className="max-w-[65px]"
-                    fullWidth
-                    size="lg"
-                    {...field}
-                  >
+                  <Select tabIndex={0} fullWidth size="lg" {...field}>
                     {['W', 'L'].map((result) => (
                       <SelectItem key={result} value={result}>
                         {result}

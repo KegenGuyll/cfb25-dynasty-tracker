@@ -1,23 +1,23 @@
-type AwardName = 
-'Player of the Year' |
-'Head Coach of the Year' |
-'Best QB' |
-'Best Defensive Player' |
-'Best DB' | 
-'Best RB' |
-'Best WR' |
-'Lomardi' | 
-'Johnny Unitas Golden Arm' |
-'Best DE' | 
-'Best Interior Lineman' | 
-'Best TE' | 
-'Broyles' |
-'Best Linebacker' | 
-'Best Center' | 
-'Lou Gorza' |
-'Best Punter' |
-'Best Returner' | 
-'Heisman'
+type AwardName =
+  'Player of the Year' |
+  'Head Coach of the Year' |
+  'Best QB' |
+  'Best Defensive Player' |
+  'Best DB' |
+  'Best RB' |
+  'Best WR' |
+  'Lomardi' |
+  'Johnny Unitas Golden Arm' |
+  'Best DE' |
+  'Best Interior Lineman' |
+  'Best TE' |
+  'Broyles' |
+  'Best Linebacker' |
+  'Best Center' |
+  'Lou Gorza' |
+  'Best Punter' |
+  'Best Returner' |
+  'Heisman'
 
 interface Awards {
   id?: number;
@@ -186,8 +186,8 @@ type Game = {
   awayTeam?: Team;
   homeTeam?: Team;
   finalScore: {
-    home: number;
-    away: number;
+    home: number | undefined;
+    away: number | undefined;
   } | null;
   rivalryGame: boolean;
   stadium: string | null;

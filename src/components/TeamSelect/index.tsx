@@ -25,8 +25,6 @@ const ReactSelectStyle: StylesConfig<
       backgroundColor: 'hsl(var(--nextui-default-200)',
     },
     border: 'none',
-    backgroundColor:
-      'hsl(var(--nextui-default-100) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))',
     borderRadius: 'var(--nextui-radius-medium)',
   }),
   placeholder: (baseStyles) => ({
@@ -114,6 +112,8 @@ type SearchableSelectProps = {
   placeholder?: string
   onChange?: (value: string | undefined) => void
   value?: { value: string; label: string }
+  isInvalid?: boolean
+  isRequired?: boolean
 }
 
 const TeamSelect: React.FC<SearchableSelectProps> = ({
@@ -123,6 +123,8 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
   placeholder,
   onChange,
   value,
+  isInvalid,
+  isRequired,
 }: SearchableSelectProps) => {
   const inputSelectRef = useRef<SelectInstance<any>>(null)
 
@@ -150,7 +152,10 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
         ref={inputSelectRef}
         tabIndex={0}
         classNames={{
-          control: () => 'bg-default-100 w-full !border-0',
+          control: () =>
+            ` ${
+              isInvalid ? '!bg-danger-50' : '!bg-default-100'
+            }  text-black w-full !border-0`,
           option: (state) =>
             state.isSelected ? 'bg-default-200' : 'bg-content1',
           menu: () => 'bg-content1',
@@ -179,6 +184,7 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
         options={options}
         onChange={handleChange}
         value={value}
+        required={isRequired}
       />
     </div>
   )

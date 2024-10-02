@@ -1,36 +1,47 @@
-import React from 'react'
-import Select, { GroupBase, SingleValue, StylesConfig } from 'react-select'
+import React, { useRef } from 'react'
+import Select, {
+  GroupBase,
+  SelectInstance,
+  SingleValue,
+  StylesConfig,
+} from 'react-select'
 
-const ReactSelectStyle: StylesConfig<{
-  value: string;
-  label: string;
-}, false, GroupBase<{
-  value: string;
-  label: string;
-}>> = {
+const ReactSelectStyle: StylesConfig<
+  {
+    value: string
+    label: string
+  },
+  false,
+  GroupBase<{
+    value: string
+    label: string
+  }>
+> = {
   control: (baseStyles, state) => ({
     ...baseStyles,
-    boxShadow: 'none',
     minHeight: '56px',
     width: '100%',
-    ":hover": {
-      backgroundColor: 'hsl(var(--nextui-default-200)'
+    ':hover': {
+      backgroundColor: 'hsl(var(--nextui-default-200)',
     },
     border: 'none',
-    backgroundColor: 'hsl(var(--nextui-default-100) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))',
-    borderRadius: 'var(--nextui-radius-medium)'
+    backgroundColor:
+      'hsl(var(--nextui-default-100) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))',
+    borderRadius: 'var(--nextui-radius-medium)',
   }),
   placeholder: (baseStyles) => ({
     ...baseStyles,
-    color: 'hsl(var(--nextui-foreground-500) / var(--nextui-foreground-500-opacity, var(--tw-text-opacity)))'
+    color:
+      'hsl(var(--nextui-foreground-500) / var(--nextui-foreground-500-opacity, var(--tw-text-opacity)))',
   }),
   indicatorSeparator: (baseStyles) => ({
     ...baseStyles,
-    display: 'none'
+    display: 'none',
   }),
   menu: (baseStyles) => ({
     ...baseStyles,
-    backgroundColor: 'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
+    backgroundColor:
+      'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
     borderRadius: 'var(--nextui-radius-medium)',
     padding: '4px',
     zIndex: 1000,
@@ -41,7 +52,7 @@ const ReactSelectStyle: StylesConfig<{
   }),
   menuPortal: (baseStyles) => ({
     ...baseStyles,
-    zIndex: 1000
+    zIndex: 1000,
   }),
   option: (baseStyles, state) => ({
     ...baseStyles,
@@ -50,70 +61,80 @@ const ReactSelectStyle: StylesConfig<{
     paddingTop: '0.375rem',
     paddingBottom: '0.375rem',
     borderRadius: 'var(--nextui-radius-medium)',
-    backgroundColor: state.isFocused ? 'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))' : 'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
-    ":hover": {
-      backgroundColor: 'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))'
-    }
+    backgroundColor: state.isFocused
+      ? 'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))'
+      : 'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
+    ':hover': {
+      backgroundColor:
+        'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))',
+    },
   }),
   input: (baseStyles) => ({
     ...baseStyles,
-    color: 'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))'
+    color:
+      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
+    ':focus-visible': {
+      backgroundColor: 'red',
+    },
   }),
   singleValue: (baseStyles) => ({
     ...baseStyles,
-    color: 'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))'
+    color:
+      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
   }),
   multiValue: (baseStyles) => ({
     ...baseStyles,
-    backgroundColor: 'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
+    backgroundColor:
+      'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
     borderRadius: 'var(--nextui-radius-medium)',
   }),
   multiValueLabel: (baseStyles) => ({
     ...baseStyles,
-    color: 'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))'
+    color:
+      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
   }),
-  'dropdownIndicator': (baseStyles) => ({
+  dropdownIndicator: (baseStyles) => ({
     ...baseStyles,
     ':hover': {
-      color: 'inherit'
-    }  
+      color: 'inherit',
+    },
   }),
-  'clearIndicator': (baseStyles) => ({
+  clearIndicator: (baseStyles) => ({
     ...baseStyles,
     ':hover': {
-      color: 'inherit'
-    }
+      color: 'inherit',
+    },
   }),
 }
 
 type SearchableSelectProps = {
   label: string
-  options: { value: string, label: string }[]
-  defaultValue?: { value: string, label: string }
+  options: { value: string; label: string }[]
+  defaultValue?: { value: string; label: string }
   placeholder?: string
   onChange?: (value: string | undefined) => void
-  value?: { value: string, label: string }
+  value?: { value: string; label: string }
 }
 
-const TeamSelect:React.FC<SearchableSelectProps> = ({
+const TeamSelect: React.FC<SearchableSelectProps> = ({
   label,
   options,
   defaultValue,
   placeholder,
   onChange,
-  value
+  value,
 }: SearchableSelectProps) => {
-
+  const inputSelectRef = useRef<SelectInstance<any>>(null)
 
   const handleChange = (
     value: SingleValue<{
-      value: string;
-      label: string;
+      value: string
+      label: string
     }>
   ) => {
-    if(!onChange) return;
+    if (!onChange) return
 
-    if(Array.isArray(value)) {
+    if (Array.isArray(value)) {
       const values = value.map((v) => v.value) as string[]
       onChange(values.join(','))
     } else {
@@ -121,33 +142,46 @@ const TeamSelect:React.FC<SearchableSelectProps> = ({
     }
   }
 
+  console.log()
+
   return (
     <div>
       <Select
+        ref={inputSelectRef}
+        tabIndex={0}
         classNames={{
-          container: () => 'w-full',
-          control:  () => 'bg-default-100 w-full !border-0',
-          option: (state) => 
+          control: () => 'bg-default-100 w-full !border-0',
+          option: (state) =>
             state.isSelected ? 'bg-default-200' : 'bg-content1',
           menu: () => 'bg-content1',
           menuPortal: () => 'z-50',
           menuList: () => 'z-50',
         }}
+        onKeyDown={(e) => {
+          switch (e.key) {
+            case 'Enter':
+              if (inputSelectRef.current?.menuListRef?.checkVisibility()) return
+              e.preventDefault()
+              inputSelectRef.current?.openMenu('first')
+              break
+            default:
+              break
+          }
+        }}
         isClearable
-        menuPosition='fixed'
+        menuPosition="fixed"
         menuPlacement="auto"
         placeholder={placeholder}
         defaultValue={defaultValue}
         isSearchable
         name={label}
-        styles={ReactSelectStyle}  
-        options={options} 
+        styles={ReactSelectStyle}
+        options={options}
         onChange={handleChange}
         value={value}
       />
     </div>
   )
-
-};
+}
 
 export default TeamSelect

@@ -145,7 +145,7 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
   }
 
   return (
-    <div>
+    <div className="w-full">
       <Select
         ref={inputSelectRef}
         tabIndex={0}

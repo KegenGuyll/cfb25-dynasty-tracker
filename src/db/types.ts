@@ -21,10 +21,17 @@ type AwardName =
 
 interface Awards {
   id?: number;
-  trophy: AwardName;
-  playerName: string;
+  awardId: number;
+  playerFirstName: string;
+  playerLastName: string;
   teamId: number;
   year: number;
+}
+
+interface AvailableAwards {
+  id?: number;
+  name: AwardName;
+  awardId: number;
 }
 
 interface DraftResults {
@@ -288,6 +295,7 @@ interface Team {
 export type {
   Awards,
   AwardName,
+  AvailableAwards,
   DraftResults,
   RecruitingClass,
   TeamSchedule,

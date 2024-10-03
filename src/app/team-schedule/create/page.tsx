@@ -3,6 +3,7 @@
 import TeamScheduleTable from '@/components/TeamScheduleTable'
 import TeamSelect from '@/components/TeamSelect'
 import { db } from '@/db/db.model'
+import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import { TeamSchedule } from '@/db/types'
 import { formatGameLocation } from '@/utils/teamSchedule'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -79,16 +80,7 @@ const CreateTeamSchedulePage = () => {
 
   const [numberOfWeeks, setNumberOfWeeks] = useState(1)
 
-  const teams = useLiveQuery(() => db.teams.toArray())
-
-  const teamOptions = useMemo(
-    () =>
-      teams?.map((team) => ({
-        value: String(team.teamId),
-        label: `${team.school} ${team.nickname}`,
-      })),
-    [teams]
-  )
+  const teamOptions = useLiveQuery(() => getTeamSelectOptions())
 
   const handleAddTeamSchedule = useCallback(
     async (data: TeamScheduleFormData) => {

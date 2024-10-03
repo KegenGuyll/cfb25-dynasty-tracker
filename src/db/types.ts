@@ -195,6 +195,7 @@ type Game = {
   broadcast: GameBroadcast;
   boxScore: BoxScore | null;
   stats: GameStats | null;
+  result: string | null;
 }
 
 interface TeamStats {

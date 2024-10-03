@@ -1,96 +1,72 @@
 'use client'
 
-import TeamScheduleTable from '@/components/TeamScheduleTable'
-import TeamSelect from '@/components/TeamSelect'
-import { db } from '@/db/db.model'
-import { TeamSchedule } from '@/db/types'
-import { formatGameLocation } from '@/utils/teamSchedule'
+import { Controller, useForm } from 'react-hook-form'
+import { TeamScheduleFormData, teamScheduleSchema } from '../../create/page'
 import { yupResolver } from '@hookform/resolvers/yup'
+import TeamSelect from '@/components/TeamSelect'
+import { useLiveQuery } from 'dexie-react-hooks'
+import { db } from '@/db/db.model'
+import TeamScheduleTable from '@/components/TeamScheduleTable'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
-import { useLiveQuery } from 'dexie-react-hooks'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { TeamSchedule } from '@/db/types'
 import { useRouter } from 'next/navigation'
-import { useCallback, useMemo, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import * as yup from 'yup'
+import {
+  convertGameLocation,
+  determineOpp,
+  determineGameResult,
+  formatGameLocation,
+} from '@/utils/teamSchedule'
+import { Spinner } from '@nextui-org/spinner'
 
-export const teamScheduleSchema = yup.object({
-  teamId: yup.string().required('Select a team schedule'),
-  year: yup
-    .string()
-    .required('Year is required')
-    .matches(/^\d{4}$/, 'Year must be 4 digits'),
-  games: yup
-    .array()
-    .of(
-      yup.object({
-        location: yup.string().required('required'),
-        opponent: yup.string().optional().nullable(),
-        stadium: yup.string().optional().nullable(),
-        result: yup.string().optional().nullable(),
-        finalScore: yup
-          .object({
-            score1: yup.number(),
-            score2: yup.number(),
-          })
-          .optional()
-          .nullable()
-          .test((finalScore, ctx) => {
-            if (finalScore?.score1 && finalScore?.score2) {
-              // finalScore score1 and score2 must be greater than or equal to 0
-              if (finalScore.score1 <= 0 || finalScore.score2 <= 0) {
-                return ctx.createError({
-                  message: 'Score must be greater than or equal to 0',
-                })
-              }
-
-              // finalScore score1 must be greater than score2
-              if (finalScore.score1 < finalScore.score2) {
-                console.log(
-                  'score1 > score2',
-                  finalScore.score1,
-                  finalScore.score2,
-                  finalScore.score1 > finalScore.score2
-                )
-                return ctx.createError({
-                  message: 'Winning Score must be greater than Losing Score',
-                })
-              }
-            }
-
-            return ctx.resolve(true)
-          }),
-      })
-    )
-    .default([]),
-})
-
-type TeamScheduleFormData = yup.InferType<typeof teamScheduleSchema>
-
-const CreateTeamSchedulePage = () => {
+const UpdateTeamSchedule = ({ params }: { params: { scheduleId: string } }) => {
   const {
     control,
     handleSubmit,
+    setValue,
+    getValues,
     formState: { errors },
   } = useForm<TeamScheduleFormData>({
     resolver: yupResolver<any>(teamScheduleSchema),
   })
   const router = useRouter()
 
+  const teamSchedule = useLiveQuery(() =>
+    db.teamSchedule.get(+params.scheduleId)
+  )
+
   const [numberOfWeeks, setNumberOfWeeks] = useState(1)
 
   const teams = useLiveQuery(() => db.teams.toArray())
 
-  const teamOptions = useMemo(
-    () =>
-      teams?.map((team) => ({
-        value: String(team.teamId),
-        label: `${team.school} ${team.nickname}`,
-      })),
-    [teams]
-  )
+  const handleSettingFormValues = useCallback(() => {
+    if (!teamSchedule) return
+    setValue('year', String(teamSchedule.year))
+    setValue('teamId', String(teamSchedule.teamId))
+    setValue(
+      'games',
+      teamSchedule.games.map((game) => ({
+        location: convertGameLocation(game.location),
+        opponent: determineOpp(game),
+        stadium: game.stadium,
+        result: determineGameResult(game),
+        finalScore: {
+          score1:
+            determineGameResult(game) === 'W'
+              ? game.finalScore?.home
+              : game.finalScore?.away,
+          score2:
+            determineGameResult(game) === 'W'
+              ? game.finalScore?.away
+              : game.finalScore?.home,
+        },
+      }))
+    )
+    setNumberOfWeeks(teamSchedule.games.length)
+  }, [setValue, teamSchedule])
 
-  const handleAddTeamSchedule = useCallback(
+  const handleUpdateTeamSchedule = useCallback(
     async (data: TeamScheduleFormData) => {
       console.log('data', data)
 
@@ -129,17 +105,37 @@ const CreateTeamSchedulePage = () => {
 
       console.log(teamSchedule)
 
-      await db.teamSchedule.add(teamSchedule)
+      // await db.teamSchedule.update(+params.scheduleId, teamSchedule)
       router.push('/team-schedule')
     },
     [router]
   )
 
+  useEffect(() => {
+    handleSettingFormValues()
+  }, [handleSettingFormValues])
+
+  const teamOptions = useMemo(
+    () =>
+      teams?.map((team) => ({
+        value: String(team.teamId),
+        label: `${team.school} ${team.nickname}`,
+      })),
+    [teams]
+  )
+
+  if (!teamSchedule)
+    return (
+      <div className="flex flex-col items-center w-full h-full">
+        <Spinner />
+      </div>
+    )
+
   return (
     <div>
       <form
+        onSubmit={handleSubmit(handleUpdateTeamSchedule)}
         className="gap-4 flex flex-col"
-        onSubmit={handleSubmit(handleAddTeamSchedule)}
       >
         <div className="flex flex-col gap-2">
           <div className="flex flex-row gap-4 justify-center w-full">
@@ -200,7 +196,7 @@ const CreateTeamSchedulePage = () => {
             />
           </div>
           <Button color="primary" type="submit">
-            Save Schedule
+            Update Schedule
           </Button>
         </div>
         <TeamScheduleTable
@@ -213,6 +209,4 @@ const CreateTeamSchedulePage = () => {
   )
 }
 
-export type { TeamScheduleFormData }
-
-export default CreateTeamSchedulePage
+export default UpdateTeamSchedule

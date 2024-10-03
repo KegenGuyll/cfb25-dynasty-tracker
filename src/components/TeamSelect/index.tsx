@@ -144,8 +144,6 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
     }
   }
 
-  console.log()
-
   return (
     <div>
       <Select

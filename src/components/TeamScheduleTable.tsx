@@ -3,12 +3,12 @@ import TeamSelect from './TeamSelect'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Input } from '@nextui-org/input'
 import { Control, Controller } from 'react-hook-form'
-import { CreateTeamScheduleForm } from '@/app/team-schedule/create/page'
+import { TeamScheduleFormData } from '@/app/team-schedule/create/page'
 
 type TeamScheduleTableProps = {
   numberOfWeeks: number
   teamOptions: { value: string; label: string }[]
-  control: Control<CreateTeamScheduleForm, any>
+  control: Control<TeamScheduleFormData, any>
 }
 
 const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
@@ -49,6 +49,8 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                       errors.games?.[i]?.location?.message ? true : false
                     }
                     {...field}
+                    selectedKeys={[field.value]}
+                    defaultSelectedKeys={[field.value]}
                     errorMessage={errors.games?.[i]?.location?.message}
                   >
                     {['VS', 'AT', 'BYE'].map((location) => (
@@ -120,15 +122,25 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
               <Controller
                 control={control}
                 name={`games.${i}.result`}
-                render={({ field }) => (
-                  <Select tabIndex={0} fullWidth size="lg" {...field}>
-                    {['W', 'L'].map((result) => (
-                      <SelectItem key={result} value={result}>
-                        {result}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )}
+                render={({ field: { value, onChange } }) => {
+                  return (
+                    <Select
+                      tabIndex={0}
+                      fullWidth
+                      size="lg"
+                      value={value || ''}
+                      selectedKeys={[String(value)]}
+                      defaultSelectedKeys={[String(value)]}
+                      onChange={onChange}
+                    >
+                      {['W', 'L'].map((result) => (
+                        <SelectItem key={result} value={result}>
+                          {result}
+                        </SelectItem>
+                      ))}
+                    </Select>
+                  )
+                }}
               />
             </td>
           </tr>

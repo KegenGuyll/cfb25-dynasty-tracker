@@ -1,7 +1,11 @@
 'use client'
 
+import DeleteConfirmationModal from '@/components/Modal/DeleteConfirmation'
+import { teamScheduleUpdateUrl } from '@/constants/urls'
+import { db } from '@/db/db.model'
 import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'
 import { Game } from '@/db/types'
+import { determineGameResultWithScore } from '@/utils/teamSchedule'
 import { Button } from '@nextui-org/button'
 import {
   Table,
@@ -13,26 +17,11 @@ import {
 } from '@nextui-org/table'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
-
-const determineGameResult = (game: Game): string => {
-  const didTeamWin =
-    game.finalScore?.home &&
-    game.finalScore?.away &&
-    game.finalScore.home > game.finalScore.away
-
-  if (game.finalScore?.home || game.finalScore?.away) {
-    return ` ${didTeamWin ? 'W' : 'L'} ${game.finalScore?.home} - ${
-      game.finalScore?.away
-    }`
-  }
-
-  if (game.location === 'bye') return 'BYE'
-
-  return 'TBD'
-}
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 const determineTeamName = (game: Game): string => {
-  if (game.location === 'home') {
+  if (game.location === 'away') {
     return `${game.homeTeam?.school}` || ''
   }
 
@@ -44,7 +33,12 @@ const determineTeamName = (game: Game): string => {
 }
 
 const TeamSchedulePage = () => {
+  const [deleteModalOpen, setDeleteModalOpen] = useState<{
+    id: number
+    teamName: string
+  } | null>(null)
   const allTeamSchedules = useLiveQuery(() => getTeamScheduleWithTeam())
+  const router = useRouter()
 
   if (!allTeamSchedules?.length) {
     return (
@@ -74,8 +68,25 @@ const TeamSchedulePage = () => {
               <span className="font-light text-sm">{teamSchedule.year}</span>
             </div>
             <div className="flex gap-2">
-              <Button>Update</Button>
-              <Button color="danger">Remove</Button>
+              <Button
+                onClick={() => {
+                  if (!teamSchedule.id) return
+                  router.push(teamScheduleUpdateUrl(teamSchedule.id))
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                onClick={() =>
+                  setDeleteModalOpen({
+                    id: teamSchedule.id || -1,
+                    teamName: `${teamSchedule.team?.school} ${teamSchedule.team?.nickname}`,
+                  })
+                }
+                color="danger"
+              >
+                Delete
+              </Button>
             </div>
           </div>
           <Table>
@@ -87,9 +98,9 @@ const TeamSchedulePage = () => {
             <TableBody>
               {teamSchedule.games.map((game) => (
                 <TableRow key={game.week}>
-                  <TableCell>{game.week - 1}</TableCell>
+                  <TableCell>{game.week}</TableCell>
                   <TableCell>{determineTeamName(game)}</TableCell>
-                  <TableCell>{determineGameResult(game)}</TableCell>
+                  <TableCell>{determineGameResultWithScore(game)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -99,6 +110,16 @@ const TeamSchedulePage = () => {
       <Button as={Link} href="/team-schedule/create">
         New Create Schedule
       </Button>
+      <DeleteConfirmationModal
+        context={`${deleteModalOpen?.teamName} schedule`}
+        isOpen={!!deleteModalOpen}
+        deleteAction={() => {
+          setDeleteModalOpen(null)
+          if (deleteModalOpen?.id) {
+            db.teamSchedule.delete(deleteModalOpen.id)
+          }
+        }}
+      />
     </div>
   )
 }

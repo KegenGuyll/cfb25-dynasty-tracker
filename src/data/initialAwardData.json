@@ -1,0 +1,78 @@
+[
+  {
+    "awardId": 1,
+    "name": "Player of the Year"
+  },
+  {
+    "awardId": 2,
+    "name": "Head Coach of the Year"
+  },
+  {
+    "awardId": 3,
+    "name": "Best QB"
+  },
+  {
+    "awardId": 4,
+    "name": "Best Defensive Player"
+  },
+  {
+    "awardId": 5,
+    "name": "Best DB"
+  },
+  {
+    "awardId": 6,
+    "name": "Best RB"
+  },
+  {
+    "awardId": 7,
+    "name": "Best WR"
+  },
+  {
+    "awardId": 8,
+    "name": "Lomardi"
+  },
+  {
+    "awardId": 9,
+    "name": "Johnny Unitas Golden Arm"
+  },
+  {
+    "awardId": 10,
+    "name": "Best DE"
+  },
+  {
+    "awardId": 11,
+    "name": "Best Interior Lineman"
+  },
+  {
+    "awardId": 12,
+    "name": "Best TE"
+  },
+  {
+    "awardId": 13,
+    "name": "Broyles"
+  },
+  {
+    "awardId": 14,
+    "name": "Best Linebacker"
+  },
+  {
+    "awardId": 15,
+    "name": "Best Center"
+  },
+  {
+    "awardId": 16,
+    "name": "Lou Gorza"
+  },
+  {
+    "awardId": 17,
+    "name": "Best Punter"
+  },
+  {
+    "awardId": 18,
+    "name": "Best Returner"
+  },
+  {
+    "awardId": 19,
+    "name": "Heisman"
+  }
+]

@@ -7,11 +7,16 @@ const awardsDashboardUrl = '/awards';
 const awardsCreateUrl = '/awards/create';
 const awardsUpdateUrl = (id: number) => `/awards/update/${id}`;
 
+const playerDashboardUrl = '/players';
+const playerCreateUrl = '/players/create';
+
 export {
   teamScheduleDashboardUrl,
   teamScheduleCreateUrl,
   teamScheduleUpdateUrl,
   awardsDashboardUrl,
   awardsCreateUrl,
-  awardsUpdateUrl
+  awardsUpdateUrl,
+  playerDashboardUrl,
+  playerCreateUrl,
 }

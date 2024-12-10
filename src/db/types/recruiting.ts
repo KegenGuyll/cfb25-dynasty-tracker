@@ -15,7 +15,9 @@ interface RecruitingClass {
 }
 
 type Recruit = {
-  name: string
+  firstName: string;
+  lastName: string;
+  nickname?: string;
   position: string
   stars: number
   devTrait: string

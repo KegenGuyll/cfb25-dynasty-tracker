@@ -1,44 +1,47 @@
 'use client'
 
-import React, { useCallback } from "react";
-import {  
-  Navbar, 
-  NavbarBrand, 
-  NavbarContent, 
-  NavbarItem, 
-  NavbarMenuToggle, 
-  NavbarMenu,  
-  NavbarMenuItem
-} from "@nextui-org/navbar";
-import Link from "next/link";
-import { Button } from "@nextui-org/button";
-import { usePathname } from "next/navigation";
+import React, { useCallback } from 'react'
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
+  NavbarMenuToggle,
+  NavbarMenu,
+  NavbarMenuItem,
+} from '@nextui-org/navbar'
+import Link from 'next/link'
+import { Button } from '@nextui-org/button'
+import { usePathname } from 'next/navigation'
 
 type MenuItems = {
-  friendlyName: string;
-  href: string;
+  friendlyName: string
+  href: string
 }
 
 const menuItems: MenuItems[] = [
-  {friendlyName: 'Dashboard', href: '/' },
-  {friendlyName: 'Team Schedule', href: '/team-schedule'},
-  {friendlyName: 'Awards', href: '/awards'},
-  {friendlyName: 'Recruiting', href: '/recruiting'},
-  {friendlyName: 'Draft Results', href: '/draft-results'},
-];
-
+  { friendlyName: 'Dashboard', href: '/' },
+  { friendlyName: 'Team Schedule', href: '/team-schedule' },
+  { friendlyName: 'Awards', href: '/awards' },
+  { friendlyName: 'Recruiting', href: '/recruiting' },
+  { friendlyName: 'Players', href: '/players' },
+  { friendlyName: 'Draft Results', href: '/draft-results' },
+]
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const pathname = usePathname()
 
-  const isPathActive = useCallback((href: string) => pathname.includes(href), [pathname]);
+  const isPathActive = useCallback(
+    (href: string) => pathname.includes(href),
+    [pathname]
+  )
 
   return (
     <Navbar onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden"
         />
         <NavbarBrand>
@@ -59,7 +62,11 @@ export default function Navigation() {
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
               color={
-                index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
+                index === 2
+                  ? 'primary'
+                  : index === menuItems.length - 1
+                  ? 'danger'
+                  : 'foreground'
               }
               className="w-full"
               href={item.href}
@@ -70,5 +77,5 @@ export default function Navigation() {
         ))}
       </NavbarMenu>
     </Navbar>
-  );
+  )
 }

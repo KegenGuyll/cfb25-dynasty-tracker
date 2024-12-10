@@ -49,19 +49,6 @@ interface DraftResults {
   seventhRound: number;
 }
 
-interface RecruitingClass {
-  id?: number
-  teamId: number;
-  year: number;
-  pts: number;
-  classRank: number;
-  '1Stars': number;
-  '2Stars': number;
-  '3Stars': number;
-  '4Stars': number;
-  '5Stars': number;
-}
-
 interface TeamSchedule {
   id?: number;
   teamId: number;
@@ -293,13 +280,11 @@ interface Team {
   secondaryColor: string;
 }
 
-
 export type {
   Awards,
   AwardName,
   AvailableAwards,
   DraftResults,
-  RecruitingClass,
   TeamSchedule,
   Game,
   GameLocation,

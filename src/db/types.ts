@@ -26,6 +26,8 @@ interface Awards {
   playerLastName: string;
   teamId: number;
   year: number;
+  team?: Team;
+  trophyName?: string;
 }
 
 interface AvailableAwards {

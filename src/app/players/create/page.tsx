@@ -1,15 +1,13 @@
 'use client'
 
-import { Button } from '@nextui-org/button'
-import { Input, Textarea } from '@nextui-org/input'
+import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
 import { NextPage } from 'next'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, useForm, useFieldArray } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import TeamSelect from '@/components/TeamSelect'
+import SearchableSelect from '@/components/SearchableSelect'
 import { useLiveQuery } from 'dexie-react-hooks'
 import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
-import { Select, SelectItem } from '@nextui-org/select'
 import {
   abilitiesByPosition,
   playerDevTraitOptions,
@@ -18,11 +16,14 @@ import {
   Position,
 } from '@/db/types/player'
 import { useMemo } from 'react'
-import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
-import { playerDashboardUrl } from '@/constants/urls'
 import GenericInputTable from '@/components/tables/GenericInputTable'
-import { passingColumns } from '@/components/tables/columns/playerStatColumns'
+import {
+  defenseColumns,
+  passingColumns,
+  receivingColumns,
+  rushingColumns,
+} from '@/components/tables/columns/playerStatColumns'
 
 export const createPlayerSchema = yup.object({
   teamId: yup.string().required('Select a team'),
@@ -42,6 +43,7 @@ export const createPlayerSchema = yup.object({
     hometown: yup.string().optional(),
     tendency: yup.string().required('Tendency is required'),
     recruitId: yup.number().optional(),
+    hasRedshirt: yup.boolean().optional(),
   }),
   playerDevelopment: yup.object({
     devTrait: yup.string().optional(),
@@ -79,22 +81,23 @@ export const createPlayerSchema = yup.object({
         .array()
         .of(
           yup.object({
-            year: yup.number().required(),
-            class: yup.string().required(),
-            teamId: yup.number().required(),
-            gp: yup.number().required(),
-            dp: yup.number().required(),
-            rating: yup.number().required(),
-            yards: yup.number().required(),
-            td: yup.number().required(),
-            int: yup.number().required(),
-            long: yup.number().required(),
-            sacks: yup.number().required(),
-            comp: yup.number().required(),
-            att: yup.number().required(),
-            compPct: yup.number().required(),
-            ypa: yup.number().required(),
-            ypg: yup.number().required(),
+            year: yup.number().nullable(),
+            class: yup.string().optional(),
+            teamId: yup.number().nullable(),
+            redshirt: yup.boolean().nullable(),
+            gp: yup.number().nullable(),
+            dp: yup.number().nullable(),
+            rating: yup.number().nullable(),
+            yards: yup.number().nullable(),
+            td: yup.number().nullable(),
+            int: yup.number().nullable(),
+            long: yup.number().nullable(),
+            sacks: yup.number().nullable(),
+            comp: yup.number().nullable(),
+            att: yup.number().nullable(),
+            compPct: yup.number().nullable(),
+            ypa: yup.number().nullable(),
+            ypg: yup.number().nullable(),
           })
         )
         .optional(),
@@ -102,21 +105,22 @@ export const createPlayerSchema = yup.object({
         .array()
         .of(
           yup.object({
-            year: yup.number().required(),
-            class: yup.string().required(),
-            teamId: yup.number().required(),
-            gp: yup.number().required(),
-            dp: yup.number().required(),
-            car: yup.number().required(),
-            yards: yup.number().required(),
-            avg: yup.number().required(),
-            td: yup.number().required(),
-            avgPerGame: yup.number().required(),
-            btk: yup.number().required(),
-            fumb: yup.number().required(),
-            yac: yup.number().required(),
-            long: yup.number().required(),
-            '20+': yup.number().required(),
+            year: yup.number().nullable(),
+            class: yup.string().optional(),
+            teamId: yup.number().nullable(),
+            redshirt: yup.boolean().nullable(),
+            gp: yup.number().nullable(),
+            dp: yup.number().nullable(),
+            car: yup.number().nullable(),
+            yards: yup.number().nullable(),
+            avg: yup.number().nullable(),
+            td: yup.number().nullable(),
+            avgPerGame: yup.number().nullable(),
+            btk: yup.number().nullable(),
+            fumb: yup.number().nullable(),
+            yac: yup.number().nullable(),
+            long: yup.number().nullable(),
+            '20+': yup.number().nullable(),
           })
         )
         .optional(),
@@ -124,20 +128,21 @@ export const createPlayerSchema = yup.object({
         .array()
         .of(
           yup.object({
-            year: yup.number().required(),
-            class: yup.string().required(),
-            teamId: yup.number().required(),
-            gp: yup.number().required(),
-            dp: yup.number().required(),
-            rec: yup.number().required(),
-            yards: yup.number().required(),
-            avg: yup.number().required(),
-            td: yup.number().required(),
-            avgPerGame: yup.number().required(),
-            rac: yup.number().required(),
-            racAvg: yup.number().required(),
-            long: yup.number().required(),
-            drops: yup.number().required(),
+            year: yup.number().nullable(),
+            class: yup.string().optional(),
+            teamId: yup.number().nullable(),
+            redshirt: yup.boolean().nullable(),
+            gp: yup.number().nullable(),
+            dp: yup.number().nullable(),
+            rec: yup.number().nullable(),
+            yards: yup.number().nullable(),
+            avg: yup.number().nullable(),
+            td: yup.number().nullable(),
+            avgPerGame: yup.number().nullable(),
+            rac: yup.number().nullable(),
+            racAvg: yup.number().nullable(),
+            long: yup.number().nullable(),
+            drops: yup.number().nullable(),
           })
         )
         .optional(),
@@ -145,34 +150,29 @@ export const createPlayerSchema = yup.object({
         .array()
         .of(
           yup.object({
-            year: yup.number().required(),
-            class: yup.string().required(),
-            teamId: yup.number().required(),
-            gp: yup.number().required(),
-            dp: yup.number().required(),
-            solo: yup.number().required(),
-            ast: yup.number().required(),
-            total: yup.number().required(),
-            tfl: yup.number().required(),
-            sack: yup.number().required(),
-            int: yup.number().required(),
-            pd: yup.number().required(),
-            ff: yup.number().required(),
-            fr: yup.number().required(),
-            blk: yup.number().required(),
-            assists: yup.number().required(),
-            tak: yup.number().required(),
-            intYds: yup.number().required(),
-            intAvg: yup.number().required(),
-            intLng: yup.number().required(),
-            defl: yup.number().required(),
-            ctha: yup.number().required(),
-            ffumb: yup.number().required(),
-            fumbRec: yup.number().required(),
-            fumbYds: yup.number().required(),
-            block: yup.number().required(),
-            sfty: yup.number().required(),
-            td: yup.number().required(),
+            year: yup.number().nullable(),
+            class: yup.string().optional(),
+            teamId: yup.number().nullable(),
+            redshirt: yup.boolean().nullable(),
+            gp: yup.number().nullable(),
+            dp: yup.number().nullable(),
+            solo: yup.number().nullable(),
+            tfl: yup.number().nullable(),
+            sack: yup.number().nullable(),
+            int: yup.number().nullable(),
+            assists: yup.number().nullable(),
+            tak: yup.number().nullable(),
+            intYds: yup.number().nullable(),
+            intAvg: yup.number().nullable(),
+            intLng: yup.number().nullable(),
+            defl: yup.number().nullable(),
+            ctha: yup.number().nullable(),
+            ffumb: yup.number().nullable(),
+            fumbRec: yup.number().nullable(),
+            fumbYds: yup.number().nullable(),
+            block: yup.number().nullable(),
+            sfty: yup.number().nullable(),
+            td: yup.number().nullable(),
           })
         )
         .optional(),
@@ -180,6 +180,85 @@ export const createPlayerSchema = yup.object({
     .optional(),
   awards: yup.array().of(yup.number().required()).optional(),
 })
+
+const emptyPassingStat = {
+  year: null,
+  class: '',
+  teamId: null,
+  gp: null,
+  dp: null,
+  rating: null,
+  yards: null,
+  td: null,
+  int: null,
+  long: null,
+  sacks: null,
+  comp: null,
+  att: null,
+  compPct: null,
+  ypa: null,
+  ypg: null,
+}
+
+const emptyRushingStat = {
+  year: null,
+  class: '',
+  teamId: null,
+  gp: null,
+  dp: null,
+  car: null,
+  yards: null,
+  avg: null,
+  td: null,
+  avgPerGame: null,
+  btk: null,
+  fumb: null,
+  yac: null,
+  long: null,
+  '20+': null,
+}
+
+const emptyReceivingStat = {
+  year: null,
+  class: '',
+  teamId: null,
+  gp: null,
+  dp: null,
+  rec: null,
+  yards: null,
+  avg: null,
+  td: null,
+  avgPerGame: null,
+  rac: null,
+  racAvg: null,
+  long: null,
+  drops: null,
+}
+
+const emptyDefenseStat = {
+  year: null,
+  class: '',
+  teamId: null,
+  gp: null,
+  dp: null,
+  solo: null,
+  tfl: null,
+  sack: null,
+  int: null,
+  assists: null,
+  tak: null,
+  intYds: null,
+  intAvg: null,
+  intLng: null,
+  defl: null,
+  ctha: null,
+  ffumb: null,
+  fumbRec: null,
+  fumbYds: null,
+  block: null,
+  sfty: null,
+  td: null,
+}
 
 type CreatePlayerFormData = yup.InferType<typeof createPlayerSchema>
 
@@ -194,7 +273,38 @@ const CreatePlayerPage: NextPage = () => {
     resolver: yupResolver(createPlayerSchema),
   })
 
-  console.log(errors)
+  const {
+    fields: passingFields,
+    append: passingAppend,
+    remove: passingRemove,
+  } = useFieldArray({
+    control,
+    name: 'stats.passing',
+  })
+  const {
+    fields: rushingFields,
+    append: rushingAppend,
+    remove: rushingRemove,
+  } = useFieldArray({
+    control,
+    name: 'stats.rushing',
+  })
+  const {
+    fields: receivingFields,
+    append: receivingAppend,
+    remove: receivingRemove,
+  } = useFieldArray({
+    control,
+    name: 'stats.receiving',
+  })
+  const {
+    fields: defenseFields,
+    append: defenseAppend,
+    remove: defenseRemove,
+  } = useFieldArray({
+    control,
+    name: 'stats.defense',
+  })
 
   const playerPosition = watch('playerInformation.position')
   const playerTendency = watch('playerInformation.tendency')
@@ -257,13 +367,13 @@ const CreatePlayerPage: NextPage = () => {
       <h1>Create Player</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="rounded p-8 w-full divide-y flex flex-col gap-8"
+        className="w-full divide-y flex flex-col gap-8"
       >
         <Button color="primary" variant="solid" type="submit">
           Save Player
         </Button>
         <div className="flex flex-col gap-8 pt-8">
-          <h2>Player Information</h2>
+          <h2 className="text-2xl">Player Information</h2>
           <div className="flex gap-4 max-w-full">
             <Controller
               control={control}
@@ -274,15 +384,15 @@ const CreatePlayerPage: NextPage = () => {
             />
             <Controller
               control={control}
-              name="playerInformation.nickname"
-              render={({ field }) => <Input {...field} label="Nickname" />}
-            />
-            <Controller
-              control={control}
               name="playerInformation.lastName"
               render={({ field }) => (
                 <Input {...field} required label="Last Name" />
               )}
+            />
+            <Controller
+              control={control}
+              name="playerInformation.nickname"
+              render={({ field }) => <Input {...field} label="Nickname" />}
             />
           </div>
           <div className="flex gap-4">
@@ -295,7 +405,7 @@ const CreatePlayerPage: NextPage = () => {
                   formState: { errors },
                 }) => (
                   <div className="w-full">
-                    <TeamSelect
+                    <SearchableSelect
                       options={teamOptions || []}
                       label="Team"
                       placeholder="Select Team"
@@ -446,7 +556,7 @@ const CreatePlayerPage: NextPage = () => {
           </div>
         </div>
         <div className="pt-8 flex flex-col gap-8">
-          <h2>Development</h2>
+          <h2 className="text-2xl">Development</h2>
           <div className="flex gap-4 max-w-64">
             <Controller
               control={control}
@@ -522,34 +632,68 @@ const CreatePlayerPage: NextPage = () => {
           </div>
         </div>
         <div className="pt-8 flex flex-col gap-8">
-          <h2>Career Stats</h2>
+          <h2 className="text-2xl">Career Stats</h2>
           <div className="flex gap-4">
-            <Button>Create Passing Table</Button>
-            <Button>Create Rushing Table</Button>
-            <Button>Create Receiving Table</Button>
-            <Button>Create Defense Table</Button>
+            <Button onPress={() => passingAppend(emptyPassingStat)}>
+              Create Passing Table
+            </Button>
+            <Button onPress={() => rushingAppend(emptyRushingStat)}>
+              Create Rushing Table
+            </Button>
+            <Button onPress={() => receivingAppend(emptyReceivingStat)}>
+              Create Receiving Table
+            </Button>
+            <Button onPress={() => defenseAppend(emptyDefenseStat)}>
+              Create Defense Table
+            </Button>
           </div>
-          <div className=" overflow-scroll p-3">
+          {passingFields.length > 0 && (
             <GenericInputTable
-              rowCount={1}
-              columns={passingColumns<CreatePlayerFormData>(control)}
+              title="Passing"
+              rowCount={passingFields.length}
+              columns={passingColumns(control, (i) => passingRemove(i), watch)}
             />
-          </div>
+          )}
+          {rushingFields.length > 0 && (
+            <GenericInputTable
+              title="Rushing"
+              rowCount={rushingFields.length}
+              columns={rushingColumns(control, (i) => rushingRemove(i), watch)}
+            />
+          )}
+          {receivingFields.length > 0 && (
+            <GenericInputTable
+              title="Receiving"
+              rowCount={receivingFields.length}
+              columns={receivingColumns(
+                control,
+                (i) => receivingRemove(i),
+                watch
+              )}
+            />
+          )}
+          {defenseFields.length > 0 && (
+            <GenericInputTable
+              title="Defense"
+              rowCount={defenseFields.length}
+              columns={defenseColumns(control, (i) => defenseRemove(i), watch)}
+            />
+          )}
         </div>
         <div className="pt-8 flex flex-col gap-8">
-          <h2>Awards</h2>
+          <h2 className="text-2xl">Awards</h2>
           <div className="flex gap-4">
             <Button>Create new Award</Button>
           </div>
         </div>
         <div className="pt-8 flex flex-col gap-8">
-          <h2>Historical Ovr</h2>
+          <h2 className="text-2xl">Historical Ovr</h2>
           <div className="flex gap-4">
             <Button>Create Ovr datapoint</Button>
           </div>
         </div>
         <div className="pt-8 flex flex-col gap-8">
-          <h2>Notes</h2>
+          <h2 className="text-2xl">Notes</h2>
           <div className="flex gap-4">
             <Textarea label="Notes" />
           </div>

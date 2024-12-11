@@ -806,7 +806,24 @@ export const abilitiesByPosition: Record<Position, PositionAbilities[]> = {
   ]
 }
 
+export const playerClassOptions = (redshirt: boolean) => {
+  if (redshirt) {
+    return [
+      { key: 'FR(RS)', label: 'FR (RS)' },
+      { key: 'SO(RS)', label: 'SO (RS)' },
+      { key: 'JR(RS)', label: 'JR (RS)' },
+      { key: 'SR(RS)', label: 'SR (RS)' },
+    ]
+  }
 
+
+  return [
+    { key: 'FR', label: 'FR' },
+    { key: 'SO', label: 'SO' },
+    { key: 'JR', label: 'JR' },
+    { key: 'SR', label: 'SR' },
+  ]
+}
 
 type Position =
   'QB' |
@@ -923,6 +940,7 @@ type PlayerInformation = {
   hometown?: string;
   tendency: string;
   recruitId?: number;
+  hasRedshirt?: boolean;
 }
 
 type PlayerDevelopment = {

@@ -21,6 +21,8 @@ import { useMemo } from 'react'
 import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
 import { playerDashboardUrl } from '@/constants/urls'
+import GenericInputTable from '@/components/tables/GenericInputTable'
+import { passingColumns } from '@/components/tables/columns/playerStatColumns'
 
 export const createPlayerSchema = yup.object({
   teamId: yup.string().required('Select a team'),
@@ -183,9 +185,16 @@ type CreatePlayerFormData = yup.InferType<typeof createPlayerSchema>
 
 const CreatePlayerPage: NextPage = () => {
   const router = useRouter()
-  const { control, handleSubmit, watch } = useForm<CreatePlayerFormData>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<CreatePlayerFormData>({
     resolver: yupResolver(createPlayerSchema),
   })
+
+  console.log(errors)
 
   const playerPosition = watch('playerInformation.position')
   const playerTendency = watch('playerInformation.tendency')
@@ -221,24 +230,26 @@ const CreatePlayerPage: NextPage = () => {
   const teamOptions = useLiveQuery(() => getTeamSelectOptions())
 
   const onSubmit = async (data: CreatePlayerFormData) => {
-    await db.players.add({
-      information: {
-        ...data.playerInformation,
-        height: `${data.playerInformation?.height?.ft}'${data.playerInformation?.height?.in}"`,
-      },
-      development: data.playerDevelopment,
-      stats: {
-        passing: data.stats?.passing,
-        rushing: data.stats?.rushing,
-        receiving: data.stats?.receiving,
-        defense: data.stats?.defense,
-      },
-      awards: data.awards ?? [],
-      historicalOverall: data.historicalOverall,
-      teamId: +data.teamId,
-    })
+    console.log(data)
 
-    router.push(playerDashboardUrl)
+    // await db.players.add({
+    //   information: {
+    //     ...data.playerInformation,
+    //     height: `${data.playerInformation?.height?.ft}'${data.playerInformation?.height?.in}"`,
+    //   },
+    //   development: data.playerDevelopment,
+    //   stats: {
+    //     passing: data.stats?.passing,
+    //     rushing: data.stats?.rushing,
+    //     receiving: data.stats?.receiving,
+    //     defense: data.stats?.defense,
+    //   },
+    //   awards: data.awards ?? [],
+    //   historicalOverall: data.historicalOverall,
+    //   teamId: +data.teamId,
+    // })
+
+    // router.push(playerDashboardUrl)
   }
 
   return (
@@ -517,6 +528,12 @@ const CreatePlayerPage: NextPage = () => {
             <Button>Create Rushing Table</Button>
             <Button>Create Receiving Table</Button>
             <Button>Create Defense Table</Button>
+          </div>
+          <div className=" overflow-scroll p-3">
+            <GenericInputTable
+              rowCount={1}
+              columns={passingColumns<CreatePlayerFormData>(control)}
+            />
           </div>
         </div>
         <div className="pt-8 flex flex-col gap-8">

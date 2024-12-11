@@ -116,7 +116,7 @@ type SearchableSelectProps = {
   isRequired?: boolean
 }
 
-const TeamSelect: React.FC<SearchableSelectProps> = ({
+const SearchableSelect: React.FC<SearchableSelectProps> = ({
   label,
   options,
   defaultValue,
@@ -188,4 +188,4 @@ const TeamSelect: React.FC<SearchableSelectProps> = ({
   )
 }
 
-export default TeamSelect
+export default SearchableSelect

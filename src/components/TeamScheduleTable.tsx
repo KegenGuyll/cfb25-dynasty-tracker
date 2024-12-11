@@ -1,5 +1,5 @@
 import React from 'react'
-import TeamSelect from './TeamSelect'
+import SearchableSelect from './SearchableSelect'
 import { Select, SelectItem } from '@nextui-org/select'
 import { Input } from '@nextui-org/input'
 import { Control, Controller } from 'react-hook-form'
@@ -67,7 +67,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                 control={control}
                 name={`games.${i}.opponent`}
                 render={({ field: { value, onChange } }) => (
-                  <TeamSelect
+                  <SearchableSelect
                     label="Opponent"
                     value={teamOptions?.find(
                       (option) => option.value === value

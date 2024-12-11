@@ -1,6 +1,6 @@
 'use client'
 
-import TeamSelect from '@/components/TeamSelect'
+import SearchableSelect from '@/components/SearchableSelect'
 import { awardsDashboardUrl } from '@/constants/urls'
 import { db } from '@/db/db.model'
 import getAvailableAwardOptions from '@/db/functions/getAvaliableAwardOptions'
@@ -62,7 +62,7 @@ const CreateAwardPage = () => {
             control={control}
             name="teamId"
             render={({ field, formState }) => (
-              <TeamSelect
+              <SearchableSelect
                 onChange={field.onChange}
                 value={teamOptions?.find((team) => team.value === field.value)}
                 label="Select team for award"
@@ -78,7 +78,7 @@ const CreateAwardPage = () => {
               control={control}
               name="awardId"
               render={({ field, formState }) => (
-                <TeamSelect
+                <SearchableSelect
                   onChange={field.onChange}
                   value={awardOptions?.find(
                     (team) => team.value === field.value

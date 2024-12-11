@@ -1,7 +1,7 @@
 'use client'
 
 import TeamScheduleTable from '@/components/TeamScheduleTable'
-import TeamSelect from '@/components/TeamSelect'
+import SearchableSelect from '@/components/SearchableSelect'
 import { db } from '@/db/db.model'
 import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import { TeamSchedule } from '@/db/types'
@@ -143,7 +143,7 @@ const CreateTeamSchedulePage = () => {
                 formState: { errors },
               }) => (
                 <div className="w-full">
-                  <TeamSelect
+                  <SearchableSelect
                     options={teamOptions || []}
                     label="Team"
                     placeholder="Select Team"

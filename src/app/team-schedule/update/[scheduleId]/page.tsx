@@ -3,7 +3,7 @@
 import { Controller, useForm } from 'react-hook-form'
 import { TeamScheduleFormData, teamScheduleSchema } from '../../create/page'
 import { yupResolver } from '@hookform/resolvers/yup'
-import TeamSelect from '@/components/TeamSelect'
+import SearchableSelect from '@/components/SearchableSelect'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '@/db/db.model'
 import TeamScheduleTable from '@/components/TeamScheduleTable'
@@ -147,7 +147,7 @@ const UpdateTeamSchedule = ({ params }: { params: { scheduleId: string } }) => {
                 formState: { errors },
               }) => (
                 <div className="w-full">
-                  <TeamSelect
+                  <SearchableSelect
                     options={teamOptions || []}
                     label="Team"
                     placeholder="Select Team"

@@ -1,7 +1,6 @@
 import React from 'react'
 import SearchableSelect from './SearchableSelect'
-import { Select, SelectItem } from '@nextui-org/select'
-import { Input } from '@nextui-org/input'
+import { Select, SelectItem, Input } from '@nextui-org/react'
 import { Control, Controller } from 'react-hook-form'
 import { TeamScheduleFormData } from '@/app/team-schedule/create/page'
 

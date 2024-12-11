@@ -9,9 +9,8 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-} from '@nextui-org/navbar'
+} from '@nextui-org/react'
 import Link from 'next/link'
-import { Button } from '@nextui-org/button'
 import { usePathname } from 'next/navigation'
 
 type MenuItems = {

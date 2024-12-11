@@ -6,7 +6,6 @@ import { db } from '@/db/db.model'
 import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'
 import { Game } from '@/db/types'
 import { determineGameResultWithScore } from '@/utils/teamSchedule'
-import { Button } from '@nextui-org/button'
 import {
   Table,
   TableBody,
@@ -14,7 +13,8 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@nextui-org/table'
+  Button,
+} from '@nextui-org/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

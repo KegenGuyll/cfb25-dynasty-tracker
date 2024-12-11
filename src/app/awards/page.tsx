@@ -3,7 +3,6 @@
 import { awardsCreateUrl } from '@/constants/urls'
 import { db } from '@/db/db.model'
 import getAwardsWithTeam from '@/db/functions/getAwardsWithTeam'
-import { Button } from '@nextui-org/button'
 import {
   Table,
   TableBody,
@@ -11,7 +10,8 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@nextui-org/table'
+  Button,
+} from '@nextui-org/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useRouter } from 'next/navigation'
 

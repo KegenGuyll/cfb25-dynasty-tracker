@@ -9,8 +9,8 @@ import { formatGameLocation } from '@/utils/teamSchedule'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Input } from '@nextui-org/react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useRouter } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
@@ -76,18 +76,26 @@ const CreateTeamSchedulePage = () => {
     resolver: yupResolver<any>(teamScheduleSchema),
   })
   const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const [numberOfWeeks, setNumberOfWeeks] = useState(1)
+  const dynastyId = searchParams.get('dynastyId')
+
+  useEffect(() => {
+    if (!dynastyId) {
+      router.push('/dynasty')
+    }
+  }, [dynastyId, router])
+
+  const [numberOfWeeks, setNumberOfWeeks] = useState(21)
 
   const teamOptions = useLiveQuery(() => getTeamSelectOptions())
 
   const handleAddTeamSchedule = useCallback(
     async (data: TeamScheduleFormData) => {
-      console.log('data', data)
-
       const teamSchedule: TeamSchedule = {
         teamId: Number(data.teamId),
         year: Number(data.year),
+        dynastyId: Number(dynastyId),
         games: data.games.map((game, i) => ({
           awayTeamId:
             game.location === 'AT'
@@ -118,12 +126,36 @@ const CreateTeamSchedulePage = () => {
         })),
       }
 
-      console.log(teamSchedule)
-
       await db.teamSchedule.add(teamSchedule)
-      router.push('/team-schedule')
+      await db.teamInfo.add({
+        dynastyId: Number(dynastyId),
+        teamId: Number(data.teamId),
+        year: Number(data.year),
+        conference: '',
+        teamOffense: 0,
+        teamDefense: 0,
+        teamOverall: 0,
+        positionInConference: 0,
+        teamWins: teamSchedule.games.filter((game) => game.result === 'W')
+          .length,
+        teamLosses: teamSchedule.games.filter((game) => game.result === 'L')
+          .length,
+      })
+      await db.dynasties.update(Number(dynastyId), (dynasty) => {
+        if (dynasty.availableTeams) {
+          dynasty.availableTeams.push({
+            teamId: Number(data.teamId),
+            year: Number(data.year),
+          })
+        } else {
+          dynasty.availableTeams = [
+            { teamId: Number(data.teamId), year: Number(data.year) },
+          ]
+        }
+      })
+      router.push(`/dynasty/${dynastyId}/dashboard/${data.teamId}`)
     },
-    [router]
+    [dynastyId, router]
   )
 
   return (

@@ -962,6 +962,7 @@ interface Player {
     defense?: DefenseStats[];
   }
   historicalOverall?: historicalOverall[]
+  dynastyId: number;
 }
 
 

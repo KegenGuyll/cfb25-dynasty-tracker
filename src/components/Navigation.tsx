@@ -19,12 +19,12 @@ type MenuItems = {
 }
 
 const menuItems: MenuItems[] = [
-  { friendlyName: 'Dashboard', href: '/' },
-  { friendlyName: 'Team Schedule', href: '/team-schedule' },
-  { friendlyName: 'Awards', href: '/awards' },
-  { friendlyName: 'Recruiting', href: '/recruiting' },
-  { friendlyName: 'Players', href: '/players' },
-  { friendlyName: 'Draft Results', href: '/draft-results' },
+  { friendlyName: 'Dashboard', href: '/dynasty' },
+  // { friendlyName: 'Team Schedule', href: '/team-schedule' },
+  // { friendlyName: 'Awards', href: '/awards' },
+  // { friendlyName: 'Recruiting', href: '/recruiting' },
+  // { friendlyName: 'Players', href: '/players' },
+  // { friendlyName: 'Draft Results', href: '/draft-results' },
 ]
 
 export default function Navigation() {

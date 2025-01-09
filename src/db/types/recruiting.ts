@@ -12,6 +12,7 @@ interface RecruitingClass {
   '5Stars': number;
   commits: Recruit[];
   notableLostRecruits: Recruit[];
+  dynastyId: number;
 }
 
 type Recruit = {

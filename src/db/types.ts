@@ -28,6 +28,7 @@ interface Awards {
   year: number;
   team?: Team;
   trophyName?: string;
+  dynastyId: number;
 }
 
 interface AvailableAwards {
@@ -40,6 +41,7 @@ interface DraftResults {
   id: number;
   teamId: number;
   year: number;
+  dynastyId: number;
   firstRound: number;
   secondRound: number;
   thirdRound: number;
@@ -55,6 +57,7 @@ interface TeamSchedule {
   year: number;
   games: Game[];
   team?: Team;
+  dynastyId: number;
 }
 
 type GameLocation = 'home' | 'away' | 'neutral' | 'bye';
@@ -210,6 +213,7 @@ interface TeamStats {
   conversions: Conversions | null;
   redzone: Redzone | null;
   turnovers: Turnovers | null;
+  dynastyId: number;
 }
 
 type Offense = {

@@ -44,7 +44,7 @@ export default function Navigation() {
           className="sm:hidden"
         />
         <NavbarBrand>
-          <p className="font-bold text-inherit">CB25 Dynasty Tracker</p>
+          <p className="font-bold text-inherit">CFB25 Dynasty Tracker</p>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">

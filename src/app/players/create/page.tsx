@@ -379,14 +379,14 @@ const CreatePlayerPage: NextPage = () => {
               control={control}
               name="playerInformation.firstName"
               render={({ field }) => (
-                <Input {...field} required label="First Name" />
+                <Input {...field} isRequired label="First Name" />
               )}
             />
             <Controller
               control={control}
               name="playerInformation.lastName"
               render={({ field }) => (
-                <Input {...field} required label="Last Name" />
+                <Input {...field} isRequired label="Last Name" />
               )}
             />
             <Controller
@@ -431,7 +431,7 @@ const CreatePlayerPage: NextPage = () => {
                     formState: { errors },
                   }) => (
                     <Select
-                      required
+                      isRequired
                       label="Position"
                       value={value}
                       onChange={onChange}
@@ -458,7 +458,7 @@ const CreatePlayerPage: NextPage = () => {
                       {...field}
                       value={field?.value?.toString() || undefined}
                       type="number"
-                      required
+                      isRequired
                       label="Number"
                     />
                   )}
@@ -514,7 +514,6 @@ const CreatePlayerPage: NextPage = () => {
               render={({ field }) => (
                 <Input
                   {...field}
-                  required={false}
                   className="max-w-32"
                   value={field?.value?.toString() || undefined}
                   type="number"
@@ -533,7 +532,7 @@ const CreatePlayerPage: NextPage = () => {
               }) => (
                 <Select
                   label="Tendency"
-                  required
+                  isRequired
                   disabled={!playerTendencies.length}
                   value={value}
                   onChange={onChange}

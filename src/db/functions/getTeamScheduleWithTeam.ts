@@ -1,12 +1,12 @@
 import { db } from "../db.model";
 
-const getTeamScheduleWithTeam = async () => {
-  const teamSchedules = await db.teamSchedule.toArray();
+const getTeamScheduleWithTeam = async (teamId: number, year: number) => {
+  const teamSchedules = await db.teamSchedule.where({ teamId, year }).toArray();
 
   await Promise.all(teamSchedules.map(async (teamSchedule) => {
-      [teamSchedule.team] = await Promise.all([
-        db.teams.get(teamSchedule.teamId)
-      ])
+    [teamSchedule.team] = await Promise.all([
+      db.teams.get(teamSchedule.teamId)
+    ])
   }))
 
   await Promise.all(teamSchedules.map(async (teamSchedule) => {

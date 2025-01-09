@@ -38,9 +38,15 @@ const determineOpp = (game: Game): string => {
   return ''
 }
 
+const determineOpponent = (game: Game): 'homeTeam' | 'awayTeam' => {
+  if (game.location === 'home') return 'awayTeam'
+  if (game.location === 'away') return 'homeTeam'
+  return 'awayTeam'
+}
+
 const convertGameLocation = (location: GameLocation): 'VS' | 'AT' | 'BYE' => {
-  if (location === 'home') return 'VS'
-  if (location === 'away') return 'AT'
+  if (location === 'away') return 'VS'
+  if (location === 'home') return 'AT'
   return 'BYE'
 }
 
@@ -77,5 +83,6 @@ export {
   determineGameResult,
   determineOpp,
   convertGameLocation,
-  determineGameResultWithScore
+  determineGameResultWithScore,
+  determineOpponent,
 }

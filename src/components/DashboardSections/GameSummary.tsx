@@ -1,3 +1,5 @@
+'use client'
+
 import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useMemo } from 'react'

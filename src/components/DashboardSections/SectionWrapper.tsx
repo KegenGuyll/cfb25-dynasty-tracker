@@ -1,3 +1,5 @@
+'use client'
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
@@ -7,12 +9,14 @@ type SectionWrapperProps = {
   summary: string
   children: React.ReactNode
   editable?: boolean
+  handleEdit?: () => void
 }
 
 const SectionWrapper: React.FC<SectionWrapperProps> = ({
   children,
   title,
   summary,
+  handleEdit,
   editable = true,
 }: SectionWrapperProps) => {
   const [hovered, setHovered] = useState(false)
@@ -22,6 +26,7 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
       <div className="flex flex-col">
         {editable ? (
           <button
+            onClick={handleEdit}
             onMouseOver={() => setHovered(true)}
             onMouseLeave={() => setHovered(false)}
             className="text-left flex gap-2 items-center"

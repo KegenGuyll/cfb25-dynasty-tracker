@@ -13,6 +13,8 @@ interface TeamInfo {
   positionInConference: number
   teamWins: number
   teamLosses: number
+  conferenceWins: number
+  conferenceLosses: number
 }
 
 export type {

@@ -1,3 +1,5 @@
+import { Team } from "../types"
+
 type PlayerPositionOptions = {
   key: Position
   label: Position
@@ -939,7 +941,6 @@ type PlayerInformation = {
   weight?: number; // lbs
   hometown?: string;
   tendency: string;
-  recruitId?: number;
   hasRedshirt?: boolean;
 }
 
@@ -947,6 +948,24 @@ type PlayerDevelopment = {
   devTrait?: string;
   mentalTraits?: PlayerMentalTrait[];
   physicalTraits?: PlayerMentalTrait[];
+}
+
+type Recruit = {
+  position: string
+  stars: number
+  devTrait: string
+  overall?: number
+  nationalRank?: number
+  gem: string
+  year: number
+  classId: number | null
+  transfers?: {
+    teamId: number
+    class: 'FR' | 'SO' | 'JR' | 'SR'
+    redshirt: boolean
+    classId: number | null
+    teamData?: Team
+  }[]
 }
 
 interface Player {
@@ -961,7 +980,8 @@ interface Player {
     receiving?: ReceivingStats[];
     defense?: DefenseStats[];
   }
-  historicalOverall?: historicalOverall[]
+  recruit: Recruit;
+  historicalOverall: historicalOverall[]
   dynastyId: number;
 }
 

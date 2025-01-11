@@ -1,18 +1,28 @@
+import { Player } from "./player";
+
 interface RecruitingClass {
   id?: number
   teamId: number;
   year: number;
-  pts: number;
   classRank: number;
   conferenceClassRank: number;
-  '1Stars': number;
-  '2Stars': number;
-  '3Stars': number;
-  '4Stars': number;
-  '5Stars': number;
-  commits: Recruit[];
+  recruits: number[];
+  players: Player[];
+  transfersPlayers: Player[];
+  transfers: number[];
   notableLostRecruits: Recruit[];
   dynastyId: number;
+  overview: Overview;
+}
+
+type Overview = {
+  total: number
+  '5star': number
+  '4star': number
+  '3star': number
+  '2star': number
+  '1star': number
+  pts: number
 }
 
 type Recruit = {
@@ -23,8 +33,14 @@ type Recruit = {
   stars: number
   devTrait: string
   overall?: number
-  transfer: boolean
-  gem: boolean
+  nationalRank?: number
+  gem: string
+  playerId?: number
+}
+
+type Transfer = Recruit & {
+  year: number
+  from: number // teamId
 }
 
 

@@ -140,6 +140,8 @@ const CreateTeamSchedulePage = () => {
           .length,
         teamLosses: teamSchedule.games.filter((game) => game.result === 'L')
           .length,
+        conferenceWins: 0,
+        conferenceLosses: 0,
       })
       await db.dynasties.update(Number(dynastyId), (dynasty) => {
         if (dynasty.availableTeams) {

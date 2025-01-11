@@ -8,12 +8,37 @@ import {
   TableRow,
 } from '@nextui-org/react'
 import SectionWrapper from './SectionWrapper'
+import { useRouter } from 'next/navigation'
+import getRecruitingData from '@/queries/recruiting/getRecruitingData'
+import { useLiveQuery } from 'dexie-react-hooks'
 
-const RecruitingSection = () => {
+type RecruitingSectionProps = {
+  dynastyId: string
+  teamId: string
+  year: string
+}
+
+const RecruitingSection: React.FC<RecruitingSectionProps> = ({
+  dynastyId,
+  teamId,
+  year,
+}: RecruitingSectionProps) => {
+  const router = useRouter()
+  const recruitingData = useLiveQuery(() =>
+    getRecruitingData(dynastyId, teamId, year)
+  )
+
+  console.log(recruitingData)
+
   return (
     <SectionWrapper
       title="Recruiting"
       summary="The Razorbacks have signed 17 recruits for the 2034 season. The class is headlined by 5-star QB John Doe and 4-star WR Jane Doe."
+      handleEdit={() =>
+        router.push(
+          `/dynasty/${dynastyId}/dashboard/${teamId}/${year}/recruiting`
+        )
+      }
     >
       <div className="flex flex-col gap-4">
         <h3 className="text-lg">Overview</h3>
@@ -29,71 +54,104 @@ const RecruitingSection = () => {
           </TableHeader>
           <TableBody>
             <TableRow key="1">
-              <TableCell>17</TableCell>
-              <TableCell>2</TableCell>
-              <TableCell>5</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>0</TableCell>
-              <TableCell>230.55</TableCell>
+              <TableCell>{recruitingData?.overview.total}</TableCell>
+              <TableCell>{recruitingData?.overview['5star']}</TableCell>
+              <TableCell>{recruitingData?.overview['4star']}</TableCell>
+              <TableCell>{recruitingData?.overview['3star']}</TableCell>
+              <TableCell>{recruitingData?.overview['2star']}</TableCell>
+              <TableCell>{recruitingData?.overview['1star']}</TableCell>
+              <TableCell>{recruitingData?.overview.pts}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </div>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg">Recruits</h3>
-        <Table aria-label="recruiting summary table">
-          <TableHeader>
-            <TableColumn>Name</TableColumn>
-            <TableColumn>Pos.</TableColumn>
-            <TableColumn>Star</TableColumn>
-            <TableColumn>Dev Trait</TableColumn>
-            <TableColumn>Gem</TableColumn>
-            <TableColumn>Nat&apos;l Rank</TableColumn>
-            <TableColumn>Ovr</TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>John Doe</TableCell>
-              <TableCell>QB</TableCell>
-              <TableCell>5</TableCell>
-              <TableCell>Normal</TableCell>
-              <TableCell>Yes</TableCell>
-              <TableCell>1</TableCell>
-              <TableCell>94</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-lg">Transfers</h3>
-        <Table aria-label="recruiting summary table">
-          <TableHeader>
-            <TableColumn>Name</TableColumn>
-            <TableColumn>Pos.</TableColumn>
-            <TableColumn>Star</TableColumn>
-            <TableColumn>Dev Trait</TableColumn>
-            <TableColumn>Gem</TableColumn>
-            <TableColumn>Nat&apos;l Rank</TableColumn>
-            <TableColumn>Ovr</TableColumn>
-            <TableColumn>Yr</TableColumn>
-            <TableColumn>From</TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>John Doe</TableCell>
-              <TableCell>QB</TableCell>
-              <TableCell>5</TableCell>
-              <TableCell>Normal</TableCell>
-              <TableCell>Yes</TableCell>
-              <TableCell>1</TableCell>
-              <TableCell>94</TableCell>
-              <TableCell>SR</TableCell>
-              <TableCell>Alabama</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
-      </div>
+      {recruitingData?.recruits && (
+        <div className="flex flex-col gap-4">
+          <h3 className="text-lg">Recruits</h3>
+          <Table aria-label="recruiting summary table">
+            <TableHeader>
+              <TableColumn>Name</TableColumn>
+              <TableColumn>Ovr</TableColumn>
+              <TableColumn>Pos.</TableColumn>
+              <TableColumn>Nat&apos;l Rank</TableColumn>
+              <TableColumn>Star</TableColumn>
+              <TableColumn>Dev Trait</TableColumn>
+              <TableColumn>Gem</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {recruitingData?.players.map((player) => (
+                <TableRow
+                  key={
+                    player.information.firstName + player.information.lastName
+                  }
+                >
+                  <TableCell>
+                    {player.information.firstName +
+                      ' ' +
+                      player.information.lastName}
+                  </TableCell>
+                  <TableCell>{player.recruit.overall}</TableCell>
+                  <TableCell>{player.recruit.position}</TableCell>
+                  <TableCell>{player.recruit.nationalRank}</TableCell>
+                  <TableCell>
+                    {Array.from(
+                      { length: player.recruit.stars },
+                      () => '⭐'
+                    ).join('')}
+                  </TableCell>
+                  <TableCell>{player.recruit.devTrait}</TableCell>
+                  <TableCell>{player.recruit.gem}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+      {recruitingData?.transfers && (
+        <div className="flex flex-col gap-4">
+          <h3 className="text-lg">Transfers</h3>
+          <Table aria-label="recruiting summary table">
+            <TableHeader>
+              <TableColumn>Name</TableColumn>
+              <TableColumn>Ovr</TableColumn>
+              <TableColumn>Pos.</TableColumn>
+              <TableColumn>Nat&apos;l Rank</TableColumn>
+              <TableColumn>Star</TableColumn>
+              <TableColumn>Dev Trait</TableColumn>
+              <TableColumn>From</TableColumn>
+            </TableHeader>
+            <TableBody>
+              {recruitingData?.transfersPlayers.map((transfer) => (
+                <TableRow
+                  key={
+                    transfer.information.firstName +
+                    transfer.information.lastName
+                  }
+                >
+                  <TableCell>
+                    {transfer.information.firstName +
+                      ' ' +
+                      transfer.information.lastName}
+                  </TableCell>
+                  <TableCell>{transfer.recruit.overall}</TableCell>
+                  <TableCell>{transfer.information.position}</TableCell>
+                  <TableCell>{transfer.recruit.nationalRank}</TableCell>
+                  <TableCell>
+                    {Array.from(
+                      { length: transfer.recruit.stars },
+                      () => '⭐'
+                    ).join('')}
+                  </TableCell>
+                  <TableCell>{transfer.recruit.devTrait}</TableCell>
+                  <TableCell>
+                    {transfer.recruit.transfers?.[0]?.teamData?.school}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </SectionWrapper>
   )
 }

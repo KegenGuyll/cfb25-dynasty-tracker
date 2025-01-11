@@ -20,7 +20,7 @@ const TeamYearPage: React.FC<TeamYearPageProps> = ({
   return (
     <div className="flex flex-col gap-12">
       <TeamOverview dynastyId={dynastyId} teamId={teamId} year={year} />
-      <RecruitingSection />
+      <RecruitingSection dynastyId={dynastyId} teamId={teamId} year={year} />
       <DraftResults />
       <TeamSchedule teamId={+teamId} year={+year} />
       <GameSummary teamId={+teamId} year={+year} />

@@ -23,7 +23,7 @@ import {
   passingColumns,
   receivingColumns,
   rushingColumns,
-} from '@/components/tables/columns/playerStatColumns'
+} from '@/components/tables/columns/playerInputStatColumns'
 
 export const createPlayerSchema = yup.object({
   teamId: yup.string().required('Select a team'),

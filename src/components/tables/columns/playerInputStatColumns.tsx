@@ -1,17 +1,10 @@
-import {
-  Input,
-  Button,
-  Select,
-  SelectItem,
-  Checkbox,
-  form,
-} from '@nextui-org/react'
+import { Input, Button, Select, SelectItem, Checkbox } from '@nextui-org/react'
 import { TableColumn } from '../GenericInputTable'
 import { Control, Controller, UseFormWatch } from 'react-hook-form'
 import TeamSelect from '@/components/TeamSelect'
 import { playerClassOptions } from '@/db/types/player'
 
-const basicColumns = (
+const basicInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   statCategory: string,
@@ -30,7 +23,7 @@ const basicColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.${statCategory}.${rowIndex}.year`}
+        name={`${statCategory}.${rowIndex}.year`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Year" />
         )}
@@ -43,8 +36,12 @@ const basicColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.${statCategory}.${rowIndex}.redshirt`}
-        render={({ field }) => <Checkbox {...field}>Has Redshirt?</Checkbox>}
+        name={`${statCategory}.${rowIndex}.redshirt`}
+        render={({ field }) => (
+          <Checkbox defaultSelected={field.value} {...field}>
+            Has Redshirt?
+          </Checkbox>
+        )}
       />
     ),
   },
@@ -52,19 +49,20 @@ const basicColumns = (
     title: 'Class',
     key: 'class',
     render: (rowIndex: number) => {
-      const redshirt = watch(`stats.${statCategory}.${rowIndex}.redshirt`)
+      const redshirt = watch(`${statCategory}.${rowIndex}.redshirt`)
       const options = playerClassOptions(redshirt)
 
       return (
         <Controller
           control={control}
-          name={`stats.${statCategory}.${rowIndex}.class`}
+          name={`${statCategory}.${rowIndex}.class`}
           render={({ field }) => (
             <Select
               items={options}
               {...field}
               className="w-[105px]"
               label="Class"
+              selectedKeys={[field.value]}
             >
               {(option) => (
                 <SelectItem key={option.key}>{option.label}</SelectItem>
@@ -81,7 +79,7 @@ const basicColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.${statCategory}.${rowIndex}.teamId`}
+        name={`${statCategory}.${rowIndex}.teamId`}
         render={({ field }) => (
           <TeamSelect
             classname="min-w-[250px]"
@@ -94,19 +92,19 @@ const basicColumns = (
   },
 ]
 
-const passingColumns = (
+const passingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   watch: UseFormWatch<any>
 ): TableColumn[] => [
-  ...basicColumns(control, deleteRow, 'passing', watch),
+  ...basicInputColumns(control, deleteRow, 'passing', watch),
   {
     title: 'Rating',
     key: 'rating',
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.rating`}
+        name={`passing.${rowIndex}.rating`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Rating" />
         )}
@@ -119,7 +117,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.yards`}
+        name={`passing.${rowIndex}.yards`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Yards" />
         )}
@@ -132,7 +130,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.td`}
+        name={`passing.${rowIndex}.td`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TD" />
         )}
@@ -145,7 +143,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.int`}
+        name={`passing.${rowIndex}.int`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="INT" />
         )}
@@ -158,7 +156,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.long`}
+        name={`passing.${rowIndex}.long`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Long" />
         )}
@@ -171,7 +169,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.sacks`}
+        name={`passing.${rowIndex}.sacks`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Sacks" />
         )}
@@ -184,7 +182,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.comp`}
+        name={`passing.${rowIndex}.comp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Comp" />
         )}
@@ -197,7 +195,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.att`}
+        name={`passing.${rowIndex}.att`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Att" />
         )}
@@ -210,7 +208,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.compPct`}
+        name={`passing.${rowIndex}.compPct`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Comp %" />
         )}
@@ -223,7 +221,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.ypg`}
+        name={`passing.${rowIndex}.ypg`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="YPG" />
         )}
@@ -236,7 +234,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.ypa`}
+        name={`passing.${rowIndex}.ypa`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="YPA" />
         )}
@@ -249,7 +247,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.gp`}
+        name={`passing.${rowIndex}.gp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="GP" />
         )}
@@ -262,7 +260,7 @@ const passingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.passing.${rowIndex}.dp`}
+        name={`passing.${rowIndex}.dp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DP" />
         )}
@@ -271,19 +269,19 @@ const passingColumns = (
   },
 ]
 
-const rushingColumns = (
+const rushingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   watch: UseFormWatch<any>
 ): TableColumn[] => [
-  ...basicColumns(control, deleteRow, 'rushing', watch),
+  ...basicInputColumns(control, deleteRow, 'rushing', watch),
   {
     title: 'Car',
     key: 'car',
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.car`}
+        name={`rushing.${rowIndex}.car`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Car" />
         )}
@@ -296,7 +294,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.yards`}
+        name={`rushing.${rowIndex}.yards`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Yards" />
         )}
@@ -309,7 +307,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.avg`}
+        name={`rushing.${rowIndex}.avg`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="AVG" />
         )}
@@ -322,7 +320,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.td`}
+        name={`rushing.${rowIndex}.td`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TD" />
         )}
@@ -335,7 +333,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.avgPerGame`}
+        name={`rushing.${rowIndex}.avgPerGame`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="AVG G" />
         )}
@@ -348,7 +346,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.btk`}
+        name={`rushing.${rowIndex}.btk`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="BTK" />
         )}
@@ -361,7 +359,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.fumb`}
+        name={`rushing.${rowIndex}.fumb`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="Fumb" />
         )}
@@ -374,7 +372,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.yac`}
+        name={`rushing.${rowIndex}.yac`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="YAC" />
         )}
@@ -387,7 +385,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.long`}
+        name={`rushing.${rowIndex}.long`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="LONG" />
         )}
@@ -400,7 +398,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.20+`}
+        name={`rushing.${rowIndex}.20+`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="20+" />
         )}
@@ -413,7 +411,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.gp`}
+        name={`rushing.${rowIndex}.gp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="GP" />
         )}
@@ -426,7 +424,7 @@ const rushingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.rushing.${rowIndex}.dp`}
+        name={`rushing.${rowIndex}.dp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DP" />
         )}
@@ -435,19 +433,19 @@ const rushingColumns = (
   },
 ]
 
-const receivingColumns = (
+const receivingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   watch: UseFormWatch<any>
 ): TableColumn[] => [
-  ...basicColumns(control, deleteRow, 'receiving', watch),
+  ...basicInputColumns(control, deleteRow, 'receiving', watch),
   {
     title: 'rec',
     key: 'rec',
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.rec`}
+        name={`receiving.${rowIndex}.rec`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="REC" />
         )}
@@ -460,7 +458,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.yards`}
+        name={`receiving.${rowIndex}.yards`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="YARDDS" />
         )}
@@ -473,7 +471,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.avg`}
+        name={`receiving.${rowIndex}.avg`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="AVG" />
         )}
@@ -486,7 +484,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.avgPerGame`}
+        name={`receiving.${rowIndex}.avgPerGame`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="AVG G" />
         )}
@@ -499,7 +497,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.td`}
+        name={`receiving.${rowIndex}.td`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TD" />
         )}
@@ -512,7 +510,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.rac`}
+        name={`receiving.${rowIndex}.rac`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="RAC" />
         )}
@@ -525,7 +523,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.racAvg`}
+        name={`receiving.${rowIndex}.racAvg`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="RAC AVG" />
         )}
@@ -538,7 +536,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.long`}
+        name={`receiving.${rowIndex}.long`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="LONG" />
         )}
@@ -551,7 +549,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.gp`}
+        name={`receiving.${rowIndex}.gp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="GP" />
         )}
@@ -564,7 +562,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.dp`}
+        name={`receiving.${rowIndex}.dp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DP" />
         )}
@@ -577,7 +575,7 @@ const receivingColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.receiving.${rowIndex}.drops`}
+        name={`receiving.${rowIndex}.drops`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DROPS" />
         )}
@@ -586,19 +584,19 @@ const receivingColumns = (
   },
 ]
 
-const defenseColumns = (
+const defenseInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   watch: UseFormWatch<any>
 ): TableColumn[] => [
-  ...basicColumns(control, deleteRow, 'defense', watch),
+  ...basicInputColumns(control, deleteRow, 'defense', watch),
   {
     title: 'solo',
     key: 'solo',
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.solo`}
+        name={`defense.${rowIndex}.solo`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="SOLO" />
         )}
@@ -611,7 +609,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.assists`}
+        name={`defense.${rowIndex}.assists`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="ASSISTS" />
         )}
@@ -624,7 +622,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.tak`}
+        name={`defense.${rowIndex}.tak`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TAK" />
         )}
@@ -637,7 +635,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.tfl`}
+        name={`defense.${rowIndex}.tfl`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TFL" />
         )}
@@ -650,7 +648,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.sack`}
+        name={`defense.${rowIndex}.sack`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="SACK" />
         )}
@@ -663,7 +661,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.int`}
+        name={`defense.${rowIndex}.int`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="INT" />
         )}
@@ -676,7 +674,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.intYds`}
+        name={`defense.${rowIndex}.intYds`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="INT YDS" />
         )}
@@ -689,7 +687,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.intAvg`}
+        name={`defense.${rowIndex}.intAvg`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="INT AVG" />
         )}
@@ -702,7 +700,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.intLng`}
+        name={`defense.${rowIndex}.intLng`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="INT LONG" />
         )}
@@ -715,7 +713,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.defl`}
+        name={`defense.${rowIndex}.defl`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DEFL" />
         )}
@@ -728,7 +726,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.ctha`}
+        name={`defense.${rowIndex}.ctha`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="CTHA" />
         )}
@@ -741,7 +739,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.ffumb`}
+        name={`defense.${rowIndex}.ffumb`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="FFUMB" />
         )}
@@ -754,7 +752,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.fumbRec`}
+        name={`defense.${rowIndex}.fumbRec`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="FUMBREC" />
         )}
@@ -767,7 +765,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.fumbYds`}
+        name={`defense.${rowIndex}.fumbYds`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="FUMBYDS" />
         )}
@@ -780,7 +778,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.block`}
+        name={`defense.${rowIndex}.block`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="BLOCK" />
         )}
@@ -793,7 +791,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.sfty`}
+        name={`defense.${rowIndex}.sfty`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="SFTY" />
         )}
@@ -806,7 +804,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.td`}
+        name={`defense.${rowIndex}.td`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="TD" />
         )}
@@ -819,7 +817,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.gp`}
+        name={`defense.${rowIndex}.gp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="GP" />
         )}
@@ -832,7 +830,7 @@ const defenseColumns = (
     render: (rowIndex: number) => (
       <Controller
         control={control}
-        name={`stats.defense.${rowIndex}.dp`}
+        name={`defense.${rowIndex}.dp`}
         render={({ field }) => (
           <Input {...field} className="w-[100px]" label="DP" />
         )}
@@ -841,4 +839,9 @@ const defenseColumns = (
   },
 ]
 
-export { passingColumns, rushingColumns, receivingColumns, defenseColumns }
+export {
+  passingInputColumns,
+  rushingInputColumns,
+  receivingInputColumns,
+  defenseInputColumns,
+}

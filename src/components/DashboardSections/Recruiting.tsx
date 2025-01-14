@@ -13,6 +13,7 @@ import getRecruitingData from '@/queries/recruiting/getRecruitingData'
 import { useLiveQuery } from 'dexie-react-hooks'
 import rs from '@/utils/summaryGenerators/recruitingSummary'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 type RecruitingSectionProps = {
   dynastyId: string
@@ -99,9 +100,11 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
                   }
                 >
                   <TableCell>
-                    {player.information.firstName +
-                      ' ' +
-                      player.information.lastName}
+                    <Link href={`/dynasty/${dynastyId}/player/${player.id}`}>
+                      {player.information.firstName +
+                        ' ' +
+                        player.information.lastName}
+                    </Link>
                   </TableCell>
                   <TableCell>{player.recruit.overall}</TableCell>
                   <TableCell>{player.recruit.position}</TableCell>
@@ -142,9 +145,11 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
                   }
                 >
                   <TableCell>
-                    {transfer.information.firstName +
-                      ' ' +
-                      transfer.information.lastName}
+                    <Link href={`/dynasty/${dynastyId}/player/${transfer.id}`}>
+                      {transfer.information.firstName +
+                        ' ' +
+                        transfer.information.lastName}
+                    </Link>
                   </TableCell>
                   <TableCell>{transfer.recruit.overall}</TableCell>
                   <TableCell>{transfer.information.position}</TableCell>

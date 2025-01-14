@@ -932,14 +932,19 @@ type DefenseStats = GeneralStats & {
   td: number
 }
 
+type PlayerHometown = {
+  city: string
+  state: string
+}
+
 type PlayerInformation = {
   position: string
   firstName: string;
   lastName: string;
   nickname?: string;
-  height?: string; // inches
+  height?: number; // inches
   weight?: number; // lbs
-  hometown?: string;
+  hometown?: PlayerHometown;
   tendency: string;
   hasRedshirt?: boolean;
   number?: number;

@@ -5,6 +5,8 @@ import { Divider } from '@nextui-org/react'
 import { useState } from 'react'
 import EditGeneralInformation from './EditGeneralInformation'
 import EditPlayerAbilities from './EditPlayerAbilities'
+import EditPersonalInformation from './EditPersonalInfromation'
+import convertInchesToFeet from '@/utils/convertInchesToFeet'
 
 type PlayerCardProps = {
   player: Player | null | undefined
@@ -56,6 +58,7 @@ const PlayerSection: React.FC<PlayerSectionProps> = ({
 const PlayerCard = ({ player }: PlayerCardProps) => {
   const [editGeneralInformation, setEditGeneralInformation] = useState(false)
   const [editAbilities, setEditAbilities] = useState(false)
+  const [editPersonalInformation, setEditPersonalInformation] = useState(false)
   const playerName = `${player?.information.firstName} ${player?.information.lastName}`
 
   if (!player) return null
@@ -105,11 +108,21 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
           </div>
         </PlayerSection>
         <Divider />
-        <PlayerSection title="Personal Information">
+        <PlayerSection
+          onEdit={() => setEditPersonalInformation(true)}
+          title="Personal Information"
+        >
           <ul>
-            <li>Hometown: {player.information.hometown}</li>
-            <li>Height: {player.information.height}</li>
-            <li>Weight: {player.information.weight}</li>
+            <li>
+              Hometown: {player.information.hometown?.city},{' '}
+              {player.information.hometown?.state}
+            </li>
+            <li>
+              Height:{' '}
+              {convertInchesToFeet(player.information.height || '').feet}'
+              {convertInchesToFeet(player.information.height || '').inches}
+            </li>
+            <li>Weight: {player.information.weight} lbs</li>
           </ul>
         </PlayerSection>
         <Divider />
@@ -144,6 +157,11 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
       <EditPlayerAbilities
         isOpen={editAbilities}
         handleClose={() => setEditAbilities(false)}
+        player={player}
+      />
+      <EditPersonalInformation
+        isOpen={editPersonalInformation}
+        handleClose={() => setEditPersonalInformation(false)}
         player={player}
       />
     </>

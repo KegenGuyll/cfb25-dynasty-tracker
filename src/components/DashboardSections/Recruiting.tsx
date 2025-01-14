@@ -11,6 +11,8 @@ import SectionWrapper from './SectionWrapper'
 import { useRouter } from 'next/navigation'
 import getRecruitingData from '@/queries/recruiting/getRecruitingData'
 import { useLiveQuery } from 'dexie-react-hooks'
+import rs from '@/utils/summaryGenerators/recruitingSummary'
+import { useEffect, useState } from 'react'
 
 type RecruitingSectionProps = {
   dynastyId: string
@@ -27,13 +29,24 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
   const recruitingData = useLiveQuery(() =>
     getRecruitingData(dynastyId, teamId, year)
   )
+  const [recruitingSummary, setRecruitingSummary] = useState<{
+    headline: string
+    summary: string
+  } | null>({ headline: '', summary: '' })
 
-  console.log(recruitingData)
+  const handleRecruitingSummary = async () => {
+    const summary = await rs(dynastyId, teamId, year)
+    setRecruitingSummary(summary)
+  }
+
+  useEffect(() => {
+    handleRecruitingSummary()
+  }, [])
 
   return (
     <SectionWrapper
       title="Recruiting"
-      summary="The Razorbacks have signed 17 recruits for the 2034 season. The class is headlined by 5-star QB John Doe and 4-star WR Jane Doe."
+      summary={recruitingSummary?.summary || ''}
       handleEdit={() =>
         router.push(
           `/dynasty/${dynastyId}/dashboard/${teamId}/${year}/recruiting`

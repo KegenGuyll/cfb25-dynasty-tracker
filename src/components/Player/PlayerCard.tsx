@@ -25,23 +25,29 @@ const PlayerSection: React.FC<PlayerSectionProps> = ({
 
   return (
     <section className="flex flex-col gap-4">
-      <button
-        onClick={onEdit}
-        className="w-full"
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
+      {onEdit ? (
+        <button
+          onClick={onEdit}
+          className="w-full"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <h2 className="text-center w-full items-center justify-center font-semibold border rounded flex gap-2 pl-4">
+            {title}
+            {hover ? (
+              <span>
+                <FontAwesomeIcon icon={faPen} />
+              </span>
+            ) : (
+              <span className="h-4 w-4" />
+            )}
+          </h2>
+        </button>
+      ) : (
         <h2 className="text-center w-full items-center justify-center font-semibold border rounded flex gap-2 pl-4">
           {title}
-          {hover ? (
-            <span>
-              <FontAwesomeIcon icon={faPen} />
-            </span>
-          ) : (
-            <span className="h-4 w-4" />
-          )}
         </h2>
-      </button>
+      )}
       {children}
     </section>
   )

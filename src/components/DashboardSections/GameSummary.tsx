@@ -78,7 +78,9 @@ const GameSummary: React.FC<TeamScheduleProps> = ({
                   </span>{' '}
                   {game[opponent]?.school} {game[opponent]?.nickname}
                 </h3>
-                <span>{determineGameResultWithScore(game)}</span>
+                <span className="bg-content1 p-2 rounded">
+                  {determineGameResultWithScore(game)}
+                </span>
               </div>
               <div>
                 <h4>POTG</h4>

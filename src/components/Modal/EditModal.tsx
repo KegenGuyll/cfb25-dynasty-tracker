@@ -15,6 +15,18 @@ type EditModalProps = {
   children: React.ReactNode
   title: string
   formId: string
+  size?:
+    | 'xs'
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | 'full'
+    | undefined
 }
 
 const EditModal: React.FC<EditModalProps> = ({
@@ -23,6 +35,7 @@ const EditModal: React.FC<EditModalProps> = ({
   title,
   handleClose,
   formId,
+  size,
 }: EditModalProps) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
@@ -42,6 +55,7 @@ const EditModal: React.FC<EditModalProps> = ({
         handleClose()
         onClose()
       }}
+      size={size}
     >
       <ModalContent>
         {() => (

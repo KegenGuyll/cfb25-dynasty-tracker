@@ -871,6 +871,7 @@ type GeneralStats = {
   teamId: number;
   gp: number;
   dp: number;
+  teamData?: Team
 }
 
 type PassingStats = GeneralStats & {
@@ -980,18 +981,20 @@ type PlayerAwards = {
   awardName: string
 }
 
+type PlayerStats = {
+  passing?: PassingStats[]
+  rushing?: RushingStats[]
+  receiving?: ReceivingStats[]
+  defense?: DefenseStats[]
+}
+
 interface Player {
   id?: number;
   teamId: number;
   information: PlayerInformation;
   development: PlayerDevelopment;
   awards: PlayerAwards[];
-  stats: {
-    passing?: PassingStats[];
-    rushing?: RushingStats[];
-    receiving?: ReceivingStats[];
-    defense?: DefenseStats[];
-  }
+  stats: PlayerStats;
   recruit: Recruit;
   historicalOverall: historicalOverall[]
   dynastyId: number;

@@ -11,25 +11,58 @@ import {
   NavbarMenuItem,
 } from '@nextui-org/react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname, useSearchParams } from 'next/navigation'
 
 type MenuItems = {
   friendlyName: string
   href: string
 }
 
-const menuItems: MenuItems[] = [
-  { friendlyName: 'Dashboard', href: '/dynasty' },
-  // { friendlyName: 'Team Schedule', href: '/team-schedule' },
-  // { friendlyName: 'Awards', href: '/awards' },
-  // { friendlyName: 'Recruiting', href: '/recruiting' },
-  // { friendlyName: 'Players', href: '/players' },
-  // { friendlyName: 'Draft Results', href: '/draft-results' },
-]
+const menuItems = (
+  dynastyId?: string,
+  teamId?: string,
+  year?: string
+): MenuItems[] => {
+  const items: MenuItems[] = [
+    { friendlyName: 'Dynasty Dashboard', href: '/dynasty' },
+  ]
+
+  if (dynastyId && teamId) {
+    items.push({
+      friendlyName: 'All Seasons',
+      href: `/dynasty/${dynastyId}/dashboard/${teamId}`,
+    })
+  }
+
+  // if (dynastyId && teamId) {
+  //   items.push({
+  //     friendlyName: 'Team Dashboard',
+  //     href: `/dynasty/${dynastyId}/team/${teamId}`,
+  //   })
+  // }
+
+  if (dynastyId && teamId && year) {
+    items.push({
+      friendlyName: `${year} Season`,
+      href: `/dynasty/${dynastyId}/dashboard/${teamId}/${year}`,
+    })
+  }
+
+  // if (dynastyId && teamId && year) {
+  //   items.push({
+  //     friendlyName: 'Recruiting',
+  //     href: `/dynasty/${dynastyId}/team/${teamId}/year/${year}/recruiting`,
+  //   })
+  // }
+
+  return items
+}
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const pathname = usePathname()
+
+  const { dynastyId, teamId, year } = useParams()
 
   const isPathActive = useCallback(
     (href: string) => pathname.includes(href),
@@ -48,32 +81,36 @@ export default function Navigation() {
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {menuItems.map((item, index) => (
-          <NavbarItem key={index} isActive={isPathActive(item.href)}>
-            <Link color="foreground" href={item.href}>
-              {item.friendlyName}
-            </Link>
-          </NavbarItem>
-        ))}
+        {menuItems(String(dynastyId), String(teamId), String(year)).map(
+          (item, index) => (
+            <NavbarItem key={index} isActive={isPathActive(item.href)}>
+              <Link color="foreground" href={item.href}>
+                {item.friendlyName}
+              </Link>
+            </NavbarItem>
+          )
+        )}
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? 'primary'
-                  : index === menuItems.length - 1
-                  ? 'danger'
-                  : 'foreground'
-              }
-              className="w-full"
-              href={item.href}
-            >
-              {item.friendlyName}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        {menuItems(String(dynastyId), String(teamId), String(year)).map(
+          (item, index) => (
+            <NavbarMenuItem key={`${item}-${index}`}>
+              <Link
+                color={
+                  index === 2
+                    ? 'primary'
+                    : index === menuItems.length - 1
+                    ? 'danger'
+                    : 'foreground'
+                }
+                className="w-full"
+                href={item.href}
+              >
+                {item.friendlyName}
+              </Link>
+            </NavbarMenuItem>
+          )
+        )}
       </NavbarMenu>
     </Navbar>
   )

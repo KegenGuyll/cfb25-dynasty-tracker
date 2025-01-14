@@ -942,6 +942,7 @@ type PlayerInformation = {
   hometown?: string;
   tendency: string;
   hasRedshirt?: boolean;
+  number?: number;
 }
 
 type PlayerDevelopment = {
@@ -968,12 +969,18 @@ type Recruit = {
   }[]
 }
 
+type PlayerAwards = {
+  year: number
+  awardId: number
+  awardName: string
+}
+
 interface Player {
   id?: number;
   teamId: number;
   information: PlayerInformation;
   development: PlayerDevelopment;
-  awards: number[];
+  awards: PlayerAwards[];
   stats: {
     passing?: PassingStats[];
     rushing?: RushingStats[];
@@ -983,6 +990,7 @@ interface Player {
   recruit: Recruit;
   historicalOverall: historicalOverall[]
   dynastyId: number;
+  currentTeamData?: Team;
 }
 
 

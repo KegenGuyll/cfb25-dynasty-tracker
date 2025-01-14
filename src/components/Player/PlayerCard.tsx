@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider } from '@nextui-org/react'
 import { useState } from 'react'
 import EditGeneralInformation from './EditPlayerNumber'
+import EditPlayerAbilities from './EditPlayerAbilities'
 
 type PlayerCardProps = {
   player: Player | null | undefined
@@ -48,6 +49,7 @@ const PlayerSection: React.FC<PlayerSectionProps> = ({
 
 const PlayerCard = ({ player }: PlayerCardProps) => {
   const [editGeneralInformation, setEditGeneralInformation] = useState(false)
+  const [editAbilities, setEditAbilities] = useState(false)
   const playerName = `${player?.information.firstName} ${player?.information.lastName}`
 
   if (!player) return null
@@ -67,7 +69,7 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
             <li>Dev Trait: {player.development.devTrait}</li>
           </ul>
         </PlayerSection>
-        <PlayerSection title="Abilities">
+        <PlayerSection onEdit={() => setEditAbilities(true)} title="Abilities">
           <div>
             <h3>Tendency: {player.information.tendency}</h3>
             <h3>Mental -</h3>
@@ -77,6 +79,9 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
                   {trait.trait} ({trait.tier})
                 </li>
               ))}
+              {player.development.mentalTraits?.length === 0 && (
+                <li>No mental traits</li>
+              )}
             </ul>
           </div>
           <div>
@@ -87,6 +92,9 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
                   {trait.trait} ({trait.tier})
                 </li>
               ))}
+              {player.development.physicalTraits?.length === 0 && (
+                <li>No physical traits</li>
+              )}
             </ul>
           </div>
         </PlayerSection>
@@ -125,6 +133,11 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
       <EditGeneralInformation
         isOpen={editGeneralInformation}
         handleClose={() => setEditGeneralInformation(false)}
+        player={player}
+      />
+      <EditPlayerAbilities
+        isOpen={editAbilities}
+        handleClose={() => setEditAbilities(false)}
         player={player}
       />
     </>

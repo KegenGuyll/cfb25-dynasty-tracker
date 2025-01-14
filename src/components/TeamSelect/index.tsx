@@ -24,7 +24,9 @@ const TeamSelect: React.FC<Props> = ({
         options={teamOptions || []}
         label="Team"
         placeholder="Select Team"
-        value={teamOptions?.find((option) => option.value === value)}
+        value={teamOptions?.find(
+          (option) => String(option.value) === String(value)
+        )}
         onChange={onChange}
         isInvalid={errors?.teamId?.message ? true : false}
         isRequired

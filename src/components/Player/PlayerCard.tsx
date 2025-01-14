@@ -3,7 +3,7 @@ import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider } from '@nextui-org/react'
 import { useState } from 'react'
-import EditGeneralInformation from './EditPlayerNumber'
+import EditGeneralInformation from './EditGeneralInformation'
 import EditPlayerAbilities from './EditPlayerAbilities'
 
 type PlayerCardProps = {

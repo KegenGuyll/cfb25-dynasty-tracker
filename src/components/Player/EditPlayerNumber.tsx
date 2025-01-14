@@ -32,7 +32,9 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
   const { control, handleSubmit } = useForm<GeneralInformationFormData>({
     resolver: yupResolver(generalInformationSchema),
     defaultValues: {
-      number: String(player.information.number) || null,
+      number: player.information.number
+        ? String(player.information.number)
+        : null,
       position: player.information.position,
       devTrait: player.development.devTrait,
     },
@@ -64,7 +66,7 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
           control={control}
           render={({ field: { value, onChange } }) => (
             <Input
-              value={String(value)}
+              value={value || undefined}
               onChange={onChange}
               label="Number"
               placeholder="Number"

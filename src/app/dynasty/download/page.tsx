@@ -17,7 +17,16 @@ const DownloadDynastyPage: React.FC<
   DownloadDynastyPageProps
 > = ({}: DownloadDynastyPageProps) => {
   const handleExport = useCallback(async () => {
-    const blob = await exportDB(db)
+    const blob = await exportDB(db, {
+      filter(table) {
+        if (table === 'availableAwards' || table === 'teams') {
+          return false
+        }
+        return true
+      },
+    })
+
+    console.log(blob)
 
     const a = document.createElement('a')
     a.download = 'CFB25DynastyTrackerDB.json'

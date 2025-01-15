@@ -269,7 +269,10 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           nickname: undefined,
           height: undefined, // inches
           weight: undefined, // lbs
-          hometown: '',
+          hometown: {
+            city: '',
+            state: '',
+          },
           tendency: '',
           hasRedshirt: false,
         },
@@ -296,6 +299,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
             overall: Number(recruit.overall),
           },
         ],
+        mediaAttachments: [],
       }))
 
       const newTransfers: Player[] = filterNewTransfers.map((transfer) => ({
@@ -308,7 +312,10 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           nickname: undefined,
           height: undefined, // inches
           weight: undefined, // lbs
-          hometown: '',
+          hometown: {
+            city: '',
+            state: '',
+          },
           tendency: '',
           hasRedshirt: false,
         },
@@ -343,6 +350,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
             overall: Number(transfer.overall),
           },
         ],
+        mediaAttachments: [],
       }))
 
       const newPlayerIds = (await db.players.bulkAdd(newRecruits, undefined, {
@@ -388,7 +396,10 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           nickname: undefined,
           height: undefined, // inches
           weight: undefined, // lbs
-          hometown: '',
+          hometown: {
+            city: '',
+            state: '',
+          },
           tendency: '',
           hasRedshirt: false,
         },
@@ -415,6 +426,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
             overall: Number(recruit.overall),
           },
         ],
+        mediaAttachments: [],
       }))
 
       const newTransfers: Player[] = data.transfers.map((transfer) => ({
@@ -427,7 +439,10 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           nickname: undefined,
           height: undefined, // inches
           weight: undefined, // lbs
-          hometown: '',
+          hometown: {
+            city: '',
+            state: '',
+          },
           tendency: '',
           hasRedshirt: false,
         },
@@ -462,6 +477,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
             overall: Number(transfer.overall),
           },
         ],
+        mediaAttachments: [],
       }))
 
       const newPlayerIds = (await db.players.bulkAdd(newRecruits, undefined, {

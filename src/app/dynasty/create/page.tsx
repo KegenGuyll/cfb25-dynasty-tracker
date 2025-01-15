@@ -2,14 +2,14 @@
 
 import { db } from '@/db/db.model'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, Textarea } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 export const dynastySchema = yup.object({
   name: yup.string().required('Name is required'),
-  description: yup.string().required('Description is required'),
+  description: yup.string().optional(),
 })
 
 type DynastyFormData = yup.InferType<typeof dynastySchema>
@@ -28,7 +28,7 @@ const CreateDynastyPage: React.FC = () => {
   const handleCreateDynasty = async (data: DynastyFormData) => {
     await db.dynasties.add({
       name: data.name,
-      description: data.description,
+      description: data.description || '',
       availableTeams: [],
     })
 
@@ -36,9 +36,15 @@ const CreateDynastyPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-12 w-full max-w-[600px] h-[400px] bg-content1 p-4 rounded">
+      <div className="space-y-2 pt-6">
+        <h1 className="text-4xl font-semibold">Create Dynasty</h1>
+        <p className="font-light text-small">
+          Create a new dynasty to start tracking your progress.
+        </p>
+      </div>
       <form
-        className="flex flex-col gap-4 bg-content1 p-4 rounded"
+        className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleCreateDynasty)}
       >
         <Controller
@@ -49,9 +55,13 @@ const CreateDynastyPage: React.FC = () => {
         <Controller
           control={control}
           name="description"
-          render={({ field }) => <Input {...field} placeholder="Description" />}
+          render={({ field }) => (
+            <Textarea rows={6} {...field} placeholder="Description" />
+          )}
         />
-        <Button type="submit">Create Dynasty</Button>
+        <Button color="primary" type="submit">
+          Get Started
+        </Button>
       </form>
     </div>
   )

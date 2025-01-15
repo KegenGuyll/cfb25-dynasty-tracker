@@ -15,5 +15,6 @@ interface Dynasty {
 }
 
 export type {
-  Dynasty
+  Dynasty,
+  AvailableTeams,
 }

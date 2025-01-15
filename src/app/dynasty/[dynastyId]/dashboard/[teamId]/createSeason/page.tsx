@@ -59,6 +59,15 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
       return
     }
 
+    await db.dynasties.update(parseInt(dynastyId), (dynasty) => {
+      if (!dynasty) return
+
+      dynasty.availableTeams.push({
+        teamId: parseInt(teamId),
+        year: data.year,
+      })
+    })
+
     await db.teamInfo.add({
       dynastyId: parseInt(dynastyId),
       teamId: parseInt(teamId),
@@ -74,7 +83,7 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
       conferenceLosses: data.conferenceLosses || 0,
     })
 
-    router.push(`/dynasty/${dynastyId}/dashboard/${teamId}/${data.year}`)
+    router.push(`/dynasty/${dynastyId}/dashboard/${teamId}`)
   }
 
   if (!team) return null

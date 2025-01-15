@@ -112,6 +112,8 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
     getAllTeamSeason(Number(dynastyId), Number(teamId))
   )
 
+  console.log(teamSeasons)
+
   const recruitingClasses = useMemo(() => {
     if (!teamSeasons) return []
 

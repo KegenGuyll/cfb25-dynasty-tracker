@@ -54,7 +54,7 @@ const GenericDataTable = <T extends unknown>({
     <Table aria-label="Example static collection table">
       <TableHeader>
         {columns.map((column) => (
-          <TableColumn>{column.title}</TableColumn>
+          <TableColumn key={column.key}>{column.title}</TableColumn>
         ))}
       </TableHeader>
       <TableBody>

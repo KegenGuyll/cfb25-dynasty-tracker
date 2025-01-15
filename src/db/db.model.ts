@@ -35,7 +35,6 @@ db.version(1).stores({
 });
 
 db.on('populate', async (tx: Transaction) => {
-  console.log('Populating database with initial data')
   await tx.table('teams').bulkAdd(initialTeams)
   await tx.table('availableAwards').bulkAdd(initialAwards)
 })

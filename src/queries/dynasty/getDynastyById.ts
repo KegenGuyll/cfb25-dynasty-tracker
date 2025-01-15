@@ -1,13 +1,9 @@
 import { db } from '@/db/db.model'
 
 const getDynastyById = async (id: number) => {
-  const dynasties = await db.dynasties.where({ id }).toArray()
+  const dynasty = await db.dynasties.where({ id }).first()
 
-  if (!dynasties) return null
-
-  console.log(dynasties, id)
-
-  const dynasty = dynasties[0]
+  if (!dynasty) return null
 
   await Promise.all(
     dynasty.availableTeams.map(async (team) => {

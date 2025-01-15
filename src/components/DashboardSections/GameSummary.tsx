@@ -40,8 +40,6 @@ const GameSummary: React.FC<TeamScheduleProps> = ({
     [teamSchedule]
   )
 
-  console.log(currentTeam)
-
   if (!currentTeam) return null
 
   return (

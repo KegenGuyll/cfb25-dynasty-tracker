@@ -51,7 +51,6 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
     // if a player is in the halfPlayer array, but no in the top half of the array and has an elite dev trait
     const hiddenGems = halfPlayers.filter(player => {
       const halfSize = Math.floor(halfPlayers.length / 2);
-      console.log(halfSize);
 
       return player.recruit.devTrait === "Elite" && topPlayers.indexOf(player) > halfSize;
     });

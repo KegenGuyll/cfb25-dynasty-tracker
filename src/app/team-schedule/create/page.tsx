@@ -46,12 +46,6 @@ export const teamScheduleSchema = yup.object({
 
               // finalScore score1 must be greater than score2
               if (finalScore.score1 < finalScore.score2) {
-                console.log(
-                  'score1 > score2',
-                  finalScore.score1,
-                  finalScore.score2,
-                  finalScore.score1 > finalScore.score2
-                )
                 return ctx.createError({
                   message: 'Winning Score must be greater than Losing Score',
                 })

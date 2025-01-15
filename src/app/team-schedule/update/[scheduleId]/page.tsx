@@ -67,8 +67,6 @@ const UpdateTeamSchedule = ({ params }: { params: { scheduleId: string } }) => {
 
   const handleUpdateTeamSchedule = useCallback(
     async (data: TeamScheduleFormData) => {
-      console.log('data', data)
-
       const teamSchedule: TeamSchedule = {
         teamId: Number(data.teamId),
         year: Number(data.year),
@@ -101,8 +99,6 @@ const UpdateTeamSchedule = ({ params }: { params: { scheduleId: string } }) => {
           result: game.result || null,
         })),
       }
-
-      console.log(teamSchedule)
 
       // await db.teamSchedule.update(+params.scheduleId, teamSchedule)
       router.push('/team-schedule')

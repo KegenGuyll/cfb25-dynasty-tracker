@@ -207,8 +207,6 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
   isOpen,
   handleClose,
 }: EditStatisticsProps) => {
-  console.log(player.stats)
-
   const { control, handleSubmit, watch } = useForm<StatisticsFormData>({
     resolver: yupResolver(statisticsSchema),
     defaultValues: {
@@ -253,7 +251,6 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
   })
 
   const onSubmit = async (data: StatisticsFormData) => {
-    console.log(data)
     await db.players.update(player.id, {
       'stats.passing': data.passing,
       'stats.rushing': data.rushing,

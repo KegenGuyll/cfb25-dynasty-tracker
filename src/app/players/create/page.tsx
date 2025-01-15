@@ -340,8 +340,6 @@ const CreatePlayerPage: NextPage = () => {
   const teamOptions = useLiveQuery(() => getTeamSelectOptions())
 
   const onSubmit = async (data: CreatePlayerFormData) => {
-    console.log(data)
-
     // await db.players.add({
     //   information: {
     //     ...data.playerInformation,
@@ -358,7 +356,6 @@ const CreatePlayerPage: NextPage = () => {
     //   historicalOverall: data.historicalOverall,
     //   teamId: +data.teamId,
     // })
-
     // router.push(playerDashboardUrl)
   }
 

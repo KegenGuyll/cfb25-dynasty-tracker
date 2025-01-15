@@ -38,8 +38,6 @@ const CreateAwardPage = () => {
     resolver: yupResolver(awardSchema),
   })
 
-  console.log(errors)
-
   const handleSaveAward = async (data: AwardFormData) => {
     await db.awards.add({
       awardId: +data.awardId,
@@ -47,6 +45,7 @@ const CreateAwardPage = () => {
       playerLastName: data.playerLastName,
       teamId: +data.teamId,
       year: +data.year,
+      dynastyId: 0,
     })
 
     router.push(awardsDashboardUrl)

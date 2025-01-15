@@ -9,6 +9,7 @@ import getAllTeamSeason from '@/queries/dynasty/getAllTeamSeason'
 import { Button, Divider, Spinner } from '@nextui-org/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 
 type TeamPageProps = {
@@ -104,6 +105,8 @@ const teamInfoColumns = (
 ]
 
 const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
+  const router = useRouter()
+
   const { dynastyId, teamId } = params
   const teamSeasons = useLiveQuery(() =>
     getAllTeamSeason(Number(dynastyId), Number(teamId))
@@ -140,7 +143,15 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   return (
     <div className=" flex flex-col gap-12 w-full">
       <div className="w-full flex flex-row-reverse space-y-2">
-        <Button className="w-1/5" color="primary">
+        <Button
+          onPress={() =>
+            router.push(
+              `/dynasty/${dynastyId}/dashboard/${teamId}/createSeason`
+            )
+          }
+          className="w-1/5"
+          color="primary"
+        >
           Add New Season
         </Button>
       </div>

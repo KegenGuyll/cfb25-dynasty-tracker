@@ -66,9 +66,9 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
   return (
     <>
       <div className="flex flex-col gap-4 w-full border rounded p-6">
-        <caption className="text-center text-lg w-full font-semibold">
+        <h1 className="text-center text-lg w-full font-semibold">
           {playerName}
-        </caption>
+        </h1>
         <PlayerSection
           onEdit={() => setEditGeneralInformation(true)}
           title={`No. ${player.information.number}`}
@@ -119,7 +119,7 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
             </li>
             <li>
               Height:{' '}
-              {convertInchesToFeet(player.information.height || '').feet}'
+              {convertInchesToFeet(player.information.height || '').feet}&apos;
               {convertInchesToFeet(player.information.height || '').inches}
             </li>
             <li>Weight: {player.information.weight} lbs</li>

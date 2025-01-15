@@ -1,5 +1,6 @@
 'use client'
 
+import EditPlayerMedia from '@/components/Player/EditPlayerMedia'
 import EditStatistics from '@/components/Player/EditStatistics'
 import PlayerCard from '@/components/Player/PlayerCard'
 import {
@@ -19,11 +20,13 @@ import {
   ReceivingStats,
   RushingStats,
 } from '@/db/types/player'
+import getMediaById from '@/queries/media/getMediaById'
 import getPlayerById from '@/queries/players/getPlayerById'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Divider } from '@nextui-org/react'
 import { useLiveQuery } from 'dexie-react-hooks'
+import Image from 'next/image'
 import { useState } from 'react'
 
 type PlayerPageProps = {
@@ -83,8 +86,13 @@ const PlayerPageSection: React.FC<PlayerPageSectionProps> = ({
 const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
   const { dynastyId, playerId } = params
   const [editStatistics, setEditStatistics] = useState(false)
+  const [editMedia, setEditMedia] = useState(false)
 
   const player = useLiveQuery(() => getPlayerById(dynastyId, playerId))
+  const playerMedia = useLiveQuery(
+    () => getMediaById(player?.mediaAttachments || []),
+    [player]
+  )
 
   if (!player) return null
 
@@ -137,6 +145,29 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                 </div>
               )}
             </PlayerPageSection>
+            <PlayerPageSection onEdit={() => setEditMedia(true)} title="Media">
+              <div className="flex flex-wrap gap-4">
+                {playerMedia?.map((media) => {
+                  if (media.dataType.includes('image')) {
+                    return (
+                      <Image
+                        width={200}
+                        height={200}
+                        key={media.id}
+                        src={media.dataUrl}
+                        alt="Alt Image"
+                      />
+                    )
+                  }
+
+                  if (media.dataType.includes('video')) {
+                    return <video key={media.id} src={media.dataUrl} controls />
+                  }
+
+                  return null
+                })}
+              </div>
+            </PlayerPageSection>
             <PlayerPageSection title="Historical Overall">
               <GenericDataTable<historicalOverall>
                 columns={HistoricalOvrColumns}
@@ -154,6 +185,11 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
         player={player}
         isOpen={editStatistics}
         handleClose={() => setEditStatistics(false)}
+      />
+      <EditPlayerMedia
+        player={player}
+        isOpen={editMedia}
+        handleClose={() => setEditMedia(false)}
       />
     </>
   )

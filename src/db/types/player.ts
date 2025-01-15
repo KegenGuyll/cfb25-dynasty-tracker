@@ -999,6 +999,7 @@ interface Player {
   historicalOverall: historicalOverall[]
   dynastyId: number;
   currentTeamData?: Team;
+  mediaAttachments: number[]
 }
 
 

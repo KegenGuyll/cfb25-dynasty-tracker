@@ -21,7 +21,7 @@ const DynastyDashboardPage: React.FC = () => {
 
         await importDB(blob)
       }
-    } catch (err) {
+    } catch (err: any) {
       window.alert(`Error importing file: ${err.message}`)
     }
   }

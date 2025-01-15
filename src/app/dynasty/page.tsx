@@ -1,13 +1,30 @@
 'use client'
 
+import FileUploadButton from '@/components/FileUploadButton'
 import useGetAllDynasties from '@/queries/dynasty/getAllDynasties'
 import { Button, Spinner } from '@nextui-org/react'
+import { importDB } from 'dexie-export-import'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { ChangeEvent } from 'react'
 
 const DynastyDashboardPage: React.FC = () => {
   const data = useGetAllDynasties()
   const router = useRouter()
+
+  const handleImport = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (e.target.files) {
+        const file = e.target.files[0]
+
+        const blob = new Blob([file], { type: 'application/JSON' })
+
+        await importDB(blob)
+      }
+    } catch (err) {
+      window.alert(`Error importing file: ${err.message}`)
+    }
+  }
 
   return (
     <div className="flex flex-col space-y-12">
@@ -27,6 +44,13 @@ const DynastyDashboardPage: React.FC = () => {
         >
           New Dynasty
         </Button>
+        <FileUploadButton
+          className="w-full"
+          fileAccept="application/JSON"
+          onUpload={handleImport}
+        >
+          Import Existing Dynasty
+        </FileUploadButton>
       </div>
       {!data && <Spinner />}
       <div className="grid grid-cols-12 gap-4">

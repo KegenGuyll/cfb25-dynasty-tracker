@@ -25,6 +25,7 @@ const menuItems = (
 ): MenuItems[] => {
   const items: MenuItems[] = [
     { friendlyName: 'Dynasty Dashboard', href: '/dynasty' },
+    { friendlyName: 'Download', href: '/dynasty/download' },
   ]
 
   if (dynastyId && teamId) {

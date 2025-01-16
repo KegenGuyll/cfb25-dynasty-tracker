@@ -64,7 +64,7 @@ type GameLocation = 'home' | 'away' | 'neutral' | 'bye';
 
 type GameBroadcast = 'national' | 'local' | 'streaming'
 
-type BoxScore = {
+type ScoreSummary = {
   "1": {
     home: number;
     away: number;
@@ -81,6 +81,10 @@ type BoxScore = {
     home: number;
     away: number;
   },
+  "final": {
+    home: number;
+    away: number;
+  }
 }
 
 type GameStats = {
@@ -185,14 +189,14 @@ type Game = {
   awayTeam?: Team;
   homeTeam?: Team;
   finalScore: {
-    home: number | undefined;
-    away: number | undefined;
+    home: number;
+    away: number;
   } | null;
   rivalryGame: boolean;
   stadium: string | null;
   location: GameLocation;
   broadcast: GameBroadcast;
-  boxScore: BoxScore | null;
+  scoreSummary: ScoreSummary | null;
   stats: GameStats | null;
   result: string | null;
 }
@@ -293,7 +297,7 @@ export type {
   Game,
   GameLocation,
   GameBroadcast,
-  BoxScore,
+  ScoreSummary,
   GameStats,
   TeamStats,
   Offense,

@@ -7,6 +7,7 @@ import { Player } from './types/player';
 import { Dynasty } from './types/dynasty';
 import { TeamInfo } from './types/teamInfo';
 import { Media } from './types/media';
+import { AllAmerican } from './types/allAmerican';
 
 
 const db = new Dexie('cfbDynastyTracker') as Dexie & {
@@ -21,6 +22,7 @@ const db = new Dexie('cfbDynastyTracker') as Dexie & {
   dynasties: EntityTable<Dynasty, 'id'>;
   teamInfo: EntityTable<TeamInfo, 'id'>;
   media: EntityTable<Media, 'id'>;
+  allAmerican: EntityTable<AllAmerican, 'id'>;
 }
 
 db.version(1).stores({
@@ -34,7 +36,8 @@ db.version(1).stores({
   players: '++id,teamId,dynastyId',
   dynasties: '++id',
   teamInfo: '++id,teamId,dynastyId,year',
-  media: '++id'
+  media: '++id',
+  allAmerican: '++id,teamId,year,dynastyId,playerId'
 });
 
 db.on('populate', async (tx: Transaction) => {

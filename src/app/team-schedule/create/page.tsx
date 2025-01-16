@@ -65,6 +65,7 @@ const CreateTeamSchedulePage = () => {
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<TeamScheduleFormData>({
     resolver: yupResolver<any>(teamScheduleSchema),
@@ -73,12 +74,22 @@ const CreateTeamSchedulePage = () => {
   const searchParams = useSearchParams()
 
   const dynastyId = searchParams.get('dynastyId')
+  const teamInfoId = searchParams.get('teamInfoId')
+  const year = searchParams.get('year')
+  const teamId = searchParams.get('teamId')
 
   useEffect(() => {
-    if (!dynastyId) {
+    if (teamId && year) {
+      setValue('teamId', teamId)
+      setValue('year', year)
+    }
+  }, [setValue, teamId, year])
+
+  useEffect(() => {
+    if (!dynastyId || !teamInfoId) {
       router.push('/dynasty')
     }
-  }, [dynastyId, router])
+  }, [dynastyId, router, teamInfoId])
 
   const [numberOfWeeks, setNumberOfWeeks] = useState(21)
 
@@ -121,10 +132,7 @@ const CreateTeamSchedulePage = () => {
       }
 
       await db.teamSchedule.add(teamSchedule)
-      await db.teamInfo.add({
-        dynastyId: Number(dynastyId),
-        teamId: Number(data.teamId),
-        year: Number(data.year),
+      await db.teamInfo.update(Number(teamInfoId), {
         conference: '',
         teamOffense: 0,
         teamDefense: 0,
@@ -137,21 +145,9 @@ const CreateTeamSchedulePage = () => {
         conferenceWins: 0,
         conferenceLosses: 0,
       })
-      await db.dynasties.update(Number(dynastyId), (dynasty) => {
-        if (dynasty.availableTeams) {
-          dynasty.availableTeams.push({
-            teamId: Number(data.teamId),
-            year: Number(data.year),
-          })
-        } else {
-          dynasty.availableTeams = [
-            { teamId: Number(data.teamId), year: Number(data.year) },
-          ]
-        }
-      })
       router.push(`/dynasty/${dynastyId}/dashboard/${data.teamId}`)
     },
-    [dynastyId, router]
+    [dynastyId, router, teamInfoId]
   )
 
   return (

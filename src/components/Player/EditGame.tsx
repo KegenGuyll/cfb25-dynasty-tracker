@@ -192,7 +192,7 @@ const EditGame: React.FC<EditGameProps> = ({
                   <label>
                     <span>Away Team</span>
                     <TeamSelect
-                      teamOptions={teamOptions}
+                      teamOptions={teamOptions || []}
                       value={String(value)}
                       onChange={onChange}
                     />
@@ -208,7 +208,7 @@ const EditGame: React.FC<EditGameProps> = ({
                   <label>
                     <span>Home Team</span>
                     <TeamSelect
-                      teamOptions={teamOptions}
+                      teamOptions={teamOptions || []}
                       value={String(value)}
                       onChange={onChange}
                     />

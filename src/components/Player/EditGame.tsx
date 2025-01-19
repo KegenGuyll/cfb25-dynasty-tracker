@@ -1,9 +1,9 @@
 import { Game, GameLocation } from '@/db/types'
 import EditModal from '../Modal/EditModal'
-import { Controller, useForm } from 'react-hook-form'
+import { Controller, set, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input, Select, SelectItem } from '@nextui-org/react'
+import { Checkbox, Input, Select, SelectItem } from '@nextui-org/react'
 import { db } from '@/db/db.model'
 import TeamSelect from '../TeamSelect'
 import { useLiveQuery } from 'dexie-react-hooks'
@@ -21,6 +21,7 @@ export const gameSchema = yup.object({
   awayTeamId: yup.number().required('Away Team is required'),
   homeTeamId: yup.number().required('Home Team is required'),
   result: yup.string().required('Result is required'),
+  overtime: yup.boolean().optional(),
   gameLocation: yup.string().required(),
   customGameName: yup.string().optional(),
   scoreSummary: yup
@@ -38,6 +39,10 @@ export const gameSchema = yup.object({
         away: yup.number().required('Away Score is required').nullable(),
       }),
       '4': yup.object({
+        home: yup.number().required('Home Score is required').nullable(),
+        away: yup.number().required('Away Score is required').nullable(),
+      }),
+      ot: yup.object({
         home: yup.number().required('Home Score is required').nullable(),
         away: yup.number().required('Away Score is required').nullable(),
       }),
@@ -71,6 +76,8 @@ const EditGame: React.FC<EditGameProps> = ({
     resolver: yupResolver(gameSchema),
   })
 
+  const OtWatch = watch('overtime')
+
   useEffect(() => {
     if (!game) return
 
@@ -96,6 +103,10 @@ const EditGame: React.FC<EditGameProps> = ({
         home: game.scoreSummary ? game.scoreSummary['4'].home : null,
         away: game.scoreSummary ? game.scoreSummary['4'].away : null,
       },
+      ot: {
+        home: game.scoreSummary ? game.scoreSummary.ot?.home ?? null : null,
+        away: game.scoreSummary ? game.scoreSummary.ot?.away ?? null : null,
+      },
       final: {
         home: game.scoreSummary
           ? game.scoreSummary.final.home
@@ -105,6 +116,7 @@ const EditGame: React.FC<EditGameProps> = ({
           : game.finalScore?.away || null,
       },
     })
+    setValue('overtime', game.overtime)
   }, [game])
 
   const watchedHomeTeamId = watch('homeTeamId')
@@ -181,6 +193,19 @@ const EditGame: React.FC<EditGameProps> = ({
             />
           )}
         />
+        <Controller
+          control={control}
+          name="overtime"
+          render={({ field }) => (
+            <Checkbox
+              defaultChecked={field.value}
+              checked={field.value}
+              onChange={field.onChange}
+            >
+              Overtime?
+            </Checkbox>
+          )}
+        />
         {game.awayTeamId === game.homeTeamId && (
           <div className="flex flex-col gap-4">
             <h2 className="text-lg font-semibold">Set Opponents</h2>
@@ -240,7 +265,12 @@ const EditGame: React.FC<EditGameProps> = ({
         )}
         <div className="flex flex-col gap-2 ">
           <h2 className="text-lg font-semibold">Score Summary</h2>
-          <div className="grid grid-cols-6 grid-rows-3 text-center border-gray-300 bg-default-100 p-4 rounded">
+          <div
+            style={{
+              gridTemplateColumns: `repeat(${OtWatch ? 7 : 6}, 1fr)`,
+            }}
+            className="grid grid-rows-3 text-center border-gray-300 bg-default-100 p-4 rounded"
+          >
             <span className="flex items-center justify-center border-b">
               TEAM
             </span>
@@ -256,6 +286,11 @@ const EditGame: React.FC<EditGameProps> = ({
             <span className="flex items-center justify-center border-b">
               Q4
             </span>
+            {OtWatch && (
+              <span className="flex items-center justify-center border-b">
+                OT
+              </span>
+            )}
             <span className="flex items-center justify-center border-b">
               FINAL
             </span>
@@ -322,6 +357,22 @@ const EditGame: React.FC<EditGameProps> = ({
                 )}
               />
             </div>
+            {OtWatch && (
+              <div className="flex items-center justify-center border-b">
+                <Controller
+                  name="scoreSummary.ot.home"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      size="lg"
+                      {...field}
+                      value={field.value ? String(field.value) : undefined}
+                      type="number"
+                    />
+                  )}
+                />
+              </div>
+            )}
             <div className="flex items-center justify-center border-b">
               <Controller
                 name="scoreSummary.final.home"
@@ -399,6 +450,22 @@ const EditGame: React.FC<EditGameProps> = ({
                 )}
               />
             </div>
+            {OtWatch && (
+              <div className="flex items-center justify-center border-b">
+                <Controller
+                  name="scoreSummary.ot.away"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      size="lg"
+                      {...field}
+                      value={field.value ? String(field.value) : undefined}
+                      type="number"
+                    />
+                  )}
+                />
+              </div>
+            )}
             <div className="flex items-center justify-center border-b">
               <Controller
                 name="scoreSummary.final.away"

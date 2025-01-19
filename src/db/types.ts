@@ -81,6 +81,10 @@ type ScoreSummary = {
     home: number;
     away: number;
   },
+  'ot'?: {
+    home: number;
+    away: number;
+  }
   "final": {
     home: number;
     away: number;
@@ -200,6 +204,7 @@ type Game = {
   scoreSummary: ScoreSummary | null;
   stats: GameStats | null;
   result: string | null;
+  overtime?: boolean
 }
 
 interface TeamStats {

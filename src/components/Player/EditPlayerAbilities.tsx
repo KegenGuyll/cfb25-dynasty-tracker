@@ -6,7 +6,7 @@ import {
   Position,
 } from '@/db/types/player'
 import EditModal from '../Modal/EditModal'
-import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'

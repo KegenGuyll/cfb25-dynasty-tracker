@@ -31,11 +31,11 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
             onMouseLeave={() => setHovered(false)}
             className="text-left flex gap-2 items-center"
           >
-            <h2 className="text-xl font-bold">{title}</h2>
+            <h3 className="text-lg font-bold">{title}</h3>
             {hovered && <FontAwesomeIcon icon={faPen} />}
           </button>
         ) : (
-          <h2 className="text-xl font-bold">{title}</h2>
+          <h3 className="text-xl font-bold">{title}</h3>
         )}
         <span>{summary}</span>
       </div>

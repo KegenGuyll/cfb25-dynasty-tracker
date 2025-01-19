@@ -19,10 +19,10 @@ import { useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import GenericInputTable from '@/components/tables/GenericInputTable'
 import {
-  defenseColumns,
-  passingColumns,
-  receivingColumns,
-  rushingColumns,
+  defenseInputColumns,
+  passingInputColumns,
+  receivingInputColumns,
+  rushingInputColumns,
 } from '@/components/tables/columns/playerInputStatColumns'
 
 export const createPlayerSchema = yup.object({
@@ -647,21 +647,29 @@ const CreatePlayerPage: NextPage = () => {
             <GenericInputTable
               title="Passing"
               rowCount={passingFields.length}
-              columns={passingColumns(control, (i) => passingRemove(i), watch)}
+              columns={passingInputColumns(
+                control,
+                (i) => passingRemove(i),
+                watch
+              )}
             />
           )}
           {rushingFields.length > 0 && (
             <GenericInputTable
               title="Rushing"
               rowCount={rushingFields.length}
-              columns={rushingColumns(control, (i) => rushingRemove(i), watch)}
+              columns={rushingInputColumns(
+                control,
+                (i) => rushingRemove(i),
+                watch
+              )}
             />
           )}
           {receivingFields.length > 0 && (
             <GenericInputTable
               title="Receiving"
               rowCount={receivingFields.length}
-              columns={receivingColumns(
+              columns={receivingInputColumns(
                 control,
                 (i) => receivingRemove(i),
                 watch
@@ -672,7 +680,11 @@ const CreatePlayerPage: NextPage = () => {
             <GenericInputTable
               title="Defense"
               rowCount={defenseFields.length}
-              columns={defenseColumns(control, (i) => defenseRemove(i), watch)}
+              columns={defenseInputColumns(
+                control,
+                (i) => defenseRemove(i),
+                watch
+              )}
             />
           )}
         </div>

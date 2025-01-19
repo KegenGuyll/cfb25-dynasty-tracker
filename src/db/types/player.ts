@@ -995,7 +995,7 @@ interface Player {
   development: PlayerDevelopment;
   awards: PlayerAwards[];
   stats: PlayerStats;
-  recruit: Recruit;
+  recruit?: Recruit;
   historicalOverall: historicalOverall[]
   dynastyId: number;
   currentTeamData?: Team;

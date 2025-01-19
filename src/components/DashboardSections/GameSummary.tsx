@@ -44,6 +44,7 @@ type GameItemProps = {
   game: Game
   scheduleId: number
   opponent: 'homeTeam' | 'awayTeam'
+  setSelectedGame: (game: Game) => void
 }
 
 type ScoreSummary = {
@@ -61,10 +62,9 @@ const scoreSummaryColumns: TableColumn<ScoreSummary>[] = [
 const GameItem: React.FC<GameItemProps> = ({
   game,
   opponent,
-  scheduleId,
+  setSelectedGame,
 }: GameItemProps) => {
   const [hover, setHover] = useState(false)
-  const [editMode, setEditMode] = useState(false)
 
   return (
     <>
@@ -74,10 +74,10 @@ const GameItem: React.FC<GameItemProps> = ({
             className="text-left"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={() => setEditMode(!editMode)}
+            onClick={() => setSelectedGame(game)}
           >
             <h3 className="text-xl">
-              {weekName(game.week)} -{' '}
+              {game.customGameName || weekName(game.week)} -{' '}
               <span className=" text-sm">
                 {convertGameLocation(game.location)}
               </span>{' '}
@@ -115,12 +115,6 @@ const GameItem: React.FC<GameItemProps> = ({
           <p>Summary text about the player of the game and a stat line.</p>
         </div>
       </div>
-      <EditGame
-        game={game}
-        isOpen={editMode}
-        handleClose={() => setEditMode(false)}
-        scheduleId={scheduleId}
-      />
     </>
   )
 }
@@ -129,24 +123,11 @@ const GameList: React.FC<GameListProps> = ({
   games,
   scheduleId,
 }: GameListProps) => {
+  const [selectedGame, setSelectedGame] = useState<Game>()
   return (
     <div className="flex flex-col gap-12 divide-y">
       {games?.map((game, index) => {
         const opponent = determineOpponent(game)
-
-        if (game.location === 'bye')
-          return (
-            <div key={index} className="flex flex-col gap-4 pt-6">
-              <div className="flex items-baseline  ">
-                <h3 className="text-xl flex-grow">
-                  {weekName(game.week)} -{' '}
-                  <span className=" text-sm">
-                    {convertGameLocation(game.location)}
-                  </span>
-                </h3>
-              </div>
-            </div>
-          )
 
         return (
           <GameItem
@@ -154,9 +135,16 @@ const GameList: React.FC<GameListProps> = ({
             key={index}
             game={game}
             opponent={opponent}
+            setSelectedGame={setSelectedGame}
           />
         )
       })}
+      <EditGame
+        game={selectedGame}
+        isOpen={!!selectedGame}
+        handleClose={() => setSelectedGame(undefined)}
+        scheduleId={scheduleId}
+      />
     </div>
   )
 }

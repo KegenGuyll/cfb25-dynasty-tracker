@@ -1,6 +1,4 @@
-import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
-import { useLiveQuery } from 'dexie-react-hooks'
-import SearchableSelect from '../SearchableSelect'
+import SearchableSelect, { OptionType } from '../SearchableSelect'
 import classNames from 'classnames'
 
 type Props = {
@@ -8,6 +6,7 @@ type Props = {
   onChange?: (value: string | undefined) => void
   errors?: Record<string, { message: string }>
   classname?: string
+  teamOptions: OptionType[]
 }
 
 const TeamSelect: React.FC<Props> = ({
@@ -15,9 +14,8 @@ const TeamSelect: React.FC<Props> = ({
   onChange,
   errors,
   classname,
+  teamOptions,
 }: Props) => {
-  const teamOptions = useLiveQuery(() => getTeamSelectOptions())
-
   return (
     <div className={classNames(classname, 'w-full')}>
       <SearchableSelect

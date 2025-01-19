@@ -105,9 +105,14 @@ const ReactSelectStyle: StylesConfig<
   }),
 }
 
+type OptionType = {
+  value: string
+  label: string
+}
+
 type SearchableSelectProps = {
   label: string
-  options: { value: string; label: string }[]
+  options: OptionType[]
   defaultValue?: { value: string; label: string }
   placeholder?: string
   onChange?: (value: string | undefined) => void
@@ -187,5 +192,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     </div>
   )
 }
+
+export type { OptionType }
 
 export default SearchableSelect

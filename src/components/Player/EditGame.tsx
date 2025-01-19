@@ -64,8 +64,6 @@ const EditGame: React.FC<EditGameProps> = ({
 }: EditGameProps) => {
   const teamOptions = useLiveQuery(() => getTeamSelectOptions(), [])
 
-  console.log(game)
-
   const {
     control,
     handleSubmit,
@@ -76,7 +74,10 @@ const EditGame: React.FC<EditGameProps> = ({
     resolver: yupResolver(gameSchema),
   })
 
+  const watchedHomeTeamId = watch('homeTeamId')
+  const watchedAwayTeamId = watch('awayTeamId')
   const OtWatch = watch('overtime')
+  const watchedScoreSummary = watch('scoreSummary')
 
   useEffect(() => {
     if (!game) return
@@ -119,9 +120,6 @@ const EditGame: React.FC<EditGameProps> = ({
     setValue('overtime', game.overtime)
   }, [game])
 
-  const watchedHomeTeamId = watch('homeTeamId')
-  const watchedAwayTeamId = watch('awayTeamId')
-
   const handleSave = async (data: GameFormData) => {
     console.log(data)
 
@@ -129,6 +127,7 @@ const EditGame: React.FC<EditGameProps> = ({
       const gameIndex = schedule.games.findIndex((g) => g.week === game?.week)
       schedule.games[gameIndex] = {
         ...schedule.games[gameIndex],
+        overtime: data.overtime,
         location: data.gameLocation as GameLocation,
         homeTeamId: data.homeTeamId,
         awayTeamId: data.awayTeamId,

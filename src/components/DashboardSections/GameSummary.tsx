@@ -106,6 +106,7 @@ const GameItem: React.FC<GameItemProps> = ({
                 homeTeam={game.homeTeam}
                 awayTeam={game.awayTeam}
                 scoreSummary={game.scoreSummary}
+                overtime={game.overtime}
               />
             )}
           </div>

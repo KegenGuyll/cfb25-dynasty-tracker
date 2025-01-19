@@ -27,33 +27,6 @@ export const teamScheduleSchema = yup.object({
         location: yup.string().required('required'),
         opponent: yup.string().optional().nullable(),
         stadium: yup.string().optional().nullable(),
-        result: yup.string().optional().nullable(),
-        finalScore: yup
-          .object({
-            score1: yup.number(),
-            score2: yup.number(),
-          })
-          .optional()
-          .nullable()
-          .test((finalScore, ctx) => {
-            if (finalScore?.score1 && finalScore?.score2) {
-              // finalScore score1 and score2 must be greater than or equal to 0
-              if (finalScore.score1 <= 0 || finalScore.score2 <= 0) {
-                return ctx.createError({
-                  message: 'Score must be greater than or equal to 0',
-                })
-              }
-
-              // finalScore score1 must be greater than score2
-              if (finalScore.score1 < finalScore.score2) {
-                return ctx.createError({
-                  message: 'Winning Score must be greater than Losing Score',
-                })
-              }
-            }
-
-            return ctx.resolve(true)
-          }),
       })
     )
     .default([]),
@@ -91,7 +64,7 @@ const CreateTeamSchedulePage = () => {
     }
   }, [dynastyId, router, teamInfoId])
 
-  const [numberOfWeeks, setNumberOfWeeks] = useState(21)
+  const [numberOfWeeks, setNumberOfWeeks] = useState(20)
 
   const teamOptions = useLiveQuery(() => getTeamSelectOptions())
 
@@ -115,36 +88,14 @@ const CreateTeamSchedulePage = () => {
           location: formatGameLocation(game.location),
           rivalryGame: false,
           broadcast: 'local',
-          boxScore: null,
+          scoreSummary: null,
           stats: null,
-          finalScore: {
-            home:
-              game.result === 'W'
-                ? game.finalScore?.score1
-                : game.finalScore?.score2,
-            away:
-              game.result === 'W'
-                ? game.finalScore?.score2
-                : game.finalScore?.score1,
-          },
-          result: game.result || null,
+          finalScore: null,
+          result: null,
         })),
       }
 
       await db.teamSchedule.add(teamSchedule)
-      await db.teamInfo.update(Number(teamInfoId), {
-        conference: '',
-        teamOffense: 0,
-        teamDefense: 0,
-        teamOverall: 0,
-        positionInConference: 0,
-        teamWins: teamSchedule.games.filter((game) => game.result === 'W')
-          .length,
-        teamLosses: teamSchedule.games.filter((game) => game.result === 'L')
-          .length,
-        conferenceWins: 0,
-        conferenceLosses: 0,
-      })
       router.push(`/dynasty/${dynastyId}/dashboard/${data.teamId}`)
     },
     [dynastyId, router, teamInfoId]
@@ -188,7 +139,7 @@ const CreateTeamSchedulePage = () => {
               name="year"
               render={({
                 field: { value, onChange },
-                formState: { errors, isValid },
+                formState: { errors },
               }) => (
                 <Input
                   id="year"

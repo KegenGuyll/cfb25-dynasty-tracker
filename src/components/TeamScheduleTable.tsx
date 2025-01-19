@@ -24,8 +24,6 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
           </th>
           <th className="px-4 py-3">Location</th>
           <th className="px-4 py-3">Opponent</th>
-          <th className="px-4 py-3">Final Score</th>
-          <th className="px-4 py-3">Result</th>
         </tr>
       </thead>
       <tbody className="gap-4">
@@ -76,70 +74,6 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                     options={teamOptions}
                   />
                 )}
-              />
-            </td>
-            <td className="px-4 py-3">
-              <div className="flex items-center justify-center flex-row gap-x-1 w-full">
-                <div className="max-w-[80px]">
-                  <Controller
-                    control={control}
-                    name={`games.${i}.finalScore.score1`}
-                    render={({ field: { onChange, value } }) => (
-                      <Input
-                        tabIndex={0}
-                        placeholder="0"
-                        fullWidth
-                        size="lg"
-                        value={value}
-                        onChange={onChange}
-                        type="number"
-                      />
-                    )}
-                  />
-                </div>
-                <span className="font-bold text-xl">-</span>
-                <div className="max-w-[80px]">
-                  <Controller
-                    control={control}
-                    name={`games.${i}.finalScore.score2`}
-                    render={({ field: { onChange, value } }) => (
-                      <Input
-                        tabIndex={0}
-                        placeholder="0"
-                        fullWidth
-                        size="lg"
-                        value={value}
-                        onChange={onChange}
-                        type="number"
-                      />
-                    )}
-                  />
-                </div>
-              </div>
-            </td>
-            <td className="px-4 py-3">
-              <Controller
-                control={control}
-                name={`games.${i}.result`}
-                render={({ field: { value, onChange } }) => {
-                  return (
-                    <Select
-                      tabIndex={0}
-                      fullWidth
-                      size="lg"
-                      value={value || ''}
-                      selectedKeys={[String(value)]}
-                      defaultSelectedKeys={[String(value)]}
-                      onChange={onChange}
-                    >
-                      {['W', 'L'].map((result) => (
-                        <SelectItem key={result} value={result}>
-                          {result}
-                        </SelectItem>
-                      ))}
-                    </Select>
-                  )
-                }}
               />
             </td>
           </tr>

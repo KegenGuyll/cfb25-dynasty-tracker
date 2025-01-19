@@ -55,7 +55,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       }
     >
       <div className="flex flex-col gap-4">
-        <h3 className="text-lg">Overview</h3>
+        <h4>Overview</h4>
         <Table aria-label="recruiting summary table">
           <TableHeader>
             <TableColumn>Total</TableColumn>
@@ -81,7 +81,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       </div>
       {recruitingData?.recruits && (
         <div className="flex flex-col gap-4">
-          <h3 className="text-lg">Recruits</h3>
+          <h4>Recruits</h4>
           <Table aria-label="recruiting summary table">
             <TableHeader>
               <TableColumn>Name</TableColumn>
@@ -106,17 +106,17 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
                         player.information.lastName}
                     </Link>
                   </TableCell>
-                  <TableCell>{player.recruit.overall}</TableCell>
-                  <TableCell>{player.recruit.position}</TableCell>
-                  <TableCell>{player.recruit.nationalRank}</TableCell>
+                  <TableCell>{player.recruit?.overall}</TableCell>
+                  <TableCell>{player.recruit?.position}</TableCell>
+                  <TableCell>{player.recruit?.nationalRank}</TableCell>
                   <TableCell>
                     {Array.from(
-                      { length: player.recruit.stars },
+                      { length: player.recruit?.stars || 0 },
                       () => '⭐'
                     ).join('')}
                   </TableCell>
-                  <TableCell>{player.recruit.devTrait}</TableCell>
-                  <TableCell>{player.recruit.gem}</TableCell>
+                  <TableCell>{player.recruit?.devTrait}</TableCell>
+                  <TableCell>{player.recruit?.gem}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -125,7 +125,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       )}
       {recruitingData?.transfers && (
         <div className="flex flex-col gap-4">
-          <h3 className="text-lg">Transfers</h3>
+          <h4>Transfers</h4>
           <Table aria-label="recruiting summary table">
             <TableHeader>
               <TableColumn>Name</TableColumn>
@@ -151,18 +151,18 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
                         transfer.information.lastName}
                     </Link>
                   </TableCell>
-                  <TableCell>{transfer.recruit.overall}</TableCell>
+                  <TableCell>{transfer.recruit?.overall}</TableCell>
                   <TableCell>{transfer.information.position}</TableCell>
-                  <TableCell>{transfer.recruit.nationalRank}</TableCell>
+                  <TableCell>{transfer.recruit?.nationalRank}</TableCell>
                   <TableCell>
                     {Array.from(
-                      { length: transfer.recruit.stars },
+                      { length: transfer.recruit?.stars || 0 },
                       () => '⭐'
                     ).join('')}
                   </TableCell>
-                  <TableCell>{transfer.recruit.devTrait}</TableCell>
+                  <TableCell>{transfer.recruit?.devTrait}</TableCell>
                   <TableCell>
-                    {transfer.recruit.transfers?.[0]?.teamData?.school}
+                    {transfer.recruit?.transfers?.[0]?.teamData?.school}
                   </TableCell>
                 </TableRow>
               ))}

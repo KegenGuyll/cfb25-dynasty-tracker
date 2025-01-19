@@ -183,6 +183,7 @@ type GameStats = {
 }
 
 type Game = {
+  customGameName?: string
   week: number;
   homeTeamId: number;
   awayTeamId: number;

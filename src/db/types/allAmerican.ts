@@ -1,6 +1,6 @@
 import { Position } from "./player"
 
-const TeamSelectionOptions = [
+const teamSelectionOptions = [
   {
     label: '1st Team',
     value: '1st Team',
@@ -23,6 +23,57 @@ const TeamSelectionOptions = [
   }
 ]
 
+const allAmericanConfOptions = [
+  {
+    label: 'National',
+    value: 'National'
+  },
+  {
+    label: 'ACC',
+    value: 'ACC'
+  },
+  {
+    label: 'American',
+    value: 'American'
+  },
+  {
+    label: 'Big 12',
+    value: 'Big 12',
+  },
+  {
+    label: 'Big Ten',
+    value: 'Big Ten'
+  },
+  {
+    label: 'CUSA',
+    value: 'CUSA'
+  },
+  {
+    label: 'FBS Independents',
+    value: 'FBS Independents'
+  },
+  {
+    label: 'MAC',
+    value: 'MAC'
+  },
+  {
+    label: 'MWC',
+    value: 'MWC'
+  },
+  {
+    label: 'PAC-12',
+    value: 'PAC-12'
+  },
+  {
+    label: 'SEC',
+    value: 'SEC'
+  },
+  {
+    label: 'Sun Belt',
+    value: 'Sun Belt'
+  }
+]
+
 type TeamSelection = '1st Team' | '2nd Team' | 'Freshman' | 'Preseason 1st Team' | 'Preseason 2nd Team'
 
 interface AllAmerican {
@@ -33,11 +84,11 @@ interface AllAmerican {
   year: number
   position: Position
   name: string
-  playerClass: string // FR, SO, JR, SR etc.
+  playerClass?: string // FR, SO, JR, SR etc.
   selection: TeamSelection
   conference: string
 }
 
-export { TeamSelectionOptions }
+export { teamSelectionOptions, allAmericanConfOptions }
 
 export type { AllAmerican, TeamSelection }

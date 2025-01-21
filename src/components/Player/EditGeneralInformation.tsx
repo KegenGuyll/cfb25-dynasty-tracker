@@ -7,7 +7,7 @@ import EditModal from '../Modal/EditModal'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input, Select, SelectItem } from '@nextui-org/react'
+import { Input, Select, SelectItem } from "@heroui/react"
 import { db } from '@/db/db.model'
 
 type EditPlayerGeneralInformationProps = {

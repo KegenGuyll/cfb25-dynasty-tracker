@@ -9,7 +9,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@nextui-org/react'
+} from "@heroui/react"
 
 import SectionWrapper from './SectionWrapper'
 import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'

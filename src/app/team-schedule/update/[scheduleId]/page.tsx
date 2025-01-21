@@ -7,7 +7,7 @@ import SearchableSelect from '@/components/SearchableSelect'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { db } from '@/db/db.model'
 import TeamScheduleTable from '@/components/TeamScheduleTable'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input } from "@heroui/react"
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { TeamSchedule } from '@/db/types'
 import { useRouter } from 'next/navigation'
@@ -17,7 +17,7 @@ import {
   determineGameResult,
   formatGameLocation,
 } from '@/utils/teamSchedule'
-import { Spinner } from '@nextui-org/spinner'
+import { Spinner } from "@heroui/spinner"
 
 const UpdateTeamSchedule = ({ params }: { params: { scheduleId: string } }) => {
   const {

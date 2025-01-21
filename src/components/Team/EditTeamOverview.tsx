@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form'
 import EditModal from '../Modal/EditModal'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from '@nextui-org/react'
+import { Input } from "@heroui/react"
 import { db } from '@/db/db.model'
 import { TeamInfo } from '@/db/types/teamInfo'
 import { useEffect } from 'react'

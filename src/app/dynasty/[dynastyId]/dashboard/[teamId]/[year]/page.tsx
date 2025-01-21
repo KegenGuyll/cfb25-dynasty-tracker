@@ -3,7 +3,7 @@ import GameSummary from '@/components/DashboardSections/GameSummary'
 import RecruitingSection from '@/components/DashboardSections/Recruiting'
 import TeamOverview from '@/components/DashboardSections/TeamOverview'
 import TeamSchedule from '@/components/DashboardSections/TeamSchedule'
-import { Divider } from '@nextui-org/react'
+import { Divider } from "@heroui/react"
 
 type TeamYearPageProps = {
   params: {

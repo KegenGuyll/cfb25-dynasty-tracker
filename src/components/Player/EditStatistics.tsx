@@ -2,7 +2,7 @@ import { Player } from '@/db/types/player'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button } from '@nextui-org/react'
+import { Button } from "@heroui/react"
 import GenericInputTable from '../tables/GenericInputTable'
 import {
   defenseInputColumns,

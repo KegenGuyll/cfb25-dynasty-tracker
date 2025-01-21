@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
   Button,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useRouter } from 'next/navigation'
 

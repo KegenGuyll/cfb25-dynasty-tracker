@@ -5,7 +5,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input } from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect } from 'react'
 

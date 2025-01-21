@@ -3,7 +3,7 @@ import EditModal from '../Modal/EditModal'
 import { Controller, set, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Checkbox, Input, Select, SelectItem } from '@nextui-org/react'
+import { Checkbox, Input, Select, SelectItem } from "@heroui/react"
 import { db } from '@/db/db.model'
 import TeamSelect from '../TeamSelect'
 import { useLiveQuery } from 'dexie-react-hooks'

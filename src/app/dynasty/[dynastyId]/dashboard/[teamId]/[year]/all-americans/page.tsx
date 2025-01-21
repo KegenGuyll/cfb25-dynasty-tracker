@@ -4,7 +4,7 @@ import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
-import { Button, Checkbox, Input } from '@nextui-org/react'
+import { Button, Checkbox, Input } from "@heroui/react"
 import { Position } from '@/db/types/player'
 import { AllAmerican, TeamSelection } from '@/db/types/allAmerican'
 import createNewPlayer, {

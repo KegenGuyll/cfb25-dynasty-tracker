@@ -1,7 +1,7 @@
 'use client'
 
 import { db } from '@/db/db.model'
-import { Button } from '@nextui-org/react'
+import { Button } from "@heroui/react"
 import { exportDB } from 'dexie-export-import'
 import { useCallback } from 'react'
 

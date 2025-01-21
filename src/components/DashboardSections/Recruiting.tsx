@@ -6,7 +6,7 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import SectionWrapper from './SectionWrapper'
 import { useRouter } from 'next/navigation'
 import getRecruitingData from '@/queries/recruiting/getRecruitingData'

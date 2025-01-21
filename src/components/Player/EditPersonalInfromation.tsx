@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
-import { Input, Select, SelectItem } from '@nextui-org/react'
+import { Input, Select, SelectItem } from "@heroui/react"
 import states from '@/data/States.json'
 import convertInchesToFeet from '@/utils/convertInchesToFeet'
 

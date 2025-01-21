@@ -11,7 +11,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
 import { useEffect, useMemo, useState } from 'react'
-import { Divider, Select, SelectItem } from '@nextui-org/react'
+import { Divider, Select, SelectItem } from "@heroui/react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 

@@ -2,7 +2,7 @@
 
 import FileUploadButton from '@/components/FileUploadButton'
 import useGetAllDynasties from '@/queries/dynasty/getAllDynasties'
-import { Button, Spinner } from '@nextui-org/react'
+import { Button, Spinner } from "@heroui/react"
 import { importDB } from 'dexie-export-import'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

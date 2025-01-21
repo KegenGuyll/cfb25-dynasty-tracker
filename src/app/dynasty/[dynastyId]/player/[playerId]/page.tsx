@@ -24,7 +24,7 @@ import getMediaById from '@/queries/media/getMediaById'
 import getPlayerById from '@/queries/players/getPlayerById'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Divider } from '@nextui-org/react'
+import { Divider } from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import Image from 'next/image'
 import { useState } from 'react'

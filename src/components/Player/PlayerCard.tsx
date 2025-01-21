@@ -1,7 +1,7 @@
 import { Player } from '@/db/types/player'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Divider } from '@nextui-org/react'
+import { Divider } from "@heroui/react"
 import { useState } from 'react'
 import EditGeneralInformation from './EditGeneralInformation'
 import EditPlayerAbilities from './EditPlayerAbilities'

@@ -22,7 +22,7 @@ import {
   Input,
   Spinner,
   Textarea,
-} from '@nextui-org/react'
+} from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

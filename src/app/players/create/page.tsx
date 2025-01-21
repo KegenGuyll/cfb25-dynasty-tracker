@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Input, Select, SelectItem, Textarea } from '@nextui-org/react'
+import { Button, Input, Select, SelectItem, Textarea } from "@heroui/react"
 import { NextPage } from 'next'
 import { Controller, useForm, useFieldArray } from 'react-hook-form'
 import * as yup from 'yup'

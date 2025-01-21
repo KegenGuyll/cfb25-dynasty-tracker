@@ -2,7 +2,7 @@
 
 import { db } from '@/db/db.model'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input, Textarea } from '@nextui-org/react'
+import { Button, Input, Textarea } from "@heroui/react"
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'

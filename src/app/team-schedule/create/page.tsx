@@ -7,7 +7,7 @@ import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import { TeamSchedule } from '@/db/types'
 import { formatGameLocation } from '@/utils/teamSchedule'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input } from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'

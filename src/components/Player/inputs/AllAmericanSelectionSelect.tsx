@@ -1,5 +1,5 @@
 import { teamSelectionOptions } from '@/db/types/allAmerican'
-import { Select, SelectItem } from '@nextui-org/react'
+import { Select, SelectItem } from "@heroui/react"
 import { ChangeEventHandler } from 'react'
 
 type AllAmericanPositionSelectProps = {

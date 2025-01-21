@@ -6,7 +6,7 @@ import GenericDataTable, {
 import { RecruitingClass } from '@/db/types/recruiting'
 import { TeamInfo } from '@/db/types/teamInfo'
 import getAllTeamSeason from '@/queries/dynasty/getAllTeamSeason'
-import { Button, Divider, Spinner } from '@nextui-org/react'
+import { Button, Divider, Spinner } from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

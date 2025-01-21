@@ -6,7 +6,7 @@ import {
   playerPositionOptions,
 } from '@/db/types/player'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Checkbox, Input, Select, SelectItem } from '@nextui-org/react'
+import { Button, Checkbox, Input, Select, SelectItem } from "@heroui/react"
 import { useEffect } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import * as yup from 'yup'

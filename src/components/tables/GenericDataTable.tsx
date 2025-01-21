@@ -5,7 +5,7 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from '@nextui-org/react'
+} from "@heroui/react"
 
 type TableColumn<T> = {
   title: string

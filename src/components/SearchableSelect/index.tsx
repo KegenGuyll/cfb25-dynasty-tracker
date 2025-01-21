@@ -22,15 +22,15 @@ const ReactSelectStyle: StylesConfig<
     minHeight: '56px',
     width: '100%',
     ':hover': {
-      backgroundColor: 'hsl(var(--nextui-default-200)',
+      backgroundColor: 'hsl(var(--heroui-default-200)',
     },
     border: 'none',
-    borderRadius: 'var(--nextui-radius-medium)',
+    borderRadius: 'var(--heroui-radius-medium)',
   }),
   placeholder: (baseStyles) => ({
     ...baseStyles,
     color:
-      'hsl(var(--nextui-foreground-500) / var(--nextui-foreground-500-opacity, var(--tw-text-opacity)))',
+      'hsl(var(--heroui-foreground-500) / var(--heroui-foreground-500-opacity, var(--tw-text-opacity)))',
   }),
   indicatorSeparator: (baseStyles) => ({
     ...baseStyles,
@@ -39,8 +39,8 @@ const ReactSelectStyle: StylesConfig<
   menu: (baseStyles) => ({
     ...baseStyles,
     backgroundColor:
-      'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
-    borderRadius: 'var(--nextui-radius-medium)',
+      'hsl(var(--heroui-content1) / var(--heroui-content1-opacity, var(--tw-bg-opacity)))',
+    borderRadius: 'var(--heroui-radius-medium)',
     padding: '4px',
     zIndex: 1000,
   }),
@@ -58,19 +58,19 @@ const ReactSelectStyle: StylesConfig<
     paddingRight: '0.5rem',
     paddingTop: '0.375rem',
     paddingBottom: '0.375rem',
-    borderRadius: 'var(--nextui-radius-medium)',
+    borderRadius: 'var(--heroui-radius-medium)',
     backgroundColor: state.isFocused
-      ? 'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))'
-      : 'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
+      ? 'hsl(var(--heroui-default-200) / var(--heroui-default-100-opacity, var(--tw-bg-opacity)))'
+      : 'hsl(var(--heroui-content1) / var(--heroui-content1-opacity, var(--tw-bg-opacity)))',
     ':hover': {
       backgroundColor:
-        'hsl(var(--nextui-default-200) / var(--nextui-default-100-opacity, var(--tw-bg-opacity)))',
+        'hsl(var(--heroui-default-200) / var(--heroui-default-100-opacity, var(--tw-bg-opacity)))',
     },
   }),
   input: (baseStyles) => ({
     ...baseStyles,
     color:
-      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
+      'hsl(var(--heroui-default-foreground) / var(--heroui-default-foreground-opacity, var(--tw-text-opacity)))',
     ':focus-visible': {
       backgroundColor: 'red',
     },
@@ -78,18 +78,18 @@ const ReactSelectStyle: StylesConfig<
   singleValue: (baseStyles) => ({
     ...baseStyles,
     color:
-      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
+      'hsl(var(--heroui-default-foreground) / var(--heroui-default-foreground-opacity, var(--tw-text-opacity)))',
   }),
   multiValue: (baseStyles) => ({
     ...baseStyles,
     backgroundColor:
-      'hsl(var(--nextui-content1) / var(--nextui-content1-opacity, var(--tw-bg-opacity)))',
-    borderRadius: 'var(--nextui-radius-medium)',
+      'hsl(var(--heroui-content1) / var(--heroui-content1-opacity, var(--tw-bg-opacity)))',
+    borderRadius: 'var(--heroui-radius-medium)',
   }),
   multiValueLabel: (baseStyles) => ({
     ...baseStyles,
     color:
-      'hsl(var(--nextui-default-foreground) / var(--nextui-default-foreground-opacity, var(--tw-text-opacity)))',
+      'hsl(var(--heroui-default-foreground) / var(--heroui-default-foreground-opacity, var(--tw-text-opacity)))',
   }),
   dropdownIndicator: (baseStyles) => ({
     ...baseStyles,

@@ -1,4 +1,4 @@
-import { Input, Button, Select, SelectItem, Checkbox } from '@nextui-org/react'
+import { Input, Button, Select, SelectItem, Checkbox } from "@heroui/react"
 import { TableColumn } from '../GenericInputTable'
 import { Control, Controller, UseFormWatch } from 'react-hook-form'
 import TeamSelect from '@/components/TeamSelect'

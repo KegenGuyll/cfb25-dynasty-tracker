@@ -1,5 +1,5 @@
 import { playerPositionOptions } from '@/db/types/player'
-import { Select, SelectItem, SelectProps } from '@nextui-org/react'
+import { Select, SelectItem, SelectProps } from "@heroui/react"
 import { ChangeEventHandler } from 'react'
 
 type PositionSelectProps = {

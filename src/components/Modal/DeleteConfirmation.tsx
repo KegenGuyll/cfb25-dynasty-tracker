@@ -7,7 +7,7 @@ import {
   ModalFooter,
   useDisclosure,
   Button,
-} from '@nextui-org/react'
+} from "@heroui/react"
 
 type DeleteConfirmationModalProps = {
   isOpen: boolean

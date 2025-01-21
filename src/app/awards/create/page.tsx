@@ -6,7 +6,7 @@ import { db } from '@/db/db.model'
 import getAvailableAwardOptions from '@/db/functions/getAvaliableAwardOptions'
 import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input } from "@heroui/react"
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'

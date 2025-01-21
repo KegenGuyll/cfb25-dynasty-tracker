@@ -1,3 +1,4 @@
+import { db } from "@/db/db.model";
 import getRecruitingData from "@/queries/recruiting/getRecruitingData";
 import getTeamInfo from "@/queries/teamInfo/getTeamInfo";
 
@@ -20,6 +21,13 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
 
   if (!recruitingClass) return null;
 
+  if (recruitingClass.classSummary && recruitingClass.classHeadline) {
+    return {
+      headline: recruitingClass.classHeadline,
+      summary: recruitingClass.classSummary
+    }
+  }
+
   const identifyProspects = () => {
     const DevTraitRanking = {
       "Elite": 1,
@@ -29,20 +37,20 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
     };
 
     const sortedByDevTrait = recruitingClass.players.sort((a, b) => {
-      return DevTraitRanking[a.recruit.devTrait as keyof typeof DevTraitRanking] - DevTraitRanking[b.recruit.devTrait as keyof typeof DevTraitRanking];
+      return DevTraitRanking[a.recruit?.devTrait as keyof typeof DevTraitRanking] - DevTraitRanking[b.recruit?.devTrait as keyof typeof DevTraitRanking];
     });
 
     // filter out any Normal dev trait players
-    const skilledProspects = sortedByDevTrait.filter(player => player.recruit.devTrait !== "Normal");
+    const skilledProspects = sortedByDevTrait.filter(player => player.recruit?.devTrait !== "Normal");
 
     // filter out any players that are considered a bust
-    const potentialProspects = skilledProspects.filter(player => player.recruit.gem.toLowerCase() !== 'bust');
+    const potentialProspects = skilledProspects.filter(player => player.recruit?.gem.toLowerCase() !== 'bust');
 
 
     // // top players will be determined by the highest overall rating, 
     // // highest potential (dev trait), weather they are a gem and national rank
     const topPlayers = potentialProspects.sort((a, b) => {
-      return (b.recruit.overall || 0) - (a.recruit.overall || 0);
+      return (b.recruit?.overall || 0) - (a.recruit?.overall || 0);
     });
 
     // // take half of the top players
@@ -52,7 +60,7 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
     const hiddenGems = halfPlayers.filter(player => {
       const halfSize = Math.floor(halfPlayers.length / 2);
 
-      return player.recruit.devTrait === "Elite" && topPlayers.indexOf(player) > halfSize;
+      return player.recruit?.devTrait === "Elite" && topPlayers.indexOf(player) > halfSize;
     });
 
     return {
@@ -63,7 +71,7 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
   }
 
 
-  const generateAdjectiveBasedOnDevTrait = (devTrait: string) => {
+  const generateAdjectiveBasedOnDevTrait = (devTrait?: string) => {
     if (devTrait === "Elite") {
       const options = ["amazing", "incredible", "unbelievable", "unreal", "unmatched"];
       return options[Math.floor(Math.random() * options.length)];
@@ -80,6 +88,8 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
       const options = ["average", "okay", "decent", "mediocre", "ordinary"];
       return options[Math.floor(Math.random() * options.length)];
     }
+
+    return "average";
   }
 
 
@@ -89,9 +99,9 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
     const headline = `The ${team.data?.school} ${team.data?.nickname} have signed ${recruitingClass.overview.total} recruits for the ${recruitingClass.year} season.`;
     const summary = `
       This class is headlined by ${prospects.topPlayer.information.firstName} ${prospects.topPlayer.information.lastName}, 
-      a ${prospects.topPlayer.recruit.position} that was ranked ${prospects.topPlayer.recruit.nationalRank} nationally!
-      ${prospects.topPlayer.information.lastName} is an ${generateAdjectiveBasedOnDevTrait(prospects.topPlayer.recruit.devTrait)} talent that will make an immediate impact on the field.
-      The follow up player to watch is ${prospects.followUpPlayers[0].information.firstName} ${prospects.followUpPlayers[0].information.lastName}, a ${prospects.followUpPlayers[0].recruit.position} that is sure to be ${generateAdjectiveBasedOnDevTrait(prospects.followUpPlayers[0].recruit.devTrait)}.
+      a ${prospects.topPlayer.recruit?.position} that was ranked ${prospects.topPlayer.recruit?.nationalRank} nationally!
+      ${prospects.topPlayer.information.lastName} is an ${generateAdjectiveBasedOnDevTrait(prospects.topPlayer.recruit?.devTrait)} talent that will make an immediate impact on the field.
+      The follow up player to watch is ${prospects.followUpPlayers[0].information.firstName} ${prospects.followUpPlayers[0].information.lastName}, a ${prospects.followUpPlayers[0].recruit?.position} that is sure to be ${generateAdjectiveBasedOnDevTrait(prospects.followUpPlayers[0].recruit?.devTrait)}.
       The ${prospects.hiddenGems.length > 1 ? "hidden gems" : "hidden gem"} in this class is ${prospects.hiddenGems.map(player => `${player.information.firstName} ${player.information.lastName}`).join(", ")}.
       `;
 
@@ -101,6 +111,8 @@ const recruitingSummary = async (dynastyId: string, teamId: string, year: string
     }
   }
 
+
+  await db.recruitingClass.update(recruitingClass.id, { classSummary: createSummary().summary });
 
   return createSummary();
 }

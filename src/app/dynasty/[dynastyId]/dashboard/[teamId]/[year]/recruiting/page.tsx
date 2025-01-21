@@ -155,11 +155,11 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
         firstName: player.information.firstName,
         lastName: player.information.lastName,
         position: player.information.position,
-        overall: String(player.recruit.overall),
+        overall: String(player.recruit?.overall),
         devTrait: player.development.devTrait,
-        gem: player.recruit.gem,
-        stars: String(player.recruit.stars),
-        nationalRank: String(player.recruit.nationalRank),
+        gem: player.recruit?.gem || 'none',
+        stars: String(player.recruit?.stars),
+        nationalRank: String(player.recruit?.nationalRank),
         playerId: String(player.id),
       })
     })
@@ -168,15 +168,15 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
       appendTransfer({
         firstName: player.information.firstName,
         lastName: player.information.lastName,
-        position: player.recruit.position,
-        overall: String(player.recruit.overall),
-        devTrait: player.recruit.devTrait,
-        stars: String(player.recruit.stars),
-        nationalRank: String(player.recruit.nationalRank),
-        class: player.recruit.transfers
+        position: player.recruit?.position || 'ATH',
+        overall: String(player.recruit?.overall),
+        devTrait: player.recruit?.devTrait,
+        stars: String(player.recruit?.stars),
+        nationalRank: String(player.recruit?.nationalRank),
+        class: player.recruit?.transfers
           ? player.recruit.transfers[0].class
           : '',
-        from: player.recruit.transfers
+        from: player.recruit?.transfers
           ? String(player.recruit.transfers[0].teamId)
           : '',
       })

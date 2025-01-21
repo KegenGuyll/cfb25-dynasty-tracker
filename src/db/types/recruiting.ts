@@ -13,6 +13,8 @@ interface RecruitingClass {
   notableLostRecruits: Recruit[];
   dynastyId: number;
   overview: Overview;
+  classHeadline?: string;
+  classSummary?: string
 }
 
 type Overview = {

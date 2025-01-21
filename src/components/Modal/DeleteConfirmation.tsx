@@ -13,12 +13,14 @@ type DeleteConfirmationModalProps = {
   isOpen: boolean
   context?: string
   deleteAction: () => void
+  handleClose: () => void
 }
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
   deleteAction,
   isOpen: openModel,
   context,
+  handleClose,
 }: DeleteConfirmationModalProps) => {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
@@ -32,13 +34,21 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
 
   const handleAction = () => {
     deleteAction()
+    handleClose()
     onClose()
   }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal
+      onClose={() => {
+        handleClose()
+        onClose()
+      }}
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+    >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col gap-1">
               Are you sure you want to delete?
@@ -50,7 +60,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
               </p>
             </ModalBody>
             <ModalFooter>
-              <Button color="default" onPress={onClose}>
+              <Button color="default" onPress={handleClose}>
                 Close
               </Button>
               <Button color="danger" onPress={handleAction}>

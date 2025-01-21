@@ -7,6 +7,8 @@ import { Button, Spinner } from '@nextui-org/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import EditTeamOverview from '../Team/EditTeamOverview'
+import getNextAndPrevSeason from '@/queries/dynasty/getNextAndPrevSeason'
+import Link from 'next/link'
 
 type TeamOverviewProps = {
   dynastyId: string
@@ -24,6 +26,11 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
   const teamInfo = useLiveQuery(() =>
     getTeamInfo(Number(dynastyId), Number(teamId), Number(year))
   )
+  const nextAndPrevSeason = useLiveQuery(() =>
+    getNextAndPrevSeason(Number(year), Number(teamId), Number(dynastyId))
+  )
+
+  console.log(nextAndPrevSeason)
 
   if (!teamInfo)
     return (
@@ -95,7 +102,29 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
             <span>{teamInfo.defPlaybook}</span>
           </li>
         </ul>
-        <div>Seasons</div>
+        <div className="flex justify-between">
+          {nextAndPrevSeason?.prevSeasonTeam ? (
+            <Link
+              href={`/dynasty/${dynastyId}/dashboard/${teamId}/${nextAndPrevSeason.prevSeasonTeam.year}`}
+              passHref
+            >
+              ← {nextAndPrevSeason.prevSeasonTeam.year}
+            </Link>
+          ) : (
+            <span>No Previous Season</span>
+          )}
+          <div>Seasons</div>
+          {nextAndPrevSeason?.nextSeasonTeam ? (
+            <Link
+              href={`/dynasty/${dynastyId}/dashboard/${teamId}/${nextAndPrevSeason.nextSeasonTeam.year}`}
+              passHref
+            >
+              {nextAndPrevSeason.nextSeasonTeam.year} →
+            </Link>
+          ) : (
+            <span>No Next Season</span>
+          )}
+        </div>
       </div>
       <EditTeamOverview
         dynastyId={dynastyId}

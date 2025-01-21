@@ -1,6 +1,6 @@
 import { teamSelectionOptions } from '@/db/types/allAmerican'
-import { Select, SelectItem } from "@heroui/react"
-import { ChangeEventHandler } from 'react'
+import { Select, SelectItem } from '@heroui/react'
+import { ChangeEventHandler, ReactNode } from 'react'
 
 type AllAmericanPositionSelectProps = {
   value: string | undefined
@@ -11,6 +11,9 @@ type AllAmericanPositionSelectProps = {
   name?: string | undefined
   ref: React.Ref<HTMLSelectElement>
   className?: string
+  validationBehavior?: 'aria' | 'native' | undefined
+  errorMessage?: ReactNode | ((v: any) => ReactNode)
+  isInvalid?: boolean | undefined
 }
 
 const AllAmericanSelectionSelect: React.FC<AllAmericanPositionSelectProps> = ({

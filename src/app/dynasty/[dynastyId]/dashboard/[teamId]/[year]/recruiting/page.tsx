@@ -6,7 +6,14 @@ import {
   playerPositionOptions,
 } from '@/db/types/player'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Checkbox, Input, Select, SelectItem } from "@heroui/react"
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Select,
+  SelectItem,
+} from '@heroui/react'
 import { useEffect } from 'react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -546,7 +553,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
   }
 
   return (
-    <form
+    <Form
       onSubmit={handleSubmit(handleSave)}
       className="bg-content1 p-4 rounded flex flex-col gap-4 divide-y"
     >
@@ -556,13 +563,27 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           <Controller
             control={control}
             name="classRank"
-            render={({ field }) => <Input label="Class Rank" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="Class Rank"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="conferenceClassRank"
-            render={({ field }) => (
-              <Input label="Conference Class Rank" {...field} />
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="Conference Class Rank"
+                {...field}
+              />
             )}
           />
         </div>
@@ -573,37 +594,93 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           <Controller
             control={control}
             name="overview.total"
-            render={({ field }) => <Input label="Total" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="Total"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.5star"
-            render={({ field }) => <Input label="5 Star" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="5 Star"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.4star"
-            render={({ field }) => <Input label="4 Star" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="4 Star"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.3star"
-            render={({ field }) => <Input label="3 Star" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="3 Star"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.2star"
-            render={({ field }) => <Input label="2 Star" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="2 Star"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.1star"
-            render={({ field }) => <Input label="1 Star" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="1 Star"
+                {...field}
+              />
+            )}
           />
           <Controller
             control={control}
             name="overview.pts"
-            render={({ field }) => <Input label="Pts" {...field} />}
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                label="Pts"
+                {...field}
+              />
+            )}
           />
         </div>
       </section>
@@ -623,19 +700,38 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`recruits.${index}.firstName`}
-                render={({ field }) => <Input label="First Name" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="First Name"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`recruits.${index}.lastName`}
-                render={({ field }) => <Input label="Last Name" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Last Name"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`recruits.${index}.position`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
                     label="Pos."
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={value}
                     defaultSelectedKeys={[value || '']}
                     onChange={onChange}
@@ -651,14 +747,25 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`recruits.${index}.stars`}
-                render={({ field }) => <Input label="Stars" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Stars"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`recruits.${index}.devTrait`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
                     label="Dev Trait"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={value}
                     defaultSelectedKeys={[value || '']}
                     onChange={onChange}
@@ -673,10 +780,13 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`recruits.${index}.gem`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
                     label="Gem"
                     value={String(value)}
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     onChange={onChange}
                     defaultSelectedKeys={[String(value) || '']}
                   >
@@ -696,12 +806,28 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`recruits.${index}.nationalRank`}
-                render={({ field }) => <Input label="Nat'l Rank" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Nat'l Rank"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`recruits.${index}.overall`}
-                render={({ field }) => <Input label="Ovr" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Ovr"
+                    {...field}
+                  />
+                )}
               />
             </div>
           ))}
@@ -724,18 +850,37 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`transfers.${index}.firstName`}
-                render={({ field }) => <Input label="First Name" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="First Name"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`transfers.${index}.lastName`}
-                render={({ field }) => <Input label="Last Name" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Last Name"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`transfers.${index}.position`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     defaultSelectedKeys={[value || '']}
                     label="Pos."
                     value={value}
@@ -752,15 +897,26 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`transfers.${index}.stars`}
-                render={({ field }) => <Input label="Stars" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Stars"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`transfers.${index}.devTrait`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
                     defaultSelectedKeys={[value || '']}
                     label="Dev Trait"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={value}
                     onChange={onChange}
                   >
@@ -773,16 +929,27 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`transfers.${index}.nationalRank`}
-                render={({ field }) => <Input label="Nat'l Rank" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    label="Nat'l Rank"
+                    {...field}
+                  />
+                )}
               />
               <Controller
                 control={control}
                 name={`transfers.${index}.class`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <Select
                     label="Class"
                     value={String(value)}
                     onChange={onChange}
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     defaultSelectedKeys={[String(value) || '']}
                   >
                     <SelectItem key={'FR'} value="FR">
@@ -803,25 +970,26 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`transfers.${index}.redshirt`}
-                render={({ field }) => (
-                  <label>
+                render={({ field, fieldState }) => (
+                  <Checkbox
+                    validationBehavior="aria"
+                    isInvalid={fieldState.invalid}
+                    defaultChecked={field.value || false}
+                    checked={field.value || false}
+                    onChange={field.onChange}
+                    onBlur={field.onBlur}
+                    name={field.name}
+                    ref={field.ref}
+                  >
                     Redshirt
-                    <Checkbox
-                      defaultChecked={field.value || false}
-                      checked={field.value || false}
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                      name={field.name}
-                      ref={field.ref}
-                    />
-                  </label>
+                  </Checkbox>
                 )}
               />
               <div className="col-span-2">
                 <Controller
                   control={control}
                   name={`transfers.${index}.from`}
-                  render={({ field: { value, onChange } }) => (
+                  render={({ field: { value, onChange }, fieldState }) => (
                     <SearchableSelect
                       placeholder="From"
                       value={teamOptions?.find(
@@ -837,7 +1005,15 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
               <Controller
                 control={control}
                 name={`transfers.${index}.overall`}
-                render={({ field }) => <Input label="Ovr" {...field} />}
+                render={({ field, fieldState }) => (
+                  <Input
+                    label="Ovr"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    {...field}
+                  />
+                )}
               />
             </div>
           ))}
@@ -849,7 +1025,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           Save
         </Button>
       </div>
-    </form>
+    </Form>
   )
 }
 

@@ -4,7 +4,7 @@ import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
-import { Button, Checkbox, Input } from "@heroui/react"
+import { Button, Checkbox, Form, Input } from '@heroui/react'
 import { Position } from '@/db/types/player'
 import { AllAmerican, TeamSelection } from '@/db/types/allAmerican'
 import createNewPlayer, {
@@ -176,7 +176,7 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
           Create existing or new All American players for {year}
         </p>
       </div>
-      <form
+      <Form
         className="flex flex-col gap-8  justify-center"
         onSubmit={handleSubmit(handleSave)}
       >
@@ -188,7 +188,7 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
             <Controller
               name={`allAmericans.${index}.doesPlayerExist`}
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <div
                   onKeyUp={(e) => {
                     if (e.key === 'Enter') {
@@ -198,6 +198,8 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
                   }}
                 >
                   <Checkbox
+                    validationBehavior="aria"
+                    isInvalid={fieldState.invalid}
                     defaultSelected={field.value}
                     checked={field.value}
                     onChange={field.onChange}
@@ -215,12 +217,12 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
             <Controller
               name={`allAmericans.${index}.playerId`}
               control={control}
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 const existingPlayer = watch(
                   `allAmericans.${index}.doesPlayerExist`
                 )
 
-                if (!existingPlayer) return null
+                if (!existingPlayer) return <span />
 
                 const selectedValue = playerOptions?.find(
                   (player) => String(player.value) === String(field.value)
@@ -233,6 +235,8 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
                       value={selectedValue}
                       onChange={field.onChange}
                       options={playerOptions || []}
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                     />
                   </div>
                 )
@@ -241,50 +245,69 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
             <Controller
               name={`allAmericans.${index}.firstName`}
               control={control}
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 const existingPlayer = watch(
                   `allAmericans.${index}.doesPlayerExist`
                 )
 
-                if (existingPlayer) return null
+                if (existingPlayer) return <span />
 
-                return <Input {...field} label="First Name" />
+                return (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    {...field}
+                    label="First Name"
+                  />
+                )
               }}
             />
             <Controller
               name={`allAmericans.${index}.lastName`}
               control={control}
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 const existingPlayer = watch(
                   `allAmericans.${index}.doesPlayerExist`
                 )
 
-                if (existingPlayer) return null
+                if (existingPlayer) return <span />
 
-                return <Input {...field} label="Last Name" />
+                return (
+                  <Input
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    {...field}
+                    label="Last Name"
+                  />
+                )
               }}
             />
             <Controller
               name={`allAmericans.${index}.teamId`}
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <TeamSelect
                   value={String(field.value)}
                   onChange={field.onChange}
-                  errors={{}}
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   classname="w-1/4 col-span-2"
-                  teamOptions={teamOptions}
+                  teamOptions={teamOptions || []}
                 />
               )}
             />
             <Controller
               name={`allAmericans.${index}.redshirt`}
               control={control}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Checkbox
                   defaultSelected={field.value}
                   checked={field.value}
                   onChange={field.onChange}
+                  validationBehavior="aria"
+                  isInvalid={fieldState.invalid}
                 >
                   Redshirt?
                 </Checkbox>
@@ -293,27 +316,42 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
             <Controller
               control={control}
               name={`allAmericans.${index}.playerClass`}
-              render={({ field }) => {
+              render={({ field, fieldState }) => {
                 const isRedshirt = watch(`allAmericans.${index}.redshirt`)
 
                 return (
-                  <ClassSelect isRedshirt={isRedshirt || false} {...field} />
+                  <ClassSelect
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
+                    isRedshirt={isRedshirt || false}
+                    {...field}
+                  />
                 )
               }}
             />
             <Controller
               control={control}
               name={`allAmericans.${index}.selection`}
-              render={({ field }) => (
-                <AllAmericanSelectionSelect className="col-span-2" {...field} />
+              render={({ field, fieldState }) => (
+                <AllAmericanSelectionSelect
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  className="col-span-2"
+                  {...field}
+                />
               )}
             />
             <Controller
               control={control}
               name={`allAmericans.${index}.conference`}
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <AllAmericanConferenceSelect
                   className="col-span-2"
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   {...field}
                 />
               )}
@@ -326,7 +364,7 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
             Save
           </Button>
         </div>
-      </form>
+      </Form>
     </div>
   )
 }

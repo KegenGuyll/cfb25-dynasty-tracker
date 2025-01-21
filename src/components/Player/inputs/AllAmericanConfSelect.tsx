@@ -1,7 +1,7 @@
 import { allAmericanConfOptions } from '@/db/types/allAmerican'
 import { playerClassOptions } from '@/db/types/player'
-import { Select, SelectItem } from "@heroui/react"
-import { ChangeEventHandler } from 'react'
+import { Select, SelectItem } from '@heroui/react'
+import { ChangeEventHandler, ReactNode } from 'react'
 
 type AllAmericanConfSelectProps = {
   value: string | undefined
@@ -12,6 +12,9 @@ type AllAmericanConfSelectProps = {
   name?: string | undefined
   ref: React.Ref<HTMLSelectElement>
   className?: string
+  validationBehavior?: 'aria' | 'native' | undefined
+  errorMessage?: ReactNode | ((v: any) => ReactNode)
+  isInvalid?: boolean | undefined
 }
 
 const AllAmericanConferenceSelect: React.FC<AllAmericanConfSelectProps> = ({

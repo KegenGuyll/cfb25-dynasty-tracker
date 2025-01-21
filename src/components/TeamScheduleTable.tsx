@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchableSelect from './SearchableSelect'
-import { Select, SelectItem, Input } from "@heroui/react"
+import { Select, SelectItem, Input } from '@heroui/react'
 import { Control, Controller } from 'react-hook-form'
 import { TeamScheduleFormData } from '@/app/team-schedule/create/page'
 
@@ -16,7 +16,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
   control,
 }: TeamScheduleTableProps) => {
   return (
-    <table className="table-auto border-separate rounded bg-default-50">
+    <table className="table-auto border-separate rounded bg-default-50 w-full">
       <thead className="bg-default-100 text-center uppercase text-md font-semibold rounded-t">
         <tr>
           <th scope="col" className="px-4 py-3 text-center bg-default-100">
@@ -36,19 +36,18 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
               <Controller
                 control={control}
                 name={`games.${i}.location`}
-                render={({ field, formState: { errors, isValid } }) => (
+                render={({ field, fieldState }) => (
                   <Select
                     tabIndex={0}
                     fullWidth
                     size="lg"
                     isRequired
-                    isInvalid={
-                      errors.games?.[i]?.location?.message ? true : false
-                    }
                     {...field}
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     selectedKeys={[field.value]}
                     defaultSelectedKeys={[field.value]}
-                    errorMessage={errors.games?.[i]?.location?.message}
                   >
                     {['VS', 'AT', 'BYE'].map((location) => (
                       <SelectItem key={location} value={location}>
@@ -63,7 +62,7 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
               <Controller
                 control={control}
                 name={`games.${i}.opponent`}
-                render={({ field: { value, onChange } }) => (
+                render={({ field: { value, onChange }, fieldState }) => (
                   <SearchableSelect
                     label="Opponent"
                     value={teamOptions?.find(
@@ -72,6 +71,8 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                     onChange={onChange}
                     placeholder="Select Opponent"
                     options={teamOptions}
+                    isInvalid={fieldState.invalid}
+                    errorMessage={fieldState.error?.message}
                   />
                 )}
               />

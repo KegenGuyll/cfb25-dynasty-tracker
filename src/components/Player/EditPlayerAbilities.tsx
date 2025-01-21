@@ -11,7 +11,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
 import { useEffect, useMemo, useState } from 'react'
-import { Divider, Select, SelectItem } from "@heroui/react"
+import { Divider, Form, Select, SelectItem } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 
@@ -178,7 +178,7 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
       handleClose={handleClose}
       formId="player-abilities-form"
     >
-      <form
+      <Form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-4"
         id="player-abilities-form"
@@ -186,7 +186,7 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
         <Controller
           control={control}
           name="tendency"
-          render={({ field: { value, onChange }, formState: { errors } }) => (
+          render={({ field: { value, onChange }, fieldState }) => (
             <Select
               label="Tendency"
               isRequired
@@ -194,8 +194,9 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
               value={value}
               onChange={onChange}
               defaultSelectedKeys={[value || '']}
-              isInvalid={errors.tendency?.message ? true : false}
-              errorMessage={errors?.tendency?.message}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             >
               {playerTendencies?.map((tendency) => (
                 <SelectItem key={tendency.key}>{tendency.label}</SelectItem>
@@ -207,7 +208,7 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
         <Controller
           control={control}
           name="mentalTraits"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Select
               selectionMode="multiple"
               label="Mental Abilities"
@@ -221,6 +222,9 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
                 )
                 updateSelectedMentalTraits(values)
               }}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             >
               {playerMentalAbilitiesOptions.map((ability) => (
                 <SelectItem key={ability.name}>{ability.name}</SelectItem>
@@ -270,12 +274,15 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
         <Controller
           control={control}
           name="physicalTraits"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Select
               selectionMode="multiple"
               label="Physical Abilities"
               defaultSelectedKeys={field.value?.map((v) => v.trait)}
               {...field}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
               value={field.value?.map((v) => v.trait)}
               onChange={(value) => {
                 const values = value.target.value.split(',')
@@ -331,7 +338,7 @@ const EditPlayerAbilities: React.FC<EditPlayerAbilitiesProps> = ({
           </label>
         </div>
         <Divider />
-      </form>
+      </Form>
     </EditModal>
   )
 }

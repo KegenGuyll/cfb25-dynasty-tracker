@@ -19,10 +19,11 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Form,
   Input,
   Spinner,
   Textarea,
-} from "@heroui/react"
+} from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -181,7 +182,7 @@ const DynastyDashboardPage: React.FC<DynastyDashboardPageProps> = ({
         handleClose={() => setOpenEdit(false)}
         formId="edit-dynasty-form"
       >
-        <form
+        <Form
           id="edit-dynasty-form"
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(handleUpdateDynasty)}
@@ -189,16 +190,31 @@ const DynastyDashboardPage: React.FC<DynastyDashboardPageProps> = ({
           <Controller
             control={control}
             name="name"
-            render={({ field }) => <Input {...field} placeholder="Name" />}
+            render={({ field, fieldState }) => (
+              <Input
+                {...field}
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                placeholder="Name"
+              />
+            )}
           />
           <Controller
             control={control}
             name="description"
-            render={({ field }) => (
-              <Textarea rows={6} {...field} placeholder="Description" />
+            render={({ field, fieldState }) => (
+              <Textarea
+                rows={6}
+                {...field}
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                placeholder="Description"
+              />
             )}
           />
-        </form>
+        </Form>
       </EditModal>
     </div>
   )

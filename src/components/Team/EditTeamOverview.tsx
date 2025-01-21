@@ -2,7 +2,7 @@ import { Controller, useForm } from 'react-hook-form'
 import EditModal from '../Modal/EditModal'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from "@heroui/react"
+import { Form, Input } from '@heroui/react'
 import { db } from '@/db/db.model'
 import { TeamInfo } from '@/db/types/teamInfo'
 import { useEffect } from 'react'
@@ -33,7 +33,7 @@ export const teamOverviewSchema = yup.object({
   defPlaybook: yup.string().optional(),
   coachesPollRanking: yup.string().optional(),
   apPollRanking: yup.string().optional(),
-  programPrestige: yup.string().optional(),
+  programPrestige: yup.number().min(1).max(5).optional(),
 })
 
 type TeamOverviewFormData = yup.InferType<typeof teamOverviewSchema>
@@ -72,7 +72,10 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
       teamInfo.coachesPollRanking?.toString() || ''
     )
     setValue('apPollRanking', teamInfo.apPollRanking?.toString() || '')
-    setValue('programPrestige', teamInfo.programPrestige?.toString() || '')
+    setValue(
+      'programPrestige',
+      teamInfo.programPrestige ? Number(teamInfo.programPrestige) : undefined
+    )
   }, [setValue, teamInfo])
 
   const handleSave = async (data: TeamOverviewFormData) => {
@@ -131,7 +134,7 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
       formId="team-overview-form"
       size="xl"
     >
-      <form
+      <Form
         id="team-overview-form"
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleSave)}
@@ -142,22 +145,43 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="teamOverall"
-              render={({ field }) => (
-                <Input label="Team Ovr" {...field} placeholder="Overall" />
+              render={({ field, fieldState }) => (
+                <Input
+                  label="Team Ovr"
+                  {...field}
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  placeholder="Overall"
+                />
               )}
             />
             <Controller
               control={control}
               name="teamOffense"
-              render={({ field }) => (
-                <Input label="Offense Ovr" {...field} placeholder="Offense" />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Offense Ovr"
+                  {...field}
+                  placeholder="Offense"
+                />
               )}
             />
             <Controller
               control={control}
               name="teamDefense"
-              render={({ field }) => (
-                <Input label="Defense Ovr" {...field} placeholder="Defense" />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Defense Ovr"
+                  {...field}
+                  placeholder="Defense"
+                />
               )}
             />
           </div>
@@ -166,8 +190,15 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="programPrestige"
-              render={({ field }) => (
-                <Input {...field} label="Program Prestige (1-5)" />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  {...field}
+                  value={field.value?.toString()}
+                  label="Program Prestige (1-5)"
+                />
               )}
             />
           </div>
@@ -178,20 +209,40 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="headCoach"
-              render={({ field }) => <Input label="Head Coach" {...field} />}
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Head Coach"
+                  {...field}
+                />
+              )}
             />
             <Controller
               control={control}
               name="offensiveCoordinator"
-              render={({ field }) => (
-                <Input label="Offensive Coordinator" {...field} />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Offensive Coordinator"
+                  {...field}
+                />
               )}
             />
             <Controller
               control={control}
               name="defensiveCoordinator"
-              render={({ field }) => (
-                <Input label="Defensive Coordinator" {...field} />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Defensive Coordinator"
+                  {...field}
+                />
               )}
             />
           </div>
@@ -202,15 +253,27 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="offPlaybook"
-              render={({ field }) => (
-                <Input label="Offensive Playbook" {...field} />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Offensive Playbook"
+                  {...field}
+                />
               )}
             />
             <Controller
               control={control}
               name="defPlaybook"
-              render={({ field }) => (
-                <Input label="Defensive Playbook" {...field} />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Defensive Playbook"
+                  {...field}
+                />
               )}
             />
           </div>
@@ -221,8 +284,11 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="coachesPollRanking"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   label="Coaches Poll"
                   {...field}
                   placeholder="Coaches Poll Ranking"
@@ -232,8 +298,11 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="apPollRanking"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   label="AP Poll"
                   {...field}
                   placeholder="AP Poll Ranking"
@@ -248,36 +317,59 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="teamWins"
-              render={({ field }) => (
-                <Input label="Wins" {...field} placeholder="Wins" />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Wins"
+                  {...field}
+                  placeholder="Wins"
+                />
               )}
             />
             <Controller
               control={control}
               name="teamLosses"
-              render={({ field }) => (
-                <Input label="Losses" {...field} placeholder="Losses" />
+              render={({ field, fieldState }) => (
+                <Input
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
+                  label="Losses"
+                  {...field}
+                  placeholder="Losses"
+                />
               )}
             />
           </div>
         </div>
         <div className="flex flex-col gap-2">
           <span>Conference</span>
-
           <Controller
             control={control}
             name="conference"
-            render={({ field }) => (
-              <Input {...field} label="Conf Name" placeholder="Conference" />
+            render={({ field, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                {...field}
+                label="Conf Name"
+                placeholder="Conference"
+              />
             )}
           />
           <div className="flex gap-2">
             <Controller
               control={control}
               name="positionInConference"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Input
                   {...field}
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   label="Conf Rank"
                   placeholder="Position in Conference"
                 />
@@ -286,9 +378,12 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="conferenceWins"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Input
                   label="Conf Wins"
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   {...field}
                   placeholder="Conference Wins"
                 />
@@ -297,9 +392,12 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             <Controller
               control={control}
               name="conferenceLosses"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <Input
                   label="Conf Losses"
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   {...field}
                   placeholder="Conference Losses"
                 />
@@ -307,7 +405,7 @@ const EditTeamOverview: React.FC<EditTeamOverviewProps> = ({
             />
           </div>
         </div>
-      </form>
+      </Form>
     </EditModal>
   )
 }

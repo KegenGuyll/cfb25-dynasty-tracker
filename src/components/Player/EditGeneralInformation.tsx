@@ -7,7 +7,7 @@ import EditModal from '../Modal/EditModal'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input, Select, SelectItem } from "@heroui/react"
+import { Form, Input, Select, SelectItem } from '@heroui/react'
 import { db } from '@/db/db.model'
 
 type EditPlayerGeneralInformationProps = {
@@ -56,7 +56,7 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
       formId="general-information-form"
       title={`${player.information.firstName} ${player.information.lastName}`}
     >
-      <form
+      <Form
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(onSubmit)}
         id="general-information-form"
@@ -64,24 +64,30 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
         <Controller
           name="number"
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState }) => (
             <Input
               value={value || undefined}
               onChange={onChange}
               label="Number"
               placeholder="Number"
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             />
           )}
         />
         <Controller
           name="position"
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState }) => (
             <Select
               label="Pos."
               value={value}
               defaultSelectedKeys={[value || '']}
               onChange={onChange}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             >
               {playerPositionOptions.map((position) => (
                 <SelectItem key={position.key}>{position.label}</SelectItem>
@@ -92,12 +98,15 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
         <Controller
           name="devTrait"
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState }) => (
             <Select
               label="Dev Trait"
               value={value}
               defaultSelectedKeys={[value || '']}
               onChange={onChange}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             >
               {playerDevTraitOptions.map((trait) => (
                 <SelectItem key={trait.key}>{trait.label}</SelectItem>
@@ -105,7 +114,7 @@ const EditGeneralInformation: React.FC<EditPlayerGeneralInformationProps> = ({
             </Select>
           )}
         />
-      </form>
+      </Form>
     </EditModal>
   )
 }

@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
-import { Input, Select, SelectItem } from "@heroui/react"
+import { Form, Input, Select, SelectItem } from '@heroui/react'
 import states from '@/data/States.json'
 import convertInchesToFeet from '@/utils/convertInchesToFeet'
 
@@ -70,7 +70,7 @@ const EditPersonalInformation: React.FC<EditPersonalInformationProps> = ({
       handleClose={handleClose}
       formId="personal-information-form"
     >
-      <form
+      <Form
         onSubmit={handleSubmit(onSubmit)}
         id="personal-information-form"
         className="flex flex-col gap-4"
@@ -79,19 +79,29 @@ const EditPersonalInformation: React.FC<EditPersonalInformationProps> = ({
           <Controller
             name="hometown.city"
             control={control}
-            render={({ field: { value, onChange } }) => (
-              <Input value={value} onChange={onChange} label="City" />
+            render={({ field: { value, onChange }, fieldState }) => (
+              <Input
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                value={value}
+                onChange={onChange}
+                label="City"
+              />
             )}
           />
           <Controller
             name="hometown.state"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { value, onChange }, fieldState }) => (
               <Select
                 label="State"
                 value={value}
                 defaultSelectedKeys={[value || '']}
                 onChange={onChange}
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
               >
                 {Object.entries(states).map(([state, stateName]) => (
                   <SelectItem key={state}>{stateName}</SelectItem>
@@ -104,24 +114,30 @@ const EditPersonalInformation: React.FC<EditPersonalInformationProps> = ({
           <Controller
             name="height.feet"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { value, onChange }, fieldState }) => (
               <Input
                 value={value ? String(value) : undefined}
                 onChange={onChange}
                 label="Feet"
                 type="number"
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
               />
             )}
           />
           <Controller
             name="height.inches"
             control={control}
-            render={({ field: { value, onChange } }) => (
+            render={({ field: { value, onChange }, fieldState }) => (
               <Input
                 value={value ? String(value) : undefined}
                 onChange={onChange}
                 label="Inches"
                 type="number"
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
               />
             )}
           />
@@ -129,16 +145,19 @@ const EditPersonalInformation: React.FC<EditPersonalInformationProps> = ({
         <Controller
           name="weight"
           control={control}
-          render={({ field: { value, onChange } }) => (
+          render={({ field: { value, onChange }, fieldState }) => (
             <Input
               value={value ? String(value) : undefined}
               onChange={onChange}
               label="Weight"
               type="number"
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
             />
           )}
         />
-      </form>
+      </Form>
     </EditModal>
   )
 }

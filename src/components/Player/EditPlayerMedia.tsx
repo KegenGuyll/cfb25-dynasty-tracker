@@ -4,6 +4,7 @@ import FileUploadButton from '../FileUploadButton'
 import { FormEvent, useState } from 'react'
 import Image from 'next/image'
 import { db } from '@/db/db.model'
+import { Form } from '@heroui/react'
 
 type EditPlayerMediaProps = {
   player: Player
@@ -83,7 +84,7 @@ const EditPlayerMedia: React.FC<EditPlayerMediaProps> = ({
       handleClose={handleClose}
       formId="player-media-form"
     >
-      <form onSubmit={bulkAddMedia} id="player-media-form">
+      <Form onSubmit={bulkAddMedia} id="player-media-form">
         <FileUploadButton
           className="w-full"
           fileAccept="image/*, video/*"
@@ -116,7 +117,7 @@ const EditPlayerMedia: React.FC<EditPlayerMediaProps> = ({
             )}
           </div>
         ))}
-      </form>
+      </Form>
     </EditModal>
   )
 }

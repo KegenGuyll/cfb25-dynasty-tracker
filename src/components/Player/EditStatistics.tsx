@@ -1,8 +1,8 @@
 import { Player } from '@/db/types/player'
-import { Controller, useFieldArray, useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button } from "@heroui/react"
+import { Button, Form } from '@heroui/react'
 import GenericInputTable from '../tables/GenericInputTable'
 import {
   defenseInputColumns,
@@ -268,7 +268,7 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
       title="Statistics"
       size="full"
     >
-      <form id="statistics-form" onSubmit={handleSubmit(onSubmit)}>
+      <Form id="statistics-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="pt-8 flex flex-col gap-8">
           <h2 className="text-2xl">Career Stats</h2>
           <div className="flex gap-4">
@@ -330,7 +330,7 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
             />
           )}
         </div>
-      </form>
+      </Form>
     </EditModal>
   )
 }

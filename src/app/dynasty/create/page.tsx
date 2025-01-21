@@ -2,13 +2,13 @@
 
 import { db } from '@/db/db.model'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input, Textarea } from "@heroui/react"
+import { Button, Form, Input, Textarea } from '@heroui/react'
 import { useRouter } from 'next/navigation'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 
 export const dynastySchema = yup.object({
-  name: yup.string().required('Name is required'),
+  name: yup.string().required('A Dynasty name is required'),
   description: yup.string().optional(),
 })
 
@@ -17,11 +17,7 @@ type DynastyFormData = yup.InferType<typeof dynastySchema>
 const CreateDynastyPage: React.FC = () => {
   const router = useRouter()
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<DynastyFormData>({
+  const { control, handleSubmit } = useForm<DynastyFormData>({
     resolver: yupResolver(dynastySchema),
   })
 
@@ -43,26 +39,41 @@ const CreateDynastyPage: React.FC = () => {
           Create a new dynasty to start tracking your progress.
         </p>
       </div>
-      <form
+      <Form
         className="flex flex-col gap-4"
         onSubmit={handleSubmit(handleCreateDynasty)}
       >
         <Controller
           control={control}
           name="name"
-          render={({ field }) => <Input {...field} placeholder="Name" />}
+          render={({ field, fieldState }) => (
+            <Input
+              {...field}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              placeholder="Name"
+            />
+          )}
         />
         <Controller
           control={control}
           name="description"
-          render={({ field }) => (
-            <Textarea rows={6} {...field} placeholder="Description" />
+          render={({ field, fieldState }) => (
+            <Textarea
+              {...field}
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
+              rows={6}
+              placeholder="Description"
+            />
           )}
         />
         <Button color="primary" type="submit">
           Get Started
         </Button>
-      </form>
+      </Form>
     </div>
   )
 }

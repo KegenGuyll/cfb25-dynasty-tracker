@@ -5,7 +5,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
-import { Button, Input } from "@heroui/react"
+import { Button, Input, Form } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect } from 'react'
 
@@ -97,7 +97,7 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
         </p>
       </div>
       <div className="w-1/2">
-        <form
+        <Form
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(handleSave)}
         >
@@ -109,8 +109,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                 label="Year"
                 isRequired
                 {...field}
-                isInvalid={fieldState.error?.message ? true : false}
+                validationBehavior="aria"
                 errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
                 value={field.value ? String(field.value) : undefined}
                 onChange={(e) => field.onChange(parseInt(e.target.value))}
               />
@@ -127,8 +128,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                   <Input
                     label="Wins"
                     {...field}
-                    isInvalid={fieldState.error?.message ? true : false}
+                    validationBehavior="aria"
                     errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={field.value ? String(field.value) : undefined}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
                   />
@@ -141,8 +143,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                   <Input
                     label="Losses"
                     {...field}
-                    isInvalid={fieldState.error?.message ? true : false}
+                    validationBehavior="aria"
                     errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={field.value ? String(field.value) : undefined}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
                   />
@@ -158,8 +161,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                   <Input
                     label="Team Ovr"
                     {...field}
-                    isInvalid={fieldState.error?.message ? true : false}
+                    validationBehavior="aria"
                     errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={field.value ? String(field.value) : undefined}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
                   />
@@ -173,8 +177,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                     <Input
                       label="Offense Ovr"
                       {...field}
-                      isInvalid={fieldState.error?.message ? true : false}
+                      validationBehavior="aria"
                       errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                       value={field.value ? String(field.value) : undefined}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
@@ -187,8 +192,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                     <Input
                       label="Defense Ovr"
                       {...field}
-                      isInvalid={fieldState.error?.message ? true : false}
+                      validationBehavior="aria"
                       errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                       value={field.value ? String(field.value) : undefined}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}
                     />
@@ -206,8 +212,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                 <Input
                   label="Conf Name"
                   {...field}
-                  isInvalid={fieldState.error?.message ? true : false}
+                  validationBehavior="aria"
                   errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   value={field.value ? String(field.value) : undefined}
                   onChange={(e) => field.onChange(e.target.value)}
                 />
@@ -220,8 +227,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                 <Input
                   label="Conf Rank"
                   {...field}
-                  isInvalid={fieldState.error?.message ? true : false}
+                  validationBehavior="aria"
                   errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   value={field.value ? String(field.value) : undefined}
                   onChange={(e) => field.onChange(parseInt(e.target.value))}
                 />
@@ -235,8 +243,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                   <Input
                     label="Conf Wins"
                     {...field}
-                    isInvalid={fieldState.error?.message ? true : false}
+                    validationBehavior="aria"
                     errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={field.value ? String(field.value) : undefined}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
                   />
@@ -249,8 +258,9 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
                   <Input
                     label="Conf Losses"
                     {...field}
-                    isInvalid={fieldState.error?.message ? true : false}
+                    validationBehavior="aria"
                     errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                     value={field.value ? String(field.value) : undefined}
                     onChange={(e) => field.onChange(parseInt(e.target.value))}
                   />
@@ -258,11 +268,10 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
               />
             </div>
           </div>
-
           <Button className="w-full" type="submit" color="primary">
             Create
           </Button>
-        </form>
+        </Form>
       </div>
     </div>
   )

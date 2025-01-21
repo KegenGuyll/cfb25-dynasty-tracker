@@ -4,7 +4,8 @@ import classNames from 'classnames'
 type Props = {
   value: string
   onChange?: (value: string | undefined) => void
-  errors?: Record<string, { message: string }>
+  isInvalid?: boolean
+  errorMessage?: string
   classname?: string
   teamOptions: OptionType[]
 }
@@ -12,7 +13,8 @@ type Props = {
 const TeamSelect: React.FC<Props> = ({
   value,
   onChange,
-  errors,
+  isInvalid,
+  errorMessage,
   classname,
   teamOptions,
 }: Props) => {
@@ -26,10 +28,10 @@ const TeamSelect: React.FC<Props> = ({
           (option) => String(option.value) === String(value)
         )}
         onChange={onChange}
-        isInvalid={errors?.teamId?.message ? true : false}
+        errorMessage={errorMessage}
+        isInvalid={isInvalid}
         isRequired
       />
-      <span className="text-xs text-danger">{errors?.teamId?.message}</span>
     </div>
   )
 }

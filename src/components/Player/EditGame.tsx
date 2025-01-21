@@ -3,7 +3,7 @@ import EditModal from '../Modal/EditModal'
 import { Controller, set, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Checkbox, Input, Select, SelectItem } from "@heroui/react"
+import { Checkbox, Form, Input, Select, SelectItem } from '@heroui/react'
 import { db } from '@/db/db.model'
 import TeamSelect from '../TeamSelect'
 import { useLiveQuery } from 'dexie-react-hooks'
@@ -151,43 +151,47 @@ const EditGame: React.FC<EditGameProps> = ({
       title={`Week ${game?.week}`}
       size="2xl"
     >
-      <form
+      <Form
         onSubmit={handleSubmit(handleSave)}
         className="flex flex-col gap-4"
         id="edit-game-form"
       >
-        <div className="flex flex-col gap-2">
-          <div>
-            <Controller
-              control={control}
-              name="result"
-              render={({ field: { value, onChange } }) => {
-                return (
-                  <Select
-                    label="Game Result"
-                    value={value || ''}
-                    selectedKeys={[String(value)]}
-                    defaultSelectedKeys={[String(value)]}
-                    onChange={onChange}
-                  >
-                    {['W', 'L'].map((result) => (
-                      <SelectItem key={result} value={result}>
-                        {result}
-                      </SelectItem>
-                    ))}
-                  </Select>
-                )
-              }}
-            />
-          </div>
-        </div>
+        <Controller
+          control={control}
+          name="result"
+          render={({ field: { value, onChange }, fieldState }) => {
+            return (
+              <Select
+                className="max-w-[125px]"
+                isRequired
+                label="Game Result"
+                value={value || ''}
+                selectedKeys={[String(value)]}
+                defaultSelectedKeys={[String(value)]}
+                validationBehavior="aria"
+                errorMessage={fieldState.error?.message}
+                isInvalid={fieldState.invalid}
+                onChange={onChange}
+              >
+                {['W', 'L'].map((result) => (
+                  <SelectItem key={result} value={result}>
+                    {result}
+                  </SelectItem>
+                ))}
+              </Select>
+            )
+          }}
+        />
         <Controller
           control={control}
           name="customGameName"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Input
               label="Custom Game Name"
               placeholder="Game Name (Bowl Game, Playoff Game, etc.)"
+              validationBehavior="aria"
+              errorMessage={fieldState.error?.message}
+              isInvalid={fieldState.invalid}
               {...field}
             />
           )}
@@ -195,11 +199,13 @@ const EditGame: React.FC<EditGameProps> = ({
         <Controller
           control={control}
           name="overtime"
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Checkbox
               defaultChecked={field.value}
               checked={field.value}
               onChange={field.onChange}
+              validationBehavior="aria"
+              isInvalid={fieldState.invalid}
             >
               Overtime?
             </Checkbox>
@@ -211,7 +217,7 @@ const EditGame: React.FC<EditGameProps> = ({
             <Controller
               control={control}
               name="awayTeamId"
-              render={({ field: { value, onChange } }) => {
+              render={({ field: { value, onChange }, fieldState }) => {
                 return (
                   <label>
                     <span>Away Team</span>
@@ -219,6 +225,8 @@ const EditGame: React.FC<EditGameProps> = ({
                       teamOptions={teamOptions || []}
                       value={String(value)}
                       onChange={onChange}
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                     />
                   </label>
                 )
@@ -227,7 +235,7 @@ const EditGame: React.FC<EditGameProps> = ({
             <Controller
               control={control}
               name="homeTeamId"
-              render={({ field: { value, onChange } }) => {
+              render={({ field: { value, onChange }, fieldState }) => {
                 return (
                   <label>
                     <span>Home Team</span>
@@ -235,6 +243,8 @@ const EditGame: React.FC<EditGameProps> = ({
                       teamOptions={teamOptions || []}
                       value={String(value)}
                       onChange={onChange}
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                     />
                   </label>
                 )
@@ -244,13 +254,16 @@ const EditGame: React.FC<EditGameProps> = ({
             <Controller
               control={control}
               name="gameLocation"
-              render={({ field: { value, onChange } }) => (
+              render={({ field: { value, onChange }, fieldState }) => (
                 <Select
                   label="Game Location"
                   value={value || ''}
                   selectedKeys={[String(value)]}
                   defaultSelectedKeys={[String(value)]}
                   onChange={onChange}
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                 >
                   {['home', 'away', 'neutral', 'bye'].map((result) => (
                     <SelectItem key={result} value={result}>
@@ -304,12 +317,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.1.home"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -318,12 +334,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.2.home"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -332,12 +351,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.3.home"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -346,12 +368,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.4.home"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -361,12 +386,15 @@ const EditGame: React.FC<EditGameProps> = ({
                 <Controller
                   name="scoreSummary.ot.home"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Input
                       size="lg"
                       {...field}
-                      value={field.value ? String(field.value) : undefined}
+                      value={field.value?.toString()}
                       type="number"
+                      validationBehavior="aria"
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                     />
                   )}
                 />
@@ -376,12 +404,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.final.home"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -397,12 +428,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.1.away"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -411,12 +445,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.2.away"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -425,12 +462,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.3.away"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -439,12 +479,15 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.4.away"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
@@ -454,12 +497,15 @@ const EditGame: React.FC<EditGameProps> = ({
                 <Controller
                   name="scoreSummary.ot.away"
                   control={control}
-                  render={({ field }) => (
+                  render={({ field, fieldState }) => (
                     <Input
                       size="lg"
                       {...field}
-                      value={field.value ? String(field.value) : undefined}
+                      value={field.value?.toString()}
                       type="number"
+                      validationBehavior="aria"
+                      errorMessage={fieldState.error?.message}
+                      isInvalid={fieldState.invalid}
                     />
                   )}
                 />
@@ -469,19 +515,22 @@ const EditGame: React.FC<EditGameProps> = ({
               <Controller
                 name="scoreSummary.final.away"
                 control={control}
-                render={({ field }) => (
+                render={({ field, fieldState }) => (
                   <Input
                     size="lg"
                     {...field}
-                    value={field.value ? String(field.value) : undefined}
+                    value={field.value?.toString()}
                     type="number"
+                    validationBehavior="aria"
+                    errorMessage={fieldState.error?.message}
+                    isInvalid={fieldState.invalid}
                   />
                 )}
               />
             </div>
           </div>
         </div>
-      </form>
+      </Form>
     </EditModal>
   )
 }

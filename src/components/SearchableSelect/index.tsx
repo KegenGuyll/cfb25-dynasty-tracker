@@ -118,6 +118,7 @@ type SearchableSelectProps = {
   onChange?: (value: string | undefined) => void
   value?: { value: string; label: string }
   isInvalid?: boolean
+  errorMessage?: string
   isRequired?: boolean
 }
 
@@ -130,6 +131,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
   value,
   isInvalid,
   isRequired,
+  errorMessage,
 }: SearchableSelectProps) => {
   const inputSelectRef = useRef<SelectInstance<any>>(null)
 
@@ -150,7 +152,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
   }
 
   return (
-    <div className="w-full">
+    <div className="flex flex-col h-full w-full">
       <Select
         ref={inputSelectRef}
         tabIndex={0}
@@ -189,6 +191,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         value={value}
         required={isRequired}
       />
+      <div className="text-tiny text-danger">{errorMessage}</div>
     </div>
   )
 }

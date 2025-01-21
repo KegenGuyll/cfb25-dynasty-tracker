@@ -6,7 +6,7 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure,
-} from "@heroui/react"
+} from '@heroui/react'
 import { useEffect } from 'react'
 
 type EditModalProps = {
@@ -50,6 +50,7 @@ const EditModal: React.FC<EditModalProps> = ({
   return (
     <Modal
       isOpen={isOpen}
+      isDismissable={false}
       onOpenChange={onOpenChange}
       onClose={() => {
         handleClose()

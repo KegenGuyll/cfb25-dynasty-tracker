@@ -7,7 +7,7 @@ import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import { TeamSchedule } from '@/db/types'
 import { formatGameLocation } from '@/utils/teamSchedule'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Button, Input } from "@heroui/react"
+import { Button, Form, Input } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
@@ -24,7 +24,7 @@ export const teamScheduleSchema = yup.object({
     .array()
     .of(
       yup.object({
-        location: yup.string().required('required'),
+        location: yup.string().required('Game location is required'),
         opponent: yup.string().optional().nullable(),
         stadium: yup.string().optional().nullable(),
       })
@@ -103,7 +103,7 @@ const CreateTeamSchedulePage = () => {
 
   return (
     <div>
-      <form
+      <Form
         className="gap-4 flex flex-col"
         onSubmit={handleSubmit(handleAddTeamSchedule)}
       >
@@ -137,10 +137,7 @@ const CreateTeamSchedulePage = () => {
             <Controller
               control={control}
               name="year"
-              render={({
-                field: { value, onChange },
-                formState: { errors },
-              }) => (
+              render={({ field: { value, onChange }, fieldState }) => (
                 <Input
                   id="year"
                   fullWidth
@@ -150,8 +147,9 @@ const CreateTeamSchedulePage = () => {
                   onChange={onChange}
                   placeholder="2024"
                   step={Number(value) >= 2000 ? 1 : 2000}
-                  isInvalid={errors.year?.message ? true : false}
-                  errorMessage={errors.year?.message}
+                  validationBehavior="aria"
+                  errorMessage={fieldState.error?.message}
+                  isInvalid={fieldState.invalid}
                   isRequired
                   required
                 />
@@ -174,7 +172,7 @@ const CreateTeamSchedulePage = () => {
           numberOfWeeks={numberOfWeeks}
           teamOptions={teamOptions || []}
         />
-      </form>
+      </Form>
     </div>
   )
 }

@@ -3,10 +3,21 @@
 import GenericDataTable, {
   TableColumn,
 } from '@/components/tables/GenericDataTable'
+import { db } from '@/db/db.model'
+import { Game } from '@/db/types'
 import { RecruitingClass } from '@/db/types/recruiting'
 import { TeamInfo } from '@/db/types/teamInfo'
 import getAllTeamSeason from '@/queries/dynasty/getAllTeamSeason'
-import { Button, Divider, Spinner } from "@heroui/react"
+import getTeamNationalChampionships, {
+  NationalChampionships,
+  NationalChampionshipsGames,
+} from '@/queries/teamInfo/getTeamNationalChampionships'
+import {
+  determineGameResultWithScore,
+  determineOpp,
+  determineOpponent,
+} from '@/utils/teamSchedule'
+import { Button, Divider, Spinner } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -104,6 +115,49 @@ const teamInfoColumns = (
   { key: 'conferenceLosses', title: 'Conf Losses' },
 ]
 
+const nationalChampionshipsColumns = (
+  dynastyId: string,
+  teamId: string
+): TableColumn<NationalChampionshipsGames>[] => [
+  {
+    title: 'Year',
+    key: 'year',
+    render: (dataRow) => (
+      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
+        {dataRow.year}
+      </Link>
+    ),
+  },
+  {
+    title: 'Coach',
+    key: 'teamInfo.headCoach',
+  },
+  {
+    title: 'Off Playbook',
+    key: 'teamInfo.offPlaybook',
+  },
+  {
+    title: 'Def Playbook',
+    key: 'teamInfo.defPlaybook',
+  },
+  {
+    title: 'Record',
+    key: 'record',
+    render: (dataRow) =>
+      `${dataRow.teamInfo?.teamWins}-${dataRow.teamInfo?.teamLosses}`,
+  },
+  {
+    title: 'Opponent',
+    key: 'opponent',
+    render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
+  },
+  {
+    title: 'Result',
+    key: 'result',
+    render: (dataRow) => determineGameResultWithScore(dataRow),
+  },
+]
+
 const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const router = useRouter()
 
@@ -111,8 +165,10 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const teamSeasons = useLiveQuery(() =>
     getAllTeamSeason(Number(dynastyId), Number(teamId))
   )
-
-  console.log(teamSeasons)
+  const nationalChampionships = useLiveQuery(() =>
+    getTeamNationalChampionships(dynastyId, teamId)
+  )
+  const team = useLiveQuery(() => db.teams.get(Number(teamId)))
 
   const recruitingClasses = useMemo(() => {
     if (!teamSeasons) return []
@@ -143,43 +199,96 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   }, [teamSeasons])
 
   return (
-    <div className=" flex flex-col gap-12 w-full">
-      <div className="w-full flex flex-row-reverse space-y-2">
-        <Button
-          onPress={() =>
-            router.push(
-              `/dynasty/${dynastyId}/dashboard/${teamId}/createSeason`
-            )
-          }
-          className="w-1/5"
-          color="primary"
-        >
-          Add New Season
-        </Button>
+    <div className="grid grid-cols-6 gap-4">
+      <div className="flex flex-col gap-12 w-full col-span-4">
+        <div className="w-full flex flex-row-reverse space-y-2">
+          <Button
+            onPress={() =>
+              router.push(
+                `/dynasty/${dynastyId}/dashboard/${teamId}/createSeason`
+              )
+            }
+            className="w-1/5"
+            color="primary"
+          >
+            Add New Season
+          </Button>
+        </div>
+        {!teamSeasons && <Spinner />}
+        <TeamPageSection title="Season Summary">
+          <GenericDataTable<TeamInfo>
+            data={teamInfo}
+            columns={teamInfoColumns(dynastyId, teamId)}
+          />
+        </TeamPageSection>
+        <TeamPageSection title="Recruiting">
+          <GenericDataTable<RecruitingClass>
+            data={recruitingClasses}
+            columns={recruitingClassColumns(dynastyId, teamId)}
+          />
+        </TeamPageSection>
+        <TeamPageSection title="Championships">
+          <h3 className="text-lg font-semibold">National Championships</h3>
+          <GenericDataTable<Game & { year: number }>
+            columns={nationalChampionshipsColumns(dynastyId, teamId)}
+            data={[
+              ...(nationalChampionships?.wins || []),
+              ...(nationalChampionships?.losses || []),
+            ]}
+          />
+          <h3 className="text-lg font-semibold">Conference Championships</h3>
+        </TeamPageSection>
+        <TeamPageSection title="Awards and Honors">
+          Awards and Honors
+        </TeamPageSection>
+        <TeamPageSection title="Bowl Games">Empty</TeamPageSection>
+        <TeamPageSection title="Championships">
+          Awards and Honors
+        </TeamPageSection>
+        <TeamPageSection title="Hall of Fame">
+          Awards and Honors
+        </TeamPageSection>
       </div>
-      {!teamSeasons && <Spinner />}
-      <TeamPageSection title="Season Summary">
-        <GenericDataTable<TeamInfo>
-          data={teamInfo}
-          columns={teamInfoColumns(dynastyId, teamId)}
-        />
-      </TeamPageSection>
-      <TeamPageSection title="Recruiting">
-        <GenericDataTable<RecruitingClass>
-          data={recruitingClasses}
-          columns={recruitingClassColumns(dynastyId, teamId)}
-        />
-      </TeamPageSection>
-      <TeamPageSection title="Championships">
-        <h3 className="text-lg font-semibold">National Championships</h3>
-        <h3 className="text-lg font-semibold">Conference Championships</h3>
-      </TeamPageSection>
-      <TeamPageSection title="Awards and Honors">
-        Awards and Honors
-      </TeamPageSection>
-      <TeamPageSection title="Bowl Games">Empty</TeamPageSection>
-      <TeamPageSection title="Championships">Awards and Honors</TeamPageSection>
-      <TeamPageSection title="Hall of Fame">Awards and Honors</TeamPageSection>
+      <div className="col-span-2 p-4 flex flex-col gap-12">
+        <div>
+          <h1 className="text-xl font-bold text-center">
+            {team?.school} {team?.nickname}
+          </h1>
+        </div>
+        <ul className="flex flex-col divide-y">
+          <li className="flex flex-col gap-2">
+            <div>
+              <h2 className="text-lg font-semibold">National Championships</h2>
+              <span>
+                {nationalChampionships?.totalAppearances} appearances in{' '}
+                {teamSeasons?.length} seasons
+              </span>
+            </div>
+            <ul className="flex flex-col gap-2 pl-4 list-disc">
+              {nationalChampionships?.wins.map((game) => (
+                <li key={game.year}>
+                  <Link
+                    href={`/dynasty/${dynastyId}/dashboard/${teamId}/${game.year}#${game.week}`}
+                  >
+                    {determineGameResultWithScore(game)} VS{' '}
+                    {game[determineOpponent(game)]?.school} ({game.year})
+                  </Link>
+                </li>
+              ))}
+              {nationalChampionships?.losses.map((game) => (
+                <li key={game.year}>
+                  <Link
+                    href={`/dynasty/${dynastyId}/dashboard/${teamId}/${game.year}#${game.week}`}
+                  >
+                    {determineGameResultWithScore(game)} VS{' '}
+                    {game[determineOpponent(game)]?.school} ({game.year})
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }

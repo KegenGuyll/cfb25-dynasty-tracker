@@ -9,9 +9,9 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-} from "@heroui/react"
+} from '@heroui/react'
 import Link from 'next/link'
-import { useParams, usePathname, useSearchParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 type MenuItems = {
   friendlyName: string
@@ -25,36 +25,7 @@ const menuItems = (
 ): MenuItems[] => {
   const items: MenuItems[] = [
     { friendlyName: 'Dynasty Dashboard', href: '/dynasty' },
-    { friendlyName: 'Download', href: '/dynasty/download' },
   ]
-
-  if (dynastyId && teamId) {
-    items.push({
-      friendlyName: 'All Seasons',
-      href: `/dynasty/${dynastyId}/dashboard/${teamId}`,
-    })
-  }
-
-  // if (dynastyId && teamId) {
-  //   items.push({
-  //     friendlyName: 'Team Dashboard',
-  //     href: `/dynasty/${dynastyId}/team/${teamId}`,
-  //   })
-  // }
-
-  if (dynastyId && teamId && year) {
-    items.push({
-      friendlyName: `${year} Season`,
-      href: `/dynasty/${dynastyId}/dashboard/${teamId}/${year}`,
-    })
-  }
-
-  // if (dynastyId && teamId && year) {
-  //   items.push({
-  //     friendlyName: 'Recruiting',
-  //     href: `/dynasty/${dynastyId}/team/${teamId}/year/${year}/recruiting`,
-  //   })
-  // }
 
   return items
 }

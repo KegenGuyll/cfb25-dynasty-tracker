@@ -8,6 +8,7 @@ import { Game } from '@/db/types'
 import { RecruitingClass } from '@/db/types/recruiting'
 import { TeamInfo } from '@/db/types/teamInfo'
 import getAllTeamSeason from '@/queries/dynasty/getAllTeamSeason'
+import getTeamBowlGames, { BowlGame } from '@/queries/teamInfo/getTeamBowlGames'
 import getTeamConfChampionships, {
   ConfChampionshipGame,
 } from '@/queries/teamInfo/getTeamConfChampoinships'
@@ -208,6 +209,41 @@ const confChampionshipsColumns = (
   },
 ]
 
+const bowlGameColumns = (
+  dynastyId: string,
+  teamId: string
+): TableColumn<BowlGame>[] => [
+  {
+    title: 'Year',
+    key: 'year',
+    render: (dataRow) => (
+      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
+        {dataRow.year}
+      </Link>
+    ),
+  },
+  {
+    title: 'Bowl',
+    key: 'customGameName',
+  },
+  {
+    title: 'Record',
+    key: 'record',
+    render: (dataRow) =>
+      `${dataRow.teamInfo?.teamWins}-${dataRow.teamInfo?.teamLosses}`,
+  },
+  {
+    title: 'Opponent',
+    key: 'opponent',
+    render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
+  },
+  {
+    title: 'Result',
+    key: 'result',
+    render: (dataRow) => determineGameResultWithScore(dataRow),
+  },
+]
+
 const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const router = useRouter()
 
@@ -221,6 +257,7 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const conferenceChampionships = useLiveQuery(() =>
     getTeamConfChampionships(dynastyId, teamId)
   )
+  const bowlGames = useLiveQuery(() => getTeamBowlGames(dynastyId, teamId))
   const team = useLiveQuery(() => db.teams.get(Number(teamId)))
 
   const recruitingClasses = useMemo(() => {
@@ -301,7 +338,12 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
         <TeamPageSection title="Awards and Honors">
           Awards and Honors
         </TeamPageSection>
-        <TeamPageSection title="Bowl Games">Empty</TeamPageSection>
+        <TeamPageSection title="Bowl Games">
+          <GenericDataTable<BowlGame>
+            columns={bowlGameColumns(dynastyId, teamId)}
+            data={[...(bowlGames?.wins || []), ...(bowlGames?.losses || [])]}
+          />
+        </TeamPageSection>
         <TeamPageSection title="Championships">
           Awards and Honors
         </TeamPageSection>

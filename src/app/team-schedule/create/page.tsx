@@ -9,7 +9,7 @@ import { formatGameLocation } from '@/utils/teamSchedule'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Button, Form, Input } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -34,22 +34,24 @@ export const teamScheduleSchema = yup.object({
 
 type TeamScheduleFormData = yup.InferType<typeof teamScheduleSchema>
 
-const CreateTeamSchedulePage = () => {
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<TeamScheduleFormData>({
+type CreateTeamSchedulePageProps = {
+  params: {}
+  searchParams: {
+    dynastyId: string
+    teamInfoId: string
+    year: string
+    teamId: string
+  }
+}
+
+const CreateTeamSchedulePage: React.FC<CreateTeamSchedulePageProps> = ({
+  searchParams,
+}: CreateTeamSchedulePageProps) => {
+  const { control, handleSubmit, setValue } = useForm<TeamScheduleFormData>({
     resolver: yupResolver<any>(teamScheduleSchema),
   })
   const router = useRouter()
-  const searchParams = useSearchParams()
-
-  const dynastyId = searchParams.get('dynastyId')
-  const teamInfoId = searchParams.get('teamInfoId')
-  const year = searchParams.get('year')
-  const teamId = searchParams.get('teamId')
+  const { dynastyId, teamInfoId, year, teamId } = searchParams
 
   useEffect(() => {
     if (teamId && year) {
@@ -98,7 +100,7 @@ const CreateTeamSchedulePage = () => {
       await db.teamSchedule.add(teamSchedule)
       router.push(`/dynasty/${dynastyId}/dashboard/${data.teamId}`)
     },
-    [dynastyId, router, teamInfoId]
+    [dynastyId, router]
   )
 
   return (

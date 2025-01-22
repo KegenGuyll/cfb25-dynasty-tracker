@@ -3,12 +3,14 @@ import { TableColumn } from '../GenericInputTable'
 import { Control, Controller, UseFormWatch } from 'react-hook-form'
 import TeamSelect from '@/components/TeamSelect'
 import { playerClassOptions } from '@/db/types/player'
+import { OptionType } from '@/components/SearchableSelect'
 
 const basicInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
   statCategory: string,
-  watch: UseFormWatch<any>
+  watch: UseFormWatch<any>,
+  teamOptions: OptionType[]
 ): TableColumn[] => [
   {
     title: '',
@@ -102,7 +104,7 @@ const basicInputColumns = (
             errorMessage={fieldState.error?.message}
             isInvalid={fieldState.invalid}
             onChange={field.onChange}
-            teamOptions={[]}
+            teamOptions={teamOptions}
           />
         )}
       />
@@ -113,9 +115,10 @@ const basicInputColumns = (
 const passingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
-  watch: UseFormWatch<any>
+  watch: UseFormWatch<any>,
+  teamOptions: OptionType[]
 ): TableColumn[] => [
-  ...basicInputColumns(control, deleteRow, 'passing', watch),
+  ...basicInputColumns(control, deleteRow, 'passing', watch, teamOptions),
   {
     title: 'Rating',
     key: 'rating',
@@ -381,9 +384,10 @@ const passingInputColumns = (
 const rushingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
-  watch: UseFormWatch<any>
+  watch: UseFormWatch<any>,
+  teamOptions: OptionType[]
 ): TableColumn[] => [
-  ...basicInputColumns(control, deleteRow, 'rushing', watch),
+  ...basicInputColumns(control, deleteRow, 'rushing', watch, teamOptions),
   {
     title: 'Car',
     key: 'car',
@@ -629,9 +633,10 @@ const rushingInputColumns = (
 const receivingInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
-  watch: UseFormWatch<any>
+  watch: UseFormWatch<any>,
+  teamOptions: OptionType[]
 ): TableColumn[] => [
-  ...basicInputColumns(control, deleteRow, 'receiving', watch),
+  ...basicInputColumns(control, deleteRow, 'receiving', watch, teamOptions),
   {
     title: 'rec',
     key: 'rec',
@@ -857,9 +862,10 @@ const receivingInputColumns = (
 const defenseInputColumns = (
   control: Control<any>,
   deleteRow: (rowIndex: number) => void,
-  watch: UseFormWatch<any>
+  watch: UseFormWatch<any>,
+  teamOptions: OptionType[]
 ): TableColumn[] => [
-  ...basicInputColumns(control, deleteRow, 'defense', watch),
+  ...basicInputColumns(control, deleteRow, 'defense', watch, teamOptions),
   {
     title: 'solo',
     key: 'solo',

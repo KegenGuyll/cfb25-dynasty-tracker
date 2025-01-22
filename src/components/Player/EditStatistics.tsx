@@ -12,6 +12,8 @@ import {
 } from '../tables/columns/playerInputStatColumns'
 import EditModal from '../Modal/EditModal'
 import { db } from '@/db/db.model'
+import { useLiveQuery } from 'dexie-react-hooks'
+import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 
 type EditStatisticsProps = {
   player: Player
@@ -207,6 +209,8 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
   isOpen,
   handleClose,
 }: EditStatisticsProps) => {
+  const teamOptions = useLiveQuery(() => getTeamSelectOptions())
+
   const { control, handleSubmit, watch } = useForm<StatisticsFormData>({
     resolver: yupResolver(statisticsSchema),
     defaultValues: {
@@ -292,7 +296,8 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
               columns={passingInputColumns(
                 control,
                 (i) => passingRemove(i),
-                watch
+                watch,
+                teamOptions || []
               )}
             />
           )}
@@ -303,7 +308,8 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
               columns={rushingInputColumns(
                 control,
                 (i) => rushingRemove(i),
-                watch
+                watch,
+                teamOptions || []
               )}
             />
           )}
@@ -314,7 +320,8 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
               columns={receivingInputColumns(
                 control,
                 (i) => receivingRemove(i),
-                watch
+                watch,
+                teamOptions || []
               )}
             />
           )}
@@ -325,7 +332,8 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
               columns={defenseInputColumns(
                 control,
                 (i) => defenseRemove(i),
-                watch
+                watch,
+                teamOptions || []
               )}
             />
           )}

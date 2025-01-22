@@ -8,6 +8,9 @@ import { Game } from '@/db/types'
 import { RecruitingClass } from '@/db/types/recruiting'
 import { TeamInfo } from '@/db/types/teamInfo'
 import getAllTeamSeason from '@/queries/dynasty/getAllTeamSeason'
+import getTeamConfChampionships, {
+  ConfChampionshipGame,
+} from '@/queries/teamInfo/getTeamConfChampoinships'
 import getTeamNationalChampionships, {
   NationalChampionships,
   NationalChampionshipsGames,
@@ -158,6 +161,53 @@ const nationalChampionshipsColumns = (
   },
 ]
 
+const confChampionshipsColumns = (
+  dynastyId: string,
+  teamId: string
+): TableColumn<ConfChampionshipGame>[] => [
+  {
+    title: 'Year',
+    key: 'year',
+    render: (dataRow) => (
+      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
+        {dataRow.year}
+      </Link>
+    ),
+  },
+  {
+    title: 'Conf',
+    key: 'teamInfo.conference',
+  },
+  {
+    title: 'Coach',
+    key: 'teamInfo.headCoach',
+  },
+  {
+    title: 'Off Playbook',
+    key: 'teamInfo.offPlaybook',
+  },
+  {
+    title: 'Def Playbook',
+    key: 'teamInfo.defPlaybook',
+  },
+  {
+    title: 'Conf Record',
+    key: 'record',
+    render: (dataRow) =>
+      `${dataRow.teamInfo?.conferenceWins}-${dataRow.teamInfo?.conferenceLosses}`,
+  },
+  {
+    title: 'Opponent',
+    key: 'opponent',
+    render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
+  },
+  {
+    title: 'Result',
+    key: 'result',
+    render: (dataRow) => determineGameResultWithScore(dataRow),
+  },
+]
+
 const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const router = useRouter()
 
@@ -167,6 +217,9 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   )
   const nationalChampionships = useLiveQuery(() =>
     getTeamNationalChampionships(dynastyId, teamId)
+  )
+  const conferenceChampionships = useLiveQuery(() =>
+    getTeamConfChampionships(dynastyId, teamId)
   )
   const team = useLiveQuery(() => db.teams.get(Number(teamId)))
 
@@ -237,6 +290,13 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
             ]}
           />
           <h3 className="text-lg font-semibold">Conference Championships</h3>
+          <GenericDataTable<ConfChampionshipGame>
+            columns={confChampionshipsColumns(dynastyId, teamId)}
+            data={[
+              ...(conferenceChampionships?.wins || []),
+              ...(conferenceChampionships?.losses || []),
+            ]}
+          />
         </TeamPageSection>
         <TeamPageSection title="Awards and Honors">
           Awards and Honors

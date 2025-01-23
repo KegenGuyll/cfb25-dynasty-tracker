@@ -21,7 +21,7 @@ import {
   determineOpp,
   determineOpponent,
 } from '@/utils/teamSchedule'
-import { Button, Divider, Spinner } from '@heroui/react'
+import { Button, Divider, SortDescriptor, Spinner } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -57,6 +57,7 @@ const recruitingClassColumns = (
   teamId: string
 ): TableColumn<RecruitingClass>[] => [
   {
+    allowSort: true,
     key: 'year',
     title: 'Year',
     render: (dataRow) => (
@@ -65,35 +66,40 @@ const recruitingClassColumns = (
       </Link>
     ),
   },
-  { key: 'classRank', title: 'National Rank' },
-  { key: 'conferenceClassRank', title: 'Conference Rank' },
-  { key: 'overview.total', title: 'Total' },
+  { allowSort: true, key: 'classRank', title: 'National Rank' },
+  { allowSort: true, key: 'conferenceClassRank', title: 'Conference Rank' },
+  { allowSort: true, key: 'overview.total', title: 'Total' },
   {
+    allowSort: true,
     key: 'overview.5star',
     title: '5 Star',
     render: (dataRow) => dataRow.overview['5star'] || 0,
   },
   {
+    allowSort: true,
     key: 'overview.4star',
     title: '4 Star',
     render: (dataRow) => dataRow.overview['4star'] || 0,
   },
   {
+    allowSort: true,
     key: 'overview.3star',
     title: '3 Star',
     render: (dataRow) => dataRow.overview['3star'] || 0,
   },
   {
+    allowSort: true,
     key: 'overview.2star',
     title: '2 Star',
     render: (dataRow) => dataRow.overview['2star'] || 0,
   },
   {
+    allowSort: true,
     key: 'overview.1star',
     title: '1 Star',
     render: (dataRow) => dataRow.overview['1star'] || 0,
   },
-  { key: 'overview.pts', title: 'Points' },
+  { allowSort: true, key: 'overview.pts', title: 'Points' },
 ]
 
 const teamInfoColumns = (
@@ -101,6 +107,7 @@ const teamInfoColumns = (
   teamId: string
 ): TableColumn<TeamInfo>[] => [
   {
+    allowSort: true,
     title: 'Year',
     key: 'year',
     render: (dataRow) => (
@@ -109,14 +116,14 @@ const teamInfoColumns = (
       </Link>
     ),
   },
-  { key: 'teamOverall', title: 'Overall' },
-  { key: 'teamOffense', title: 'Offense' },
-  { key: 'teamDefense', title: 'Defense' },
-  { key: 'teamWins', title: 'Wins' },
-  { key: 'teamLosses', title: 'Losses' },
-  { key: 'positionInConference', title: 'Conf Rank' },
-  { key: 'conferenceWins', title: 'Conf Wins' },
-  { key: 'conferenceLosses', title: 'Conf Losses' },
+  { allowSort: true, key: 'teamOverall', title: 'Overall' },
+  { allowSort: true, key: 'teamOffense', title: 'Offense' },
+  { allowSort: true, key: 'teamDefense', title: 'Defense' },
+  { allowSort: true, key: 'teamWins', title: 'Wins' },
+  { allowSort: true, key: 'teamLosses', title: 'Losses' },
+  { allowSort: true, key: 'positionInConference', title: 'Conf Rank' },
+  { allowSort: true, key: 'conferenceWins', title: 'Conf Wins' },
+  { allowSort: true, key: 'conferenceLosses', title: 'Conf Losses' },
 ]
 
 const nationalChampionshipsColumns = (
@@ -126,6 +133,7 @@ const nationalChampionshipsColumns = (
   {
     title: 'Year',
     key: 'year',
+    allowSort: true,
     render: (dataRow) => (
       <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
         {dataRow.year}
@@ -133,29 +141,35 @@ const nationalChampionshipsColumns = (
     ),
   },
   {
+    allowSort: true,
     title: 'Coach',
     key: 'teamInfo.headCoach',
   },
   {
+    allowSort: true,
     title: 'Off Playbook',
     key: 'teamInfo.offPlaybook',
   },
   {
+    allowSort: true,
     title: 'Def Playbook',
     key: 'teamInfo.defPlaybook',
   },
   {
+    allowSort: true,
     title: 'Record',
     key: 'record',
     render: (dataRow) =>
       `${dataRow.teamInfo?.teamWins}-${dataRow.teamInfo?.teamLosses}`,
   },
   {
+    allowSort: false,
     title: 'Opponent',
     key: 'opponent',
     render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
   },
   {
+    allowSort: true,
     title: 'Result',
     key: 'result',
     render: (dataRow) => determineGameResultWithScore(dataRow),
@@ -167,6 +181,7 @@ const confChampionshipsColumns = (
   teamId: string
 ): TableColumn<ConfChampionshipGame>[] => [
   {
+    allowSort: true,
     title: 'Year',
     key: 'year',
     render: (dataRow) => (
@@ -176,33 +191,40 @@ const confChampionshipsColumns = (
     ),
   },
   {
+    allowSort: true,
     title: 'Conf',
     key: 'teamInfo.conference',
   },
   {
+    allowSort: true,
     title: 'Coach',
     key: 'teamInfo.headCoach',
   },
   {
+    allowSort: true,
     title: 'Off Playbook',
     key: 'teamInfo.offPlaybook',
   },
   {
+    allowSort: true,
     title: 'Def Playbook',
     key: 'teamInfo.defPlaybook',
   },
   {
+    allowSort: true,
     title: 'Conf Record',
     key: 'record',
     render: (dataRow) =>
       `${dataRow.teamInfo?.conferenceWins}-${dataRow.teamInfo?.conferenceLosses}`,
   },
   {
+    allowSort: false,
     title: 'Opponent',
     key: 'opponent',
     render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
   },
   {
+    allowSort: true,
     title: 'Result',
     key: 'result',
     render: (dataRow) => determineGameResultWithScore(dataRow),
@@ -216,6 +238,7 @@ const bowlGameColumns = (
   {
     title: 'Year',
     key: 'year',
+    allowSort: true,
     render: (dataRow) => (
       <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
         {dataRow.year}
@@ -223,26 +246,35 @@ const bowlGameColumns = (
     ),
   },
   {
+    allowSort: true,
     title: 'Bowl',
     key: 'customGameName',
   },
   {
+    allowSort: true,
     title: 'Record',
     key: 'record',
     render: (dataRow) =>
       `${dataRow.teamInfo?.teamWins}-${dataRow.teamInfo?.teamLosses}`,
   },
   {
+    allowSort: false,
     title: 'Opponent',
     key: 'opponent',
     render: (dataRow) => dataRow[determineOpponent(dataRow)]?.school,
   },
   {
+    allowSort: true,
     title: 'Result',
     key: 'result',
     render: (dataRow) => determineGameResultWithScore(dataRow),
   },
 ]
+
+const yearDefaultSortDescriptor: SortDescriptor = {
+  column: 'year',
+  direction: 'descending',
+}
 
 const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
   const router = useRouter()
@@ -309,12 +341,16 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
           <GenericDataTable<TeamInfo>
             data={teamInfo}
             columns={teamInfoColumns(dynastyId, teamId)}
+            keySelector={(dataRow) => dataRow?.id?.toString() || ''}
+            defaultSortDescriptor={yearDefaultSortDescriptor}
           />
         </TeamPageSection>
         <TeamPageSection title="Recruiting">
           <GenericDataTable<RecruitingClass>
             data={recruitingClasses}
             columns={recruitingClassColumns(dynastyId, teamId)}
+            keySelector={(dataRow) => dataRow?.id?.toString() || ''}
+            defaultSortDescriptor={yearDefaultSortDescriptor}
           />
         </TeamPageSection>
         <TeamPageSection title="Championships">
@@ -325,6 +361,8 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
               ...(nationalChampionships?.wins || []),
               ...(nationalChampionships?.losses || []),
             ]}
+            defaultSortDescriptor={yearDefaultSortDescriptor}
+            keySelector={(_, i) => i}
           />
           <h3 className="text-lg font-semibold">Conference Championships</h3>
           <GenericDataTable<ConfChampionshipGame>
@@ -333,6 +371,8 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
               ...(conferenceChampionships?.wins || []),
               ...(conferenceChampionships?.losses || []),
             ]}
+            defaultSortDescriptor={yearDefaultSortDescriptor}
+            keySelector={(_, i) => i}
           />
         </TeamPageSection>
         <TeamPageSection title="Awards and Honors">
@@ -341,7 +381,15 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
         <TeamPageSection title="Bowl Games">
           <GenericDataTable<BowlGame>
             columns={bowlGameColumns(dynastyId, teamId)}
-            data={[...(bowlGames?.wins || []), ...(bowlGames?.losses || [])]}
+            data={[
+              ...(bowlGames?.wins || []),
+              ...(bowlGames?.losses || []),
+            ].map((game) => ({
+              ...game,
+              sortKey: `${determineOpponent(game)}.school`,
+            }))}
+            defaultSortDescriptor={yearDefaultSortDescriptor}
+            keySelector={(_, i) => i}
           />
         </TeamPageSection>
         <TeamPageSection title="Championships">

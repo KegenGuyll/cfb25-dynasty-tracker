@@ -273,7 +273,7 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
       size="full"
     >
       <Form id="statistics-form" onSubmit={handleSubmit(onSubmit)}>
-        <div className="pt-8 flex flex-col gap-8">
+        <div className="pt-8 flex flex-col gap-8 w-full">
           <h2 className="text-2xl">Career Stats</h2>
           <div className="flex gap-4">
             <Button onPress={() => passingAppend(emptyPassingStat)}>
@@ -289,54 +289,56 @@ const EditStatistics: React.FC<EditStatisticsProps> = ({
               Create Defense Table
             </Button>
           </div>
-          {passingFields.length > 0 && (
-            <GenericInputTable
-              title="Passing"
-              rowCount={passingFields.length}
-              columns={passingInputColumns(
-                control,
-                (i) => passingRemove(i),
-                watch,
-                teamOptions || []
-              )}
-            />
-          )}
-          {rushingFields.length > 0 && (
-            <GenericInputTable
-              title="Rushing"
-              rowCount={rushingFields.length}
-              columns={rushingInputColumns(
-                control,
-                (i) => rushingRemove(i),
-                watch,
-                teamOptions || []
-              )}
-            />
-          )}
-          {receivingFields.length > 0 && (
-            <GenericInputTable
-              title="Receiving"
-              rowCount={receivingFields.length}
-              columns={receivingInputColumns(
-                control,
-                (i) => receivingRemove(i),
-                watch,
-                teamOptions || []
-              )}
-            />
-          )}
-          {defenseFields.length > 0 && (
-            <GenericInputTable
-              title="Defense"
-              rowCount={defenseFields.length}
-              columns={defenseInputColumns(
-                control,
-                (i) => defenseRemove(i),
-                watch,
-                teamOptions || []
-              )}
-            />
-          )}
+          <div className="max-w-full overflow-auto">
+            {passingFields.length > 0 && (
+              <GenericInputTable
+                title="Passing"
+                rowCount={passingFields.length}
+                columns={passingInputColumns(
+                  control,
+                  (i) => passingRemove(i),
+                  watch,
+                  teamOptions || []
+                )}
+              />
+            )}
+            {rushingFields.length > 0 && (
+              <GenericInputTable
+                title="Rushing"
+                rowCount={rushingFields.length}
+                columns={rushingInputColumns(
+                  control,
+                  (i) => rushingRemove(i),
+                  watch,
+                  teamOptions || []
+                )}
+              />
+            )}
+            {receivingFields.length > 0 && (
+              <GenericInputTable
+                title="Receiving"
+                rowCount={receivingFields.length}
+                columns={receivingInputColumns(
+                  control,
+                  (i) => receivingRemove(i),
+                  watch,
+                  teamOptions || []
+                )}
+              />
+            )}
+            {defenseFields.length > 0 && (
+              <GenericInputTable
+                title="Defense"
+                rowCount={defenseFields.length}
+                columns={defenseInputColumns(
+                  control,
+                  (i) => defenseRemove(i),
+                  watch,
+                  teamOptions || []
+                )}
+              />
+            )}
+          </div>
         </div>
       </Form>
     </EditModal>

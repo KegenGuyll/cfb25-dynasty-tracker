@@ -3,7 +3,7 @@
 import getTeamInfo from '@/queries/teamInfo/getTeamInfo'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useState } from 'react'
-import { Button, Spinner } from "@heroui/react"
+import { Button, Spinner } from '@heroui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import EditTeamOverview from '../Team/EditTeamOverview'
@@ -29,8 +29,6 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
   const nextAndPrevSeason = useLiveQuery(() =>
     getNextAndPrevSeason(Number(year), Number(teamId), Number(dynastyId))
   )
-
-  console.log(nextAndPrevSeason)
 
   if (!teamInfo)
     return (

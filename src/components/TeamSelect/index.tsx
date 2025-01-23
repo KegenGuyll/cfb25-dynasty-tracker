@@ -1,13 +1,15 @@
-import SearchableSelect, { OptionType } from '../SearchableSelect'
+import { Autocomplete, AutocompleteItem } from '@heroui/react'
+import { OptionType } from '../SearchableSelect'
 import classNames from 'classnames'
 
 type Props = {
   value: string
-  onChange?: (value: string | undefined) => void
+  onChange: (value: string | undefined) => void
   isInvalid?: boolean
   errorMessage?: string
   classname?: string
   teamOptions: OptionType[]
+  isRequired?: boolean
 }
 
 const TeamSelect: React.FC<Props> = ({
@@ -17,21 +19,27 @@ const TeamSelect: React.FC<Props> = ({
   errorMessage,
   classname,
   teamOptions,
+  isRequired,
 }: Props) => {
   return (
     <div className={classNames(classname, 'w-full')}>
-      <SearchableSelect
-        options={teamOptions || []}
+      <Autocomplete
+        defaultItems={teamOptions || []}
         label="Team"
+        selectedKey={value?.toString() || ''}
         placeholder="Select Team"
-        value={teamOptions?.find(
-          (option) => String(option.value) === String(value)
-        )}
-        onChange={onChange}
         errorMessage={errorMessage}
         isInvalid={isInvalid}
-        isRequired
-      />
+        isRequired={isRequired}
+        onSelectionChange={(key) => onChange(key?.toString())}
+        validationBehavior="aria"
+      >
+        {(teamOption) => (
+          <AutocompleteItem key={teamOption.value}>
+            {teamOption.label}
+          </AutocompleteItem>
+        )}
+      </Autocomplete>
     </div>
   )
 }

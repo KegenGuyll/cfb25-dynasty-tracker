@@ -22,8 +22,7 @@ const TeamYearPage: React.FC<TeamYearPageProps> = ({
   return (
     <IdScrollWrapper>
       <div className="w-full">
-        <div className="grid grid-flow-col grid-cols-7 gap-4 w-full">
-          <div className="border p-4 hidden lg:block lg:col-span-1"></div>
+        <div className="grid grid-flow-col grid-cols-6 gap-4 w-full">
           <div className="flex flex-col gap-12 w-full col-span-5 lg:col-span-4">
             <h1 className="text-3xl font-bold">Team Year Page</h1>
             <div className="flex flex-col gap-8">

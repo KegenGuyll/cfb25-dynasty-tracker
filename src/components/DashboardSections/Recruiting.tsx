@@ -1,25 +1,107 @@
 'use client'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@heroui/react"
+
 import SectionWrapper from './SectionWrapper'
 import { useRouter } from 'next/navigation'
 import getRecruitingData from '@/queries/recruiting/getRecruitingData'
 import { useLiveQuery } from 'dexie-react-hooks'
 import rs from '@/utils/summaryGenerators/recruitingSummary'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
+import GenericDataTable, {
+  TableColumn as TableColumnType,
+} from '../tables/GenericDataTable'
+import { Player } from '@/db/types/player'
+import { Overview } from '@/db/types/recruiting'
 
 type RecruitingSectionProps = {
   dynastyId: string
   teamId: string
   year: string
 }
+
+const recruitsColumns = (dynastyId: string): TableColumnType<Player>[] => [
+  {
+    title: 'Name',
+    key: 'information.firstName',
+    render: (rowData) => (
+      <Link href={`/dynasty/${dynastyId}/player/${rowData.id}`}>
+        {rowData.information.firstName + ' ' + rowData.information.lastName}
+      </Link>
+    ),
+    allowSort: true,
+  },
+  {
+    title: 'Ovr',
+    key: 'recruit.overall',
+    allowSort: true,
+  },
+  {
+    title: 'Pos.',
+    key: 'recruit.position',
+    allowSort: true,
+  },
+  {
+    title: "Nat'l Rank",
+    key: 'recruit.nationalRank',
+    allowSort: true,
+  },
+  {
+    title: 'Star',
+    key: 'recruit.stars',
+    allowSort: true,
+    render: (rowData) => '⭐'.repeat(Number(rowData.recruit?.stars)),
+  },
+  {
+    title: 'Dev Trait',
+    allowSort: true,
+    key: 'recruit.devTrait',
+  },
+  {
+    title: 'Gem',
+    allowSort: true,
+    key: 'recruit.gem',
+  },
+]
+
+const transfersColumns = (dynastyId: string): TableColumnType<Player>[] => [
+  ...recruitsColumns(dynastyId),
+  {
+    title: 'From',
+    key: 'recruit.transfers.0.teamData.school',
+    render: (rowData) => rowData.recruit?.transfers?.[0]?.teamData?.school,
+  },
+]
+
+const overviewColumns: TableColumnType<Overview>[] = [
+  {
+    title: 'Total',
+    key: 'total',
+  },
+  {
+    title: '5-Star',
+    key: '5star',
+  },
+  {
+    title: '4-Star',
+    key: '4star',
+  },
+  {
+    title: '3-Star',
+    key: '3star',
+  },
+  {
+    title: '2-Star',
+    key: '2star',
+  },
+  {
+    title: '1-Star',
+    key: '1star',
+  },
+  {
+    title: 'PTS',
+    key: 'pts',
+  },
+]
 
 const RecruitingSection: React.FC<RecruitingSectionProps> = ({
   dynastyId,
@@ -35,14 +117,14 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
     summary: string
   } | null>({ headline: '', summary: '' })
 
-  const handleRecruitingSummary = async () => {
+  const handleRecruitingSummary = useCallback(async () => {
     const summary = await rs(dynastyId, teamId, year)
     setRecruitingSummary(summary)
-  }
+  }, [dynastyId, teamId, year])
 
   useEffect(() => {
     handleRecruitingSummary()
-  }, [])
+  }, [handleRecruitingSummary])
 
   return (
     <SectionWrapper
@@ -56,118 +138,40 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
     >
       <div className="flex flex-col gap-4">
         <h4>Overview</h4>
-        <Table aria-label="recruiting summary table">
-          <TableHeader>
-            <TableColumn>Total</TableColumn>
-            <TableColumn>5-STAR</TableColumn>
-            <TableColumn>4-STAR</TableColumn>
-            <TableColumn>3-STAR</TableColumn>
-            <TableColumn>2-STAR</TableColumn>
-            <TableColumn>1-STAR</TableColumn>
-            <TableColumn>PTS</TableColumn>
-          </TableHeader>
-          <TableBody>
-            <TableRow key="1">
-              <TableCell>{recruitingData?.overview.total}</TableCell>
-              <TableCell>{recruitingData?.overview['5star']}</TableCell>
-              <TableCell>{recruitingData?.overview['4star']}</TableCell>
-              <TableCell>{recruitingData?.overview['3star']}</TableCell>
-              <TableCell>{recruitingData?.overview['2star']}</TableCell>
-              <TableCell>{recruitingData?.overview['1star']}</TableCell>
-              <TableCell>{recruitingData?.overview.pts}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <GenericDataTable<Overview>
+          columns={overviewColumns}
+          data={[
+            recruitingData?.overview || {
+              total: 0,
+              '5star': 0,
+              '4star': 0,
+              '3star': 0,
+              '2star': 0,
+              '1star': 0,
+              pts: 0,
+            },
+          ]}
+          keySelector={(item) => item.total}
+        />
       </div>
       {recruitingData?.recruits && (
         <div className="flex flex-col gap-4">
           <h4>Recruits</h4>
-          <Table aria-label="recruiting summary table">
-            <TableHeader>
-              <TableColumn>Name</TableColumn>
-              <TableColumn>Ovr</TableColumn>
-              <TableColumn>Pos.</TableColumn>
-              <TableColumn>Nat&apos;l Rank</TableColumn>
-              <TableColumn>Star</TableColumn>
-              <TableColumn>Dev Trait</TableColumn>
-              <TableColumn>Gem</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {recruitingData?.players.map((player) => (
-                <TableRow
-                  key={
-                    player.information.firstName + player.information.lastName
-                  }
-                >
-                  <TableCell>
-                    <Link href={`/dynasty/${dynastyId}/player/${player.id}`}>
-                      {player.information.firstName +
-                        ' ' +
-                        player.information.lastName}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{player.recruit?.overall}</TableCell>
-                  <TableCell>{player.recruit?.position}</TableCell>
-                  <TableCell>{player.recruit?.nationalRank}</TableCell>
-                  <TableCell>
-                    {Array.from(
-                      { length: player.recruit?.stars || 0 },
-                      () => '⭐'
-                    ).join('')}
-                  </TableCell>
-                  <TableCell>{player.recruit?.devTrait}</TableCell>
-                  <TableCell>{player.recruit?.gem}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <GenericDataTable<Player>
+            columns={recruitsColumns(dynastyId)}
+            data={recruitingData.players}
+            keySelector={(item) => item.id || 0}
+          />
         </div>
       )}
       {recruitingData?.transfers && (
         <div className="flex flex-col gap-4">
           <h4>Transfers</h4>
-          <Table aria-label="recruiting summary table">
-            <TableHeader>
-              <TableColumn>Name</TableColumn>
-              <TableColumn>Ovr</TableColumn>
-              <TableColumn>Pos.</TableColumn>
-              <TableColumn>Nat&apos;l Rank</TableColumn>
-              <TableColumn>Star</TableColumn>
-              <TableColumn>Dev Trait</TableColumn>
-              <TableColumn>From</TableColumn>
-            </TableHeader>
-            <TableBody>
-              {recruitingData?.transfersPlayers.map((transfer) => (
-                <TableRow
-                  key={
-                    transfer.information.firstName +
-                    transfer.information.lastName
-                  }
-                >
-                  <TableCell>
-                    <Link href={`/dynasty/${dynastyId}/player/${transfer.id}`}>
-                      {transfer.information.firstName +
-                        ' ' +
-                        transfer.information.lastName}
-                    </Link>
-                  </TableCell>
-                  <TableCell>{transfer.recruit?.overall}</TableCell>
-                  <TableCell>{transfer.information.position}</TableCell>
-                  <TableCell>{transfer.recruit?.nationalRank}</TableCell>
-                  <TableCell>
-                    {Array.from(
-                      { length: transfer.recruit?.stars || 0 },
-                      () => '⭐'
-                    ).join('')}
-                  </TableCell>
-                  <TableCell>{transfer.recruit?.devTrait}</TableCell>
-                  <TableCell>
-                    {transfer.recruit?.transfers?.[0]?.teamData?.school}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <GenericDataTable<Player>
+            columns={transfersColumns(dynastyId)}
+            data={recruitingData.transfersPlayers}
+            keySelector={(item) => item.id || 0}
+          />
         </div>
       )}
     </SectionWrapper>

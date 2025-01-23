@@ -8,10 +8,11 @@ type NationalChampionships = {
   wins: NationalChampionshipsGames[]
   losses: NationalChampionshipsGames[]
   totalAppearances: number
+  numberOfSeasons: number
 }
 
 const getTeamNationalChampionships = async (dynastyId: string, teamId: string): Promise<NationalChampionships> => {
-  const championships: NationalChampionships = { wins: [], losses: [], totalAppearances: 0 }
+  const championships: NationalChampionships = { wins: [], losses: [], totalAppearances: 0, numberOfSeasons: 0 }
 
   const teamSeasons = await db.teamSchedule.where({ dynastyId: Number(dynastyId), teamId: Number(teamId) }).toArray();
 
@@ -42,6 +43,7 @@ const getTeamNationalChampionships = async (dynastyId: string, teamId: string): 
 
   championships.totalAppearances =
     championships.wins.length + championships.losses.length
+  championships.numberOfSeasons = teamSeasons.length
 
   return championships
 }

@@ -24,7 +24,7 @@ import getMediaById from '@/queries/media/getMediaById'
 import getPlayerById from '@/queries/players/getPlayerById'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Divider } from "@heroui/react"
+import { Divider } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -114,6 +114,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                   <GenericDataTable<PassingStats>
                     columns={passingStatsColumns}
                     data={player.stats.passing}
+                    keySelector={(_, i) => i}
                   />
                 </div>
               )}
@@ -123,6 +124,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                   <GenericDataTable<RushingStats>
                     columns={rushingStatsColumns}
                     data={player.stats.rushing}
+                    keySelector={(_, i) => i}
                   />
                 </div>
               )}
@@ -132,6 +134,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                   <GenericDataTable<ReceivingStats>
                     columns={receivingStatsColumns}
                     data={player.stats.receiving}
+                    keySelector={(_, i) => i}
                   />
                 </div>
               )}
@@ -141,6 +144,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                   <GenericDataTable<DefenseStats>
                     columns={defenseStatsColumns}
                     data={player.stats.defense}
+                    keySelector={(_, i) => i}
                   />
                 </div>
               )}
@@ -172,6 +176,7 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
               <GenericDataTable<historicalOverall>
                 columns={HistoricalOvrColumns}
                 data={player.historicalOverall}
+                keySelector={(_, i) => i}
               />
             </PlayerPageSection>
             <PlayerPageSection title="Notes">test</PlayerPageSection>

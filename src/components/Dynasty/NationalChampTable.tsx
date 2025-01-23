@@ -11,6 +11,7 @@ import Link from 'next/link'
 import GenericDataTable, { TableColumn } from '../tables/GenericDataTable'
 import { useLiveQuery } from 'dexie-react-hooks'
 import { SortDescriptor } from '@heroui/react'
+import formatHeaderId from '@/utils/formatHeaderId'
 
 const nationalChampionshipsColumns = (
   dynastyId: string,
@@ -20,11 +21,17 @@ const nationalChampionshipsColumns = (
     title: 'Year',
     key: 'year',
     allowSort: true,
-    render: (dataRow) => (
-      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
-        {dataRow.year}
-      </Link>
-    ),
+    render: (dataRow) => {
+      const headerId = formatHeaderId(dataRow.customGameName || 'natl-champ')
+
+      return (
+        <Link
+          href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}#${headerId}`}
+        >
+          {dataRow.year}
+        </Link>
+      )
+    },
   },
   {
     allowSort: true,

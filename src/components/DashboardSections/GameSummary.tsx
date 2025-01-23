@@ -66,17 +66,21 @@ const GameItem: React.FC<GameItemProps> = ({
 }: GameItemProps) => {
   const [hover, setHover] = useState(false)
 
+  const formatHeaderId =
+    game.customGameName?.toLowerCase().replace(' ', '-') ||
+    weekName(game.week).toLowerCase().replace(' ', '-')
+
   return (
     <>
       <div className="flex flex-col gap-6 pt-6">
         <div className="flex items-baseline">
           <button
-            className="text-left"
+            className="text-left scroll-smooth"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
             onClick={() => setSelectedGame(game)}
           >
-            <h3 className="text-xl">
+            <h3 id={formatHeaderId} className="text-xl">
               {game.customGameName || weekName(game.week)} -{' '}
               <span className=" text-sm">
                 {convertGameLocation(game.location)}

@@ -2,6 +2,7 @@
 
 import { db } from '@/db/db.model'
 import getTeamNationalChampionships from '@/queries/teamInfo/getTeamNationalChampionships'
+import formatHeaderId from '@/utils/formatHeaderId'
 import {
   determineGameResultWithScore,
   determineOpponent,
@@ -44,7 +45,11 @@ const DynastySidePanel: React.FC<DynastySidePanelProps> = ({
             {nationalChampionships?.wins.map((game) => (
               <li key={game.year}>
                 <Link
-                  href={`/dynasty/${dynastyId}/dashboard/${teamId}/${game.year}#${game.week}`}
+                  passHref
+                  scroll={true}
+                  href={`/dynasty/${dynastyId}/dashboard/${teamId}/${
+                    game.year
+                  }#${formatHeaderId(game.customGameName || "nat'l-champ")}`}
                 >
                   {determineGameResultWithScore(game)} VS{' '}
                   {game[determineOpponent(game)]?.school} ({game.year})
@@ -54,7 +59,9 @@ const DynastySidePanel: React.FC<DynastySidePanelProps> = ({
             {nationalChampionships?.losses.map((game) => (
               <li key={game.year}>
                 <Link
-                  href={`/dynasty/${dynastyId}/dashboard/${teamId}/${game.year}#${game.week}`}
+                  href={`/dynasty/${dynastyId}/dashboard/${teamId}/${
+                    game.year
+                  }#${formatHeaderId(game.customGameName || "nat'l-champ")}`}
                 >
                   {determineGameResultWithScore(game)} VS{' '}
                   {game[determineOpponent(game)]?.school} ({game.year})

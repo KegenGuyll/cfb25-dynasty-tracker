@@ -137,7 +137,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       }
     >
       <div className="flex flex-col gap-4">
-        <h4>Overview</h4>
+        <h4 id="recruiting-overview">Overview</h4>
         <GenericDataTable<Overview>
           columns={overviewColumns}
           data={[
@@ -156,7 +156,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       </div>
       {recruitingData?.recruits && (
         <div className="flex flex-col gap-4">
-          <h4>Recruits</h4>
+          <h4 id="recruiting-recruits">Recruits</h4>
           <GenericDataTable<Player>
             columns={recruitsColumns(dynastyId)}
             data={recruitingData.players}
@@ -166,7 +166,7 @@ const RecruitingSection: React.FC<RecruitingSectionProps> = ({
       )}
       {recruitingData?.transfers && (
         <div className="flex flex-col gap-4">
-          <h4>Transfers</h4>
+          <h4 id="recruiting-transfer">Transfers</h4>
           <GenericDataTable<Player>
             columns={transfersColumns(dynastyId)}
             data={recruitingData.transfersPlayers}

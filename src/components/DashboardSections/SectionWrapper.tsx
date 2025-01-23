@@ -21,6 +21,8 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
 }: SectionWrapperProps) => {
   const [hovered, setHovered] = useState(false)
 
+  const formatHeaderId = title.toLowerCase().replace(' ', '-')
+
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-col">
@@ -31,11 +33,15 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({
             onMouseLeave={() => setHovered(false)}
             className="text-left flex gap-2 items-center"
           >
-            <h3 className="text-lg font-bold">{title}</h3>
+            <h3 id={formatHeaderId} className="text-lg font-bold">
+              {title}
+            </h3>
             {hovered && <FontAwesomeIcon icon={faPen} />}
           </button>
         ) : (
-          <h3 className="text-xl font-bold">{title}</h3>
+          <h3 id={formatHeaderId} className="text-xl font-bold">
+            {title}
+          </h3>
         )}
         <span>{summary}</span>
       </div>

@@ -20,7 +20,9 @@ const recruitingClassColumns = (
     key: 'year',
     title: 'Year',
     render: (dataRow) => (
-      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
+      <Link
+        href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}#recruiting-overview`}
+      >
         {dataRow.year}
       </Link>
     ),

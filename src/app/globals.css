@@ -6,4 +6,16 @@
   a:hover {
     text-decoration: underline;
   }
+  h1 {
+    scroll-margin-top: 5.2rem;
+  }
+  h2 {
+    scroll-margin-top: 5.2rem;
+  }
+  h3 {
+    scroll-margin-top: 5.2rem;
+  }
+  h4 {
+    scroll-margin-top: 5.2rem;
+  }
 }

@@ -8,6 +8,7 @@ import {
 import Link from 'next/link'
 import GenericDataTable, { TableColumn } from '../tables/GenericDataTable'
 import { useLiveQuery } from 'dexie-react-hooks'
+import formatHeaderId from '@/utils/formatHeaderId'
 
 type BowlGameTableProps = {
   dynastyId: string
@@ -22,11 +23,17 @@ const bowlGameColumns = (
     title: 'Year',
     key: 'year',
     allowSort: true,
-    render: (dataRow) => (
-      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
-        {dataRow.year}
-      </Link>
-    ),
+    render: (dataRow) => {
+      const headerId = formatHeaderId(dataRow.customGameName || 'conf-champ')
+
+      return (
+        <Link
+          href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}#${headerId}`}
+        >
+          {dataRow.year}
+        </Link>
+      )
+    },
   },
   {
     allowSort: true,

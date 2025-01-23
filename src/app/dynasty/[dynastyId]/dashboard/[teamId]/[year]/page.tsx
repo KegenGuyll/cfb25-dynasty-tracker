@@ -3,7 +3,7 @@ import GameSummary from '@/components/DashboardSections/GameSummary'
 import RecruitingSection from '@/components/DashboardSections/Recruiting'
 import TeamOverview from '@/components/DashboardSections/TeamOverview'
 import TeamSchedule from '@/components/DashboardSections/TeamSchedule'
-import { Divider } from "@heroui/react"
+import { Divider } from '@heroui/react'
 
 type TeamYearPageProps = {
   params: {
@@ -26,7 +26,9 @@ const TeamYearPage: React.FC<TeamYearPageProps> = ({
           <h1 className="text-3xl font-bold">Team Year Page</h1>
           <div className="flex flex-col gap-8">
             <div>
-              <h2 className="text-2xl font-bold">Season</h2>
+              <h2 id="season" className="text-2xl font-bold">
+                Season
+              </h2>
               <Divider />
             </div>
             <RecruitingSection

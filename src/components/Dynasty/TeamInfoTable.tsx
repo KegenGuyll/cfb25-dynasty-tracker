@@ -20,7 +20,9 @@ const teamInfoColumns = (
     title: 'Year',
     key: 'year',
     render: (dataRow) => (
-      <Link href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}`}>
+      <Link
+        href={`/dynasty/${dynastyId}/dashboard/${teamId}/${dataRow.year}#season`}
+      >
         {dataRow.year}
       </Link>
     ),

@@ -392,9 +392,6 @@ const TeamPage: React.FC<TeamPageProps> = ({ params }: TeamPageProps) => {
             keySelector={(_, i) => i}
           />
         </TeamPageSection>
-        <TeamPageSection title="Championships">
-          Awards and Honors
-        </TeamPageSection>
         <TeamPageSection title="Hall of Fame">
           Awards and Honors
         </TeamPageSection>

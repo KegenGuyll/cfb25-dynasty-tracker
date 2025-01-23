@@ -34,6 +34,7 @@ const basicInputColumns = (
             isInvalid={fieldState.invalid}
             className="w-[100px]"
             label="Year"
+            isRequired
           />
         )}
       />
@@ -105,6 +106,7 @@ const basicInputColumns = (
             isInvalid={fieldState.invalid}
             onChange={field.onChange}
             teamOptions={teamOptions}
+            isRequired
           />
         )}
       />

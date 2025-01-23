@@ -17,7 +17,7 @@ const DownloadDynastyFile = () => {
     })
 
     const a = document.createElement('a')
-    a.download = 'CFB25DynastyTrackerDB.json'
+    a.download = `CFB25DynastyTrackerDB-${new Date().toISOString()}.json`
     a.href = window.URL.createObjectURL(blob)
     const clickEvt = new MouseEvent('click', {
       view: window,

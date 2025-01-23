@@ -3,6 +3,7 @@ import SearchableSelect from './SearchableSelect'
 import { Select, SelectItem, Input } from '@heroui/react'
 import { Control, Controller } from 'react-hook-form'
 import { TeamScheduleFormData } from '@/app/team-schedule/create/page'
+import TeamSelect from './TeamSelect'
 
 type TeamScheduleTableProps = {
   numberOfWeeks: number
@@ -63,14 +64,11 @@ const TeamScheduleTable: React.FC<TeamScheduleTableProps> = ({
                 control={control}
                 name={`games.${i}.opponent`}
                 render={({ field: { value, onChange }, fieldState }) => (
-                  <SearchableSelect
+                  <TeamSelect
                     label="Opponent"
-                    value={teamOptions?.find(
-                      (option) => option.value === value
-                    )}
+                    value={value || ''}
                     onChange={onChange}
-                    placeholder="Select Opponent"
-                    options={teamOptions}
+                    teamOptions={teamOptions}
                     isInvalid={fieldState.invalid}
                     errorMessage={fieldState.error?.message}
                   />

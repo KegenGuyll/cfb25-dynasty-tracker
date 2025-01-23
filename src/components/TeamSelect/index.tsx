@@ -3,6 +3,7 @@ import { OptionType } from '../SearchableSelect'
 import classNames from 'classnames'
 
 type Props = {
+  label?: string
   value: string
   onChange: (value: string | undefined) => void
   isInvalid?: boolean
@@ -20,12 +21,13 @@ const TeamSelect: React.FC<Props> = ({
   classname,
   teamOptions,
   isRequired,
+  label = 'Team',
 }: Props) => {
   return (
     <div className={classNames(classname, 'w-full')}>
       <Autocomplete
         defaultItems={teamOptions || []}
-        label="Team"
+        label={label}
         selectedKey={value?.toString() || ''}
         placeholder="Select Team"
         errorMessage={errorMessage}

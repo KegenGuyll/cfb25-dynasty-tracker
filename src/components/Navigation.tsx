@@ -28,7 +28,12 @@ const menuItems = (
   teamId?: string,
   year?: string
 ): MenuItems[] => {
-  const items: MenuItems[] = []
+  const items: MenuItems[] = [
+    {
+      friendlyName: 'Download Data',
+      href: '/dynasty/download',
+    },
+  ]
 
   return items
 }
@@ -65,7 +70,7 @@ export default function Navigation() {
             </NavbarItem>
           )
         )}
-        <div className="flex gap-2 w-full">
+        <div className="pl-4 flex gap-2 w-full">
           <SearchModal />
           <Button
             as={Link}

@@ -33,7 +33,7 @@ db.version(1).stores({
   awards: '++id,trophy,playerName,teamId,year,dynastyId',
   teams: '++id,teamId',
   availableAwards: '++id,name,awardId',
-  players: '++id,teamId,dynastyId',
+  players: '++id,teamId,dynastyId,[dynastyId+id]',
   dynasties: '++id',
   teamInfo: '++id,teamId,dynastyId,year',
   media: '++id',

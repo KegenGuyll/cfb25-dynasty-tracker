@@ -218,22 +218,15 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
         filterExistingRecruits.map((recruit) => ({
           key: Number(recruit.playerId),
           changes: {
-            information: {
-              firstName: recruit.firstName,
-              lastName: recruit.lastName,
-              position: recruit.position,
-              tendency: '',
-            },
-            recruit: {
-              gem: recruit.gem,
-              stars: Number(recruit.stars),
-              overall: Number(recruit.overall),
-              devTrait: recruit.devTrait || '',
-              position: recruit.position,
-              year: Number(params.year),
-              classId: exitingRecruitingData.id || null,
-              nationalRank: Number(recruit.nationalRank),
-            },
+            'information.firstName': recruit.firstName,
+            'information.lastName': recruit.lastName,
+            'recruit.stars': Number(recruit.stars),
+            'recruit.overall': Number(recruit.overall),
+            'recruit.devTrait': recruit.devTrait || '',
+            'recruit.position': recruit.position,
+            'recruit.year': Number(params.year),
+            'recruit.classId': exitingRecruitingData.id || null,
+            'recruit.nationalRank': Number(recruit.nationalRank),
           },
         }))
       )
@@ -245,7 +238,6 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           changes: {
             'information.firstName': transfer.firstName,
             'information.lastName': transfer.lastName,
-            'information.position': transfer.position,
             'recruit.stars': Number(transfer.stars),
             'recruit.overall': Number(transfer.overall),
             'recruit.devTrait': transfer.devTrait || '',

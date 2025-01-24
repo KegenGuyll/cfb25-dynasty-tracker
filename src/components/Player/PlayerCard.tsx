@@ -1,12 +1,13 @@
 import { Player } from '@/db/types/player'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Divider } from "@heroui/react"
+import { Divider } from '@heroui/react'
 import { useState } from 'react'
 import EditGeneralInformation from './EditGeneralInformation'
 import EditPlayerAbilities from './EditPlayerAbilities'
 import EditPersonalInformation from './EditPersonalInfromation'
 import convertInchesToFeet from '@/utils/convertInchesToFeet'
+import Link from 'next/link'
 
 type PlayerCardProps = {
   player: Player | null | undefined
@@ -124,6 +125,25 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
             </li>
             <li>Weight: {player.information.weight} lbs</li>
           </ul>
+        </PlayerSection>
+        <Divider />
+        <PlayerSection title="Recruiting Information">
+          {player.recruit && (
+            <ul>
+              <li>Stars: {Array(player.recruit.stars).fill('⭐️').join('')}</li>
+              <li>National Rank: {player.recruit.nationalRank || 'N/A'}</li>
+              <li>
+                Class:{' '}
+                <Link
+                  href={`/dynasty/${player.dynastyId}/dashboard/${player.currentTeamData?.id}/${player.recruit.year}#recruiting-recruits`}
+                >
+                  {player.recruit.year}
+                </Link>
+              </li>
+              <li>Position: {player.recruit.position}</li>
+              <li>Gem Status: {player.recruit.gem}</li>
+            </ul>
+          )}
         </PlayerSection>
         <Divider />
         <PlayerSection title="Career Information">

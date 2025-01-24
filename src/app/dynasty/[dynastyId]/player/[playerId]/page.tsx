@@ -12,7 +12,6 @@ import {
 import GenericDataTable, {
   TableColumn,
 } from '@/components/tables/GenericDataTable'
-import GenericInputTable from '@/components/tables/GenericInputTable'
 import {
   DefenseStats,
   historicalOverall,
@@ -112,9 +111,13 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                 <div className="flex flex-col gap-4">
                   <h3 className="text-lg font-semibold">Passing</h3>
                   <GenericDataTable<PassingStats>
-                    columns={passingStatsColumns}
+                    columns={passingStatsColumns(dynastyId)}
                     data={player.stats.passing}
                     keySelector={(_, i) => i}
+                    defaultSortDescriptor={{
+                      column: 'year',
+                      direction: 'descending',
+                    }}
                   />
                 </div>
               )}
@@ -122,9 +125,13 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                 <div className="flex flex-col gap-4 pt-8">
                   <h3 className="text-lg font-semibold">Rushing</h3>
                   <GenericDataTable<RushingStats>
-                    columns={rushingStatsColumns}
+                    columns={rushingStatsColumns(dynastyId)}
                     data={player.stats.rushing}
                     keySelector={(_, i) => i}
+                    defaultSortDescriptor={{
+                      column: 'year',
+                      direction: 'descending',
+                    }}
                   />
                 </div>
               )}
@@ -132,9 +139,13 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                 <div className="flex flex-col gap-4 pt-8">
                   <h3 className="text-lg font-semibold">Receiving</h3>
                   <GenericDataTable<ReceivingStats>
-                    columns={receivingStatsColumns}
+                    columns={receivingStatsColumns(dynastyId)}
                     data={player.stats.receiving}
                     keySelector={(_, i) => i}
+                    defaultSortDescriptor={{
+                      column: 'year',
+                      direction: 'descending',
+                    }}
                   />
                 </div>
               )}
@@ -142,9 +153,13 @@ const PlayerPage: React.FC<PlayerPageProps> = ({ params }: PlayerPageProps) => {
                 <div className="flex flex-col gap-4 pt-8">
                   <h3 className="text-lg font-semibold">Defense</h3>
                   <GenericDataTable<DefenseStats>
-                    columns={defenseStatsColumns}
+                    columns={defenseStatsColumns(dynastyId)}
                     data={player.stats.defense}
                     keySelector={(_, i) => i}
+                    defaultSortDescriptor={{
+                      column: 'year',
+                      direction: 'descending',
+                    }}
                   />
                 </div>
               )}

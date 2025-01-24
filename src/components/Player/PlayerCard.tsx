@@ -8,6 +8,7 @@ import EditPlayerAbilities from './EditPlayerAbilities'
 import EditPersonalInformation from './EditPersonalInfromation'
 import convertInchesToFeet from '@/utils/convertInchesToFeet'
 import Link from 'next/link'
+import CareerStatsList from './CareerStatsList'
 
 type PlayerCardProps = {
   player: Player | null | undefined
@@ -164,9 +165,7 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
         </PlayerSection>
         <Divider />
         <PlayerSection title="Career Statistics">
-          <ul>
-            <li>Will be determined by position</li>
-          </ul>
+          <CareerStatsList player={player} />
         </PlayerSection>
       </div>
       <EditGeneralInformation

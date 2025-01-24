@@ -9,9 +9,15 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
+  Input,
+  Button,
 } from '@heroui/react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 type MenuItems = {
   friendlyName: string
@@ -23,9 +29,7 @@ const menuItems = (
   teamId?: string,
   year?: string
 ): MenuItems[] => {
-  const items: MenuItems[] = [
-    { friendlyName: 'Dynasty Dashboard', href: '/dynasty' },
-  ]
+  const items: MenuItems[] = []
 
   return items
 }
@@ -48,11 +52,11 @@ export default function Navigation() {
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           className="sm:hidden"
         />
-        <NavbarBrand>
+        <NavbarBrand as={Link} href="/dynasty">
           <p className="font-bold text-inherit">CFB25 Dynasty Tracker</p>
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className="hidden sm:flex gap-4 divide-x" justify="center">
         {menuItems(String(dynastyId), String(teamId), String(year)).map(
           (item, index) => (
             <NavbarItem key={index} isActive={isPathActive(item.href)}>
@@ -62,6 +66,28 @@ export default function Navigation() {
             </NavbarItem>
           )
         )}
+        <div className="flex gap-2 w-full">
+          <Button
+            className="px-8"
+            startContent={<FontAwesomeIcon icon={faSearch} />}
+            variant="ghost"
+            radius="full"
+            fullWidth
+          >
+            Search
+          </Button>
+          <Button
+            as={Link}
+            href="https://github.com/KegenGuyll/cfb25-dynasty-tracker"
+            className="px-8"
+            variant="ghost"
+            radius="full"
+            startContent={<FontAwesomeIcon icon={faGithub} />}
+          >
+            Github
+          </Button>
+          <ThemeSwitcher />
+        </div>
       </NavbarContent>
       <NavbarMenu>
         {menuItems(String(dynastyId), String(teamId), String(year)).map(

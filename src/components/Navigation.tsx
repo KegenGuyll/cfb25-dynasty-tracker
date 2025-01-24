@@ -9,15 +9,14 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Input,
   Button,
 } from '@heroui/react'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import { ThemeSwitcher } from './ThemeSwitcher'
+import SearchModal from './Modal/SearchModal'
 
 type MenuItems = {
   friendlyName: string
@@ -67,15 +66,7 @@ export default function Navigation() {
           )
         )}
         <div className="flex gap-2 w-full">
-          <Button
-            className="px-8"
-            startContent={<FontAwesomeIcon icon={faSearch} />}
-            variant="ghost"
-            radius="full"
-            fullWidth
-          >
-            Search
-          </Button>
+          <SearchModal />
           <Button
             as={Link}
             href="https://github.com/KegenGuyll/cfb25-dynasty-tracker"

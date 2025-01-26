@@ -7,7 +7,10 @@ import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
 import { Button, Input, Form } from '@heroui/react'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import TeamSelect from '@/components/TeamSelect'
+import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
+import { Team } from '@/db/types'
 
 type CreateSeasonPageProps = {
   params: {
@@ -17,6 +20,7 @@ type CreateSeasonPageProps = {
 }
 
 export const CreateSeasonPageSchema = yup.object({
+  teamId: yup.string().required('A team is required'),
   year: yup.number().required('Year is required'),
   conference: yup.string().optional(),
   teamOverall: yup.number().optional(),
@@ -35,7 +39,21 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
   params: { dynastyId, teamId },
 }: CreateSeasonPageProps) => {
   const router = useRouter()
-  const team = useLiveQuery(() => db.teams.get(parseInt(teamId)))
+  const [team, setTeam] = useState<Team | null>(null)
+  const teamOptions = useLiveQuery(() => getTeamSelectOptions())
+
+  const handleFetchTeam = useCallback(async () => {
+    if (teamId !== 'null') {
+      const fetchedTeam = await db.teams.get(+teamId)
+      if (fetchedTeam) {
+        setTeam(fetchedTeam)
+      }
+    }
+  }, [teamId])
+
+  useEffect(() => {
+    handleFetchTeam()
+  }, [handleFetchTeam])
 
   const { control, handleSubmit, setError, setValue } =
     useForm<CreateSeasonPageFormData>({
@@ -44,6 +62,7 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
 
   useEffect(() => {
     if (team) {
+      setValue('teamId', team.id!.toString())
       setValue('conference', team.conference)
     }
   }, [setValue, team])
@@ -63,14 +82,14 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
       if (!dynasty) return
 
       dynasty.availableTeams.push({
-        teamId: parseInt(teamId),
+        teamId: +data.teamId,
         year: data.year,
       })
     })
 
     await db.teamInfo.add({
       dynastyId: parseInt(dynastyId),
-      teamId: parseInt(teamId),
+      teamId: +data.teamId,
       year: data.year,
       conference: data.conference || '',
       teamOverall: data.teamOverall || 0,
@@ -83,24 +102,42 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
       conferenceLosses: data.conferenceLosses || 0,
     })
 
-    router.push(`/dynasty/${dynastyId}/dashboard/${teamId}`)
+    router.push(`/dynasty/${dynastyId}/dashboard/${data.teamId}`)
   }
-
-  if (!team) return null
 
   return (
     <div className="flex flex-col gap-4 w-full bg-content1 rounded p-4 items-center max-w-[800px]">
       <div className="w-1/2">
         <h1 className="text-3xl font-semibold">Creating a new season</h1>
-        <p className="text-small font-light">
-          with the {team.school} {team.nickname}
-        </p>
+        {team && (
+          <h2 className="text-xl font-semibold">
+            {team.school} {team.nickname}
+          </h2>
+        )}
+        {!team && (
+          <div>
+            <h2>Select a team to create a new season with.</h2>
+          </div>
+        )}
       </div>
       <div className="w-1/2">
         <Form
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(handleSave)}
         >
+          <Controller
+            name="teamId"
+            control={control}
+            render={({ field, fieldState }) => (
+              <TeamSelect
+                label="Team"
+                isRequired
+                {...field}
+                {...fieldState}
+                teamOptions={teamOptions || []}
+              />
+            )}
+          />
           <Controller
             name="year"
             control={control}

@@ -143,9 +143,10 @@ const DynastyDashboardPage: React.FC<DynastyDashboardPageProps> = ({
             </Dropdown>
           </div>
           <Button
+            as={Link}
+            href={`/dynasty/${params.dynastyId}/dashboard/${null}/createSeason`}
             className="w-1/4"
             color={data.availableTeams.length > 0 ? 'default' : 'primary'}
-            onPress={() => router.push('/team-schedule/create?dynastyId=1')}
           >
             Add Team
           </Button>

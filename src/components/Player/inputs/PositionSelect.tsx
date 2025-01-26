@@ -1,5 +1,5 @@
 import { playerPositionOptions } from '@/db/types/player'
-import { Select, SelectItem, SelectProps } from "@heroui/react"
+import { Select, SelectItem, SelectProps } from '@heroui/react'
 import { ChangeEventHandler } from 'react'
 
 type PositionSelectProps = {
@@ -11,6 +11,7 @@ type PositionSelectProps = {
   name?: string | undefined
   ref: React.Ref<HTMLSelectElement>
   className?: string
+  isRequired?: boolean
 }
 
 const PositionSelect: React.FC<PositionSelectProps> = ({

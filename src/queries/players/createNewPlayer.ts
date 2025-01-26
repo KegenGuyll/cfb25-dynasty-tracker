@@ -1,5 +1,5 @@
 import { db } from "@/db/db.model"
-import { Player } from "@/db/types/player"
+import { HistoricalOverall, Player, PlayerDevelopment, PlayerInformation, PlayerStats, Recruit } from "@/db/types/player"
 
 type MinPlayerDetails = {
   firstName: string
@@ -8,6 +8,11 @@ type MinPlayerDetails = {
   teamId: number
   year: number
   dynastyId: number
+  recruit?: Recruit
+  historicalOverall?: HistoricalOverall[]
+  stats?: PlayerStats
+  information?: PlayerInformation
+  development?: PlayerDevelopment
 }
 
 
@@ -21,30 +26,30 @@ async function createNewPlayer(players: MinPlayerDetails[], returnPlayers?: bool
     information: {
       firstName: player.firstName,
       lastName: player.lastName,
-      nickname: undefined,
+      nickname: player.information?.nickname || undefined,
       position: player.position,
       year: player.year,
-      height: undefined,
-      weight: undefined,
-      hometown: undefined,
-      tendency: '',
-      hasRedshirt: undefined,
-      number: undefined
+      height: player.information?.height || undefined,
+      weight: player.information?.weight || undefined,
+      hometown: player.information?.hometown || undefined,
+      tendency: player.information?.tendency || '',
+      hasRedshirt: player.information?.hasRedshirt || false,
+      number: player.information?.number || undefined,
     },
     development: {
-      devTrait: undefined,
-      mentalTraits: undefined,
-      physicalTraits: undefined
+      devTrait: player.development?.devTrait || undefined,
+      mentalTraits: player.development?.mentalTraits || undefined,
+      physicalTraits: player.development?.physicalTraits || undefined,
     },
     awards: [],
     stats: {
-      passing: undefined,
-      rushing: undefined,
-      receiving: undefined,
-      defense: undefined,
+      passing: player.stats?.passing || undefined,
+      rushing: player.stats?.rushing || undefined,
+      receiving: player.stats?.receiving || undefined,
+      defense: player.stats?.defense || undefined,
     },
-    recruit: undefined,
-    historicalOverall: [],
+    recruit: player.recruit,
+    historicalOverall: player.historicalOverall || [],
     mediaAttachments: [],
     currentTeamData: undefined,
   }))

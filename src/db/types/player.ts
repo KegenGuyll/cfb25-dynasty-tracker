@@ -855,7 +855,7 @@ type PlayerDevTrait = 'Normal' | 'Impact' | 'Star' | 'Elite'
 
 type TraitTier = 'Bronze' | 'Silver' | 'Gold' | 'Platinum'
 
-type historicalOverall = {
+type HistoricalOverall = {
   year: number
   overall: number
 }
@@ -996,7 +996,7 @@ interface Player {
   awards: PlayerAwards[];
   stats: PlayerStats;
   recruit?: Recruit;
-  historicalOverall: historicalOverall[]
+  historicalOverall: HistoricalOverall[]
   dynastyId: number;
   currentTeamData?: Team;
   mediaAttachments: number[]
@@ -1016,5 +1016,7 @@ export type {
   DefenseStats,
   PlayerInformation,
   PlayerDevelopment,
-  historicalOverall
+  HistoricalOverall,
+  Recruit,
+  PlayerStats,
 }

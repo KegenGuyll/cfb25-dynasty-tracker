@@ -23,9 +23,13 @@ const getRecruitingData = async (dynastyId: string, teamId: string, year: string
       result.transfersPlayers.push(player);
     }
 
+    console.log(result.transfersPlayers)
+
     result.transfersPlayers.map((player) => {
-      if (player.recruit.transfers) {
+      if (player.recruit?.transfers) {
         player.recruit.transfers.map(async (transfer) => {
+          console.log(transfer)
+
           const team = await db.teams.get(transfer.teamId);
 
           if (team) {

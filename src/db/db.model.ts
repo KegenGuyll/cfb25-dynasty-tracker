@@ -28,14 +28,14 @@ const db = new Dexie('cfbDynastyTracker') as Dexie & {
 db.version(1).stores({
   draftResults: '++id,teamId,year,dynastyId',
   teamStats: '++id,teamId,year,dynastyId',
-  teamSchedule: '++id,teamId,year,dynastyId',
-  recruitingClass: '++id,teamId,year,dynastyId',
+  teamSchedule: '++id,teamId,year,dynastyId,[teamId+year]',
+  recruitingClass: '++id,teamId,year,dynastyId,[dynastyId+teamId+year]',
   awards: '++id,trophy,playerName,teamId,year,dynastyId',
   teams: '++id,teamId',
   availableAwards: '++id,name,awardId',
   players: '++id,teamId,dynastyId,[dynastyId+id]',
   dynasties: '++id',
-  teamInfo: '++id,teamId,dynastyId,year',
+  teamInfo: '++id,teamId,dynastyId,year,[dynastyId+teamId+year]',
   media: '++id',
   allAmerican: '++id,teamId,year,dynastyId,playerId'
 });

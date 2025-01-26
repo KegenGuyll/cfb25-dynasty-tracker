@@ -25,6 +25,7 @@ import getTeamSelectOptions from '@/db/functions/getTeamSelectOptions'
 import SearchableSelect from '@/components/SearchableSelect'
 import { db } from '@/db/db.model'
 import { useRouter } from 'next/navigation'
+import createNewPlayer from '@/queries/players/createNewPlayer'
 
 export const recruitingSchema = yup.object({
   classRank: yup.string().optional(),
@@ -94,6 +95,9 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
     setValue,
     formState: { errors },
   } = useForm<RecruitingFormData>({
+    defaultValues: {
+      recruits: exitingRecruitingData?.players || [],
+    },
     resolver: yupResolver(recruitingSchema),
   })
 
@@ -257,112 +261,55 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
         }))
       )
 
-      // add new recruits to the player db
-      const newRecruits: Player[] = filterNewRecruits.map((recruit) => ({
-        dynastyId: Number(params.dynastyId),
-        teamId: Number(params.teamId),
-        information: {
-          position: recruit.position,
+      const newPlayerIds = await createNewPlayer(
+        filterNewRecruits.map((recruit) => ({
+          teamId: Number(params.teamId),
+          dynastyId: Number(params.dynastyId),
           firstName: recruit.firstName,
           lastName: recruit.lastName,
-          nickname: undefined,
-          height: undefined, // inches
-          weight: undefined, // lbs
-          hometown: {
-            city: '',
-            state: '',
-          },
-          tendency: '',
-          hasRedshirt: false,
-        },
-        recruit: {
-          gem: recruit.gem,
-          stars: Number(recruit.stars),
-          overall: Number(recruit.overall),
-          nationalRank: Number(recruit.nationalRank),
           position: recruit.position,
-          devTrait: recruit.devTrait || '',
           year: Number(params.year),
-          classId: exitingRecruitingData.id || null,
-        },
-        development: {
-          devTrait: recruit.devTrait,
-          mentalTraits: undefined,
-          physicalTraits: undefined,
-        },
-        awards: [],
-        stats: {},
-        historicalOverall: [
-          {
-            year: Number(params.year),
+          recruit: {
+            gem: recruit.gem,
+            stars: Number(recruit.stars),
             overall: Number(recruit.overall),
+            nationalRank: Number(recruit.nationalRank),
+            position: recruit.position,
+            devTrait: recruit.devTrait || '',
+            year: Number(params.year),
+            classId: null, // update after class is created
           },
-        ],
-        mediaAttachments: [],
-      }))
+        }))
+      )
 
-      const newTransfers: Player[] = filterNewTransfers.map((transfer) => ({
-        dynastyId: Number(params.dynastyId),
-        teamId: Number(params.teamId),
-        information: {
-          position: transfer.position,
+      const newPlayerTransferIds = await createNewPlayer(
+        filterNewTransfers.map((transfer) => ({
+          teamId: Number(params.teamId),
+          dynastyId: Number(params.dynastyId),
           firstName: transfer.firstName,
           lastName: transfer.lastName,
-          nickname: undefined,
-          height: undefined, // inches
-          weight: undefined, // lbs
-          hometown: {
-            city: '',
-            state: '',
-          },
-          tendency: '',
-          hasRedshirt: false,
-        },
-        recruit: {
-          gem: 'None',
-          stars: Number(transfer.stars),
-          overall: Number(transfer.overall),
-          nationalRank: Number(transfer.nationalRank),
           position: transfer.position,
-          devTrait: transfer.devTrait || '',
           year: Number(params.year),
-          classId: exitingRecruitingData.id || null,
-          transfers: [
-            {
-              redshirt: transfer.redshirt || false,
-              class: transfer.class as any,
-              teamId: Number(transfer.from),
-              classId: exitingRecruitingData.id || null,
-            },
-          ],
-        },
-        development: {
-          devTrait: transfer.devTrait,
-          mentalTraits: undefined,
-          physicalTraits: undefined,
-        },
-        awards: [],
-        stats: {},
-        historicalOverall: [
-          {
-            year: Number(params.year),
+          recruit: {
+            gem: transfer.gem || 'none',
+            stars: Number(transfer.stars),
             overall: Number(transfer.overall),
+            nationalRank: Number(transfer.nationalRank),
+            position: transfer.position,
+            devTrait: transfer.devTrait || '',
+            year: Number(params.year),
+            classId: null, // update after class is created
+            transfers: [
+              {
+                redshirt: transfer.redshirt || false,
+                class: transfer.class as any,
+                teamId: Number(transfer.from),
+                classId: null, // update after class is created
+              },
+            ],
           },
-        ],
-        mediaAttachments: [],
-      }))
-
-      const newPlayerIds = (await db.players.bulkAdd(newRecruits, undefined, {
-        allKeys: true,
-      })) as number[] | undefined
-
-      const newPlayerTRIds = (await db.players.bulkAdd(
-        newTransfers,
-        undefined,
-        {
-          allKeys: true,
-        }
-      )) as number[] | undefined
+        }))
+      )
 
       const playerIds = [
         ...filterExistingRecruits.map((recruit) => Number(recruit.playerId)),
@@ -371,7 +318,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
 
       const playerTransIds = [
         ...filterExistingTransfers.map((transfer) => Number(transfer.playerId)),
-        ...(newPlayerTRIds || []),
+        ...(newPlayerTransferIds || []),
       ]
 
       // update class with recruits
@@ -384,112 +331,55 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
         transfers: playerTransIds,
       })
     } else {
-      // add new recruits to the player db
-      const newRecruits: Player[] = data.recruits.map((recruit) => ({
-        dynastyId: Number(params.dynastyId),
-        teamId: Number(params.teamId),
-        information: {
-          position: recruit.position,
+      const newPlayerIds = await createNewPlayer(
+        data.recruits.map((recruit) => ({
+          teamId: Number(params.teamId),
+          dynastyId: Number(params.dynastyId),
           firstName: recruit.firstName,
           lastName: recruit.lastName,
-          nickname: undefined,
-          height: undefined, // inches
-          weight: undefined, // lbs
-          hometown: {
-            city: '',
-            state: '',
-          },
-          tendency: '',
-          hasRedshirt: false,
-        },
-        recruit: {
-          gem: recruit.gem,
-          stars: Number(recruit.stars),
-          overall: Number(recruit.overall),
-          nationalRank: Number(recruit.nationalRank),
           position: recruit.position,
-          devTrait: recruit.devTrait || '',
           year: Number(params.year),
-          classId: null, // update after class is created
-        },
-        development: {
-          devTrait: recruit.devTrait,
-          mentalTraits: undefined,
-          physicalTraits: undefined,
-        },
-        awards: [],
-        stats: {},
-        historicalOverall: [
-          {
-            year: Number(params.year),
+          recruit: {
+            gem: recruit.gem,
+            stars: Number(recruit.stars),
             overall: Number(recruit.overall),
+            nationalRank: Number(recruit.nationalRank),
+            position: recruit.position,
+            devTrait: recruit.devTrait || '',
+            year: Number(params.year),
+            classId: null, // update after class is created
           },
-        ],
-        mediaAttachments: [],
-      }))
+        }))
+      )
 
-      const newTransfers: Player[] = data.transfers.map((transfer) => ({
-        dynastyId: Number(params.dynastyId),
-        teamId: Number(params.teamId),
-        information: {
-          position: transfer.position,
+      const newPlayerTransferIds = await createNewPlayer(
+        data.transfers.map((transfer) => ({
+          teamId: Number(params.teamId),
+          dynastyId: Number(params.dynastyId),
           firstName: transfer.firstName,
           lastName: transfer.lastName,
-          nickname: undefined,
-          height: undefined, // inches
-          weight: undefined, // lbs
-          hometown: {
-            city: '',
-            state: '',
-          },
-          tendency: '',
-          hasRedshirt: false,
-        },
-        recruit: {
-          gem: 'none',
-          stars: Number(transfer.stars),
-          overall: Number(transfer.overall),
-          nationalRank: Number(transfer.nationalRank),
           position: transfer.position,
-          devTrait: transfer.devTrait || '',
           year: Number(params.year),
-          classId: null, // update after class is created
-          transfers: [
-            {
-              redshirt: transfer.redshirt || false,
-              class: transfer.class as any,
-              teamId: Number(transfer.from),
-              classId: null, // update after class is created
-            },
-          ],
-        },
-        development: {
-          devTrait: transfer.devTrait,
-          mentalTraits: undefined,
-          physicalTraits: undefined,
-        },
-        awards: [],
-        stats: {},
-        historicalOverall: [
-          {
-            year: Number(params.year),
+          recruit: {
+            gem: transfer.gem || 'none',
+            stars: Number(transfer.stars),
             overall: Number(transfer.overall),
+            nationalRank: Number(transfer.nationalRank),
+            position: transfer.position,
+            devTrait: transfer.devTrait || '',
+            year: Number(params.year),
+            classId: null, // update after class is created
+            transfers: [
+              {
+                redshirt: transfer.redshirt || false,
+                class: transfer.class as any,
+                teamId: Number(transfer.from),
+                classId: null, // update after class is created
+              },
+            ],
           },
-        ],
-        mediaAttachments: [],
-      }))
-
-      const newPlayerIds = (await db.players.bulkAdd(newRecruits, undefined, {
-        allKeys: true,
-      })) as number[] | undefined
-
-      const newPlayerTRIds = (await db.players.bulkAdd(
-        newTransfers,
-        undefined,
-        {
-          allKeys: true,
-        }
-      )) as number[] | undefined
+        }))
+      )
 
       // create new recruiting class
       const classId = await db.recruitingClass.add({
@@ -506,7 +396,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
           pts: Number(data.overview.pts),
         },
         recruits: newPlayerIds || [],
-        transfers: newPlayerTRIds || [],
+        transfers: newPlayerTransferIds || [],
         classRank: Number(data.classRank),
         conferenceClassRank: Number(data.conferenceClassRank),
         notableLostRecruits: [],
@@ -526,13 +416,13 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
         )
       }
 
-      if (classId && newPlayerTRIds) {
+      if (classId && newPlayerTransferIds) {
         // update players with classId
         await db.players.bulkUpdate(
-          newPlayerTRIds.map((id) => ({
+          newPlayerTransferIds.map((id) => ({
             key: id,
             changes: {
-              'recruit.transfers.0': classId,
+              'recruit.transfers.0.classId': classId,
             },
           }))
         )

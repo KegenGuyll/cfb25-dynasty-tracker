@@ -1,24 +1,18 @@
 import { db } from "../db.model";
 
 const getTeamScheduleWithTeam = async (teamId: number, year: number) => {
-  const teamSchedules = await db.teamSchedule.where({ teamId, year }).toArray();
+  const teamSchedule = await db.teamSchedule.get({ teamId, year })
 
-  await Promise.all(teamSchedules.map(async (teamSchedule) => {
-    [teamSchedule.team] = await Promise.all([
-      db.teams.get(teamSchedule.teamId)
-    ])
+  if (!teamSchedule) return null
+
+  teamSchedule.team = await db.teams.get(teamId)
+
+  await Promise.all(teamSchedule.games.map(async (game) => {
+    game.awayTeam = await db.teams.get(game.awayTeamId),
+      game.homeTeam = await db.teams.get(game.homeTeamId)
   }))
 
-  await Promise.all(teamSchedules.map(async (teamSchedule) => {
-    teamSchedule.games.map(async (game) => {
-      [game.awayTeam, game.homeTeam] = await Promise.all([
-        db.teams.get(game.awayTeamId),
-        db.teams.get(game.homeTeamId)
-      ])
-    })
-  }))
-
-  return teamSchedules;
+  return teamSchedule;
 };
 
 export default getTeamScheduleWithTeam;

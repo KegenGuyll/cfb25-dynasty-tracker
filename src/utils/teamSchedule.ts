@@ -38,9 +38,9 @@ const determineOpp = (game: Game): string => {
   return ''
 }
 
-const determineOpponent = (game: Game): 'homeTeam' | 'awayTeam' => {
-  if (game.location === 'home') return 'awayTeam'
-  if (game.location === 'away') return 'homeTeam'
+const determineOpponent = (game?: Game): 'homeTeam' | 'awayTeam' => {
+  if (game?.location === 'home') return 'awayTeam'
+  if (game?.location === 'away') return 'homeTeam'
   return 'awayTeam'
 }
 

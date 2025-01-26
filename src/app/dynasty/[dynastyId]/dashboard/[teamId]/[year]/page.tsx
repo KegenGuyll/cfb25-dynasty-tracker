@@ -40,7 +40,7 @@ const TeamYearPage: React.FC<TeamYearPageProps> = ({
             </div>
             <DraftResults />
             <TeamSchedule teamId={+teamId} year={+year} dynastyId={dynastyId} />
-            <GameSummary teamId={+teamId} year={+year} />
+            <GameSummary dynastyId={dynastyId} teamId={+teamId} year={+year} />
           </div>
           <div className="md:col-span-2">
             <TeamOverview dynastyId={dynastyId} teamId={teamId} year={year} />

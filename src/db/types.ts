@@ -1,3 +1,5 @@
+import { Player } from "./types/player";
+
 type AwardName =
   'Player of the Year' |
   'Head Coach of the Year' |
@@ -186,6 +188,48 @@ type GameStats = {
   }
 }
 
+type CommonStatLeaderFields = {
+  playerId: number
+  teamId: number;
+  player?: Player
+  team?: Team
+}
+
+type PassingStatLeaders = CommonStatLeaderFields & {
+  attempts: number;
+  completions: number;
+  yards: number;
+  tds: number;
+  ints: number;
+}
+
+type RushingStatLeaders = CommonStatLeaderFields & {
+  attempts: number;
+  yards: number;
+  tds: number;
+}
+
+type ReceivingStatLeaders = CommonStatLeaderFields & {
+  receptions: number;
+  yards: number;
+  tds: number;
+}
+
+type DefenseStatLeaders = CommonStatLeaderFields & {
+  tackles: number;
+  sacks: number;
+  ints: number;
+}
+
+type StatLeadersStats = {
+  passing?: PassingStatLeaders
+  rushing?: RushingStatLeaders
+  receiving?: ReceivingStatLeaders
+  defense?: DefenseStatLeaders
+}
+
+type StatLeaders = Record<'homeTeam' | 'awayTeam', StatLeadersStats>
+
 type Game = {
   customGameName?: string
   week: number;
@@ -205,6 +249,7 @@ type Game = {
   stats: GameStats | null;
   result: string | null;
   overtime?: boolean
+  statLeaders?: StatLeaders;
 }
 
 interface TeamStats {
@@ -311,5 +356,11 @@ export type {
   Conversions,
   Redzone,
   Turnovers,
-  Team
+  Team,
+  PassingStatLeaders as PassingStateLeaders,
+  RushingStatLeaders,
+  ReceivingStatLeaders,
+  DefenseStatLeaders,
+  StatLeaders,
+  StatLeadersStats,
 }

@@ -2,19 +2,17 @@
 
 import {
   Button,
-  Tab,
   Table,
   TableBody,
   TableCell,
   TableColumn,
   TableHeader,
   TableRow,
-} from "@heroui/react"
+} from '@heroui/react'
 
 import SectionWrapper from './SectionWrapper'
 import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'
 import { useLiveQuery } from 'dexie-react-hooks'
-import { useMemo } from 'react'
 import { determineGameResultWithScore } from '@/utils/teamSchedule'
 import { Game } from '@/db/types'
 import { useRouter } from 'next/navigation'
@@ -49,26 +47,21 @@ const TeamSchedule: React.FC<TeamScheduleProps> = ({
     getTeamInfo(Number(dynastyId), Number(teamId), Number(year))
   )
 
-  const currentTeam = useMemo(
-    () => (teamSchedule ? teamSchedule[0] : null),
-    [teamSchedule]
-  )
-
   const createSummary = (): string => {
-    if (!currentTeam)
+    if (!teamSchedule)
       return 'No team schedule found. Get started by creating a team schedule.'
 
-    const wins = currentTeam.games.filter((game) => game.result === 'W').length
-    const losses = currentTeam.games.filter(
+    const wins = teamSchedule.games.filter((game) => game.result === 'W').length
+    const losses = teamSchedule.games.filter(
       (game) => game.result === 'L'
     ).length
 
-    return `The ${currentTeam.team?.school} has a ${wins}-${losses} record in the ${year} season.`
+    return `The ${teamSchedule.team?.school} has a ${wins}-${losses} record in the ${year} season.`
   }
 
   return (
     <SectionWrapper title="Team Schedule" summary={createSummary()}>
-      {!currentTeam ? (
+      {!teamSchedule ? (
         <div>
           <Button
             onPress={() =>
@@ -90,7 +83,7 @@ const TeamSchedule: React.FC<TeamScheduleProps> = ({
               <TableColumn>RESULT</TableColumn>
             </TableHeader>
             <TableBody>
-              {currentTeam?.games.map((game) => (
+              {teamSchedule?.games.map((game) => (
                 <TableRow key={game.week}>
                   <TableCell>{game.week}</TableCell>
                   <TableCell>{determineTeamName(game)}</TableCell>

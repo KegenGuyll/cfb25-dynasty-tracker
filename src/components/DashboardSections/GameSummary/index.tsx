@@ -8,11 +8,13 @@ import GameList from './GameList'
 type TeamScheduleProps = {
   teamId: number
   year: number
+  dynastyId: string
 }
 
 const GameSummary: React.FC<TeamScheduleProps> = ({
   teamId,
   year,
+  dynastyId,
 }: TeamScheduleProps) => {
   const teamSchedule = useLiveQuery(() => getTeamScheduleWithTeam(teamId, year))
 
@@ -24,7 +26,12 @@ const GameSummary: React.FC<TeamScheduleProps> = ({
       summary="The Razorbacks have a 11-1 record in the 2034 season."
       editable={false}
     >
-      <GameList scheduleId={teamSchedule.id || 0} games={teamSchedule.games} />
+      <GameList
+        year={year.toString()}
+        dynastyId={dynastyId}
+        scheduleId={teamSchedule.id || 0}
+        games={teamSchedule.games}
+      />
     </SectionWrapper>
   )
 }

@@ -3,23 +3,33 @@ import { determineOpponent } from '@/utils/teamSchedule'
 import { useState } from 'react'
 import EditGame from '../../Player/EditGame'
 import GameItem from './GameItem'
+import EditStatLeaders from '@/components/Game/EditStatLeaders'
 
 type GameListProps = {
   games: Game[]
   scheduleId: number
+  dynastyId: string
+  year: string
 }
 
 const GameList: React.FC<GameListProps> = ({
   games,
   scheduleId,
+  dynastyId,
+  year,
 }: GameListProps) => {
   const [selectedGame, setSelectedGame] = useState<Game>()
+  const [editStatLeaders, setEditStatLeaders] = useState(false)
+  const [editGame, setEditGame] = useState(false)
+
   return (
     <div className="flex flex-col gap-12 divide-y">
       {games.map((game, index) => {
         const opponent = determineOpponent(game)
         return (
           <GameItem
+            setEditGame={setEditGame}
+            setEditStatLeaders={setEditStatLeaders}
             scheduleId={scheduleId}
             key={index}
             game={game}
@@ -30,9 +40,17 @@ const GameList: React.FC<GameListProps> = ({
       })}
       <EditGame
         game={selectedGame}
-        isOpen={!!selectedGame}
-        handleClose={() => setSelectedGame(undefined)}
+        isOpen={editGame}
+        handleClose={() => setEditGame(false)}
         scheduleId={scheduleId}
+      />
+      <EditStatLeaders
+        scheduleId={scheduleId}
+        dynastyId={dynastyId}
+        year={year}
+        game={selectedGame}
+        isOpen={editStatLeaders}
+        handleClose={() => setEditStatLeaders(false)}
       />
     </div>
   )

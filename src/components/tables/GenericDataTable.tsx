@@ -7,7 +7,7 @@ import {
   TableCell,
   SortDescriptor,
 } from '@heroui/react'
-import { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 type DataRow<T> = T
 
@@ -19,6 +19,7 @@ type TableColumn<T> = {
 }
 
 type GenericDataTableProps<T> = {
+  topContent?: React.ReactNode
   columns: TableColumn<T>[]
   data: DataRow<T>[]
   defaultSortDescriptor?: SortDescriptor
@@ -66,6 +67,7 @@ const GenericDataTable = <T extends unknown>({
   data,
   keySelector,
   defaultSortDescriptor,
+  topContent,
 }: GenericDataTableProps<T>) => {
   const [sortDescriptor, setSortDescriptor] = useState<
     SortDescriptor | undefined
@@ -112,6 +114,7 @@ const GenericDataTable = <T extends unknown>({
 
   return (
     <Table
+      topContent={topContent}
       sortDescriptor={sortDescriptor}
       onSortChange={onSortChange}
       aria-label="Example static collection table"
@@ -124,13 +127,6 @@ const GenericDataTable = <T extends unknown>({
         ))}
       </TableHeader>
       <TableBody>
-        {/* {(item) => (
-          <TableRow key={keySelector(item)}>
-            {(columnKey) => (
-              <TableCell>{renderCellData(item, column(columnKey))}</TableCell>
-            )}
-          </TableRow>
-        )} */}
         {sortedData.map((dataRow, dataIndex) => (
           <TableRow key={keySelector(dataRow, dataIndex)}>
             {columns.map((column, rowIndex) => (

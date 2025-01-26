@@ -1,24 +1,18 @@
-'use client'
-
-import getTeamScheduleWithTeam from '@/db/functions/getTeamScheduleWithTeam'
-import { useLiveQuery } from 'dexie-react-hooks'
-import { useMemo, useState } from 'react'
-import SectionWrapper from './SectionWrapper'
+import { Game } from '@/db/types'
 import {
   convertGameLocation,
   determineGameResultWithScore,
-  determineOpponent,
 } from '@/utils/teamSchedule'
-import { Game } from '@/db/types'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
-import EditGame from '../Player/EditGame'
-import GenericDataTable, { TableColumn } from '../tables/GenericDataTable'
-import ScoreSummaryTable from '../tables/ScoreSummary'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
+import ScoreSummaryTable from '../../tables/ScoreSummary'
 
-type TeamScheduleProps = {
-  teamId: number
-  year: number
+type GameItemProps = {
+  game: Game
+  scheduleId: number
+  opponent: 'homeTeam' | 'awayTeam'
+  setSelectedGame: (game: Game) => void
 }
 
 const weekName = (week: number): string => {
@@ -34,30 +28,6 @@ const weekName = (week: number): string => {
 
   return "Nat'l Champ"
 }
-
-type GameListProps = {
-  games: Game[]
-  scheduleId: number
-}
-
-type GameItemProps = {
-  game: Game
-  scheduleId: number
-  opponent: 'homeTeam' | 'awayTeam'
-  setSelectedGame: (game: Game) => void
-}
-
-type ScoreSummary = {
-  quarter: number
-  home: number
-  away: number
-}
-
-const scoreSummaryColumns: TableColumn<ScoreSummary>[] = [
-  { key: 'quarter', title: 'Quarter' },
-  { key: 'home', title: 'Home' },
-  { key: 'away', title: 'Away' },
-]
 
 const GameItem: React.FC<GameItemProps> = ({
   game,
@@ -124,58 +94,4 @@ const GameItem: React.FC<GameItemProps> = ({
   )
 }
 
-const GameList: React.FC<GameListProps> = ({
-  games,
-  scheduleId,
-}: GameListProps) => {
-  const [selectedGame, setSelectedGame] = useState<Game>()
-  return (
-    <div className="flex flex-col gap-12 divide-y">
-      {games?.map((game, index) => {
-        const opponent = determineOpponent(game)
-
-        return (
-          <GameItem
-            scheduleId={scheduleId}
-            key={index}
-            game={game}
-            opponent={opponent}
-            setSelectedGame={setSelectedGame}
-          />
-        )
-      })}
-      <EditGame
-        game={selectedGame}
-        isOpen={!!selectedGame}
-        handleClose={() => setSelectedGame(undefined)}
-        scheduleId={scheduleId}
-      />
-    </div>
-  )
-}
-
-const GameSummary: React.FC<TeamScheduleProps> = ({
-  teamId,
-  year,
-}: TeamScheduleProps) => {
-  const teamSchedule = useLiveQuery(() => getTeamScheduleWithTeam(teamId, year))
-
-  const currentTeam = useMemo(
-    () => (teamSchedule ? teamSchedule[0] : null),
-    [teamSchedule]
-  )
-
-  if (!currentTeam) return null
-
-  return (
-    <SectionWrapper
-      title="Game Summary"
-      summary="The Razorbacks have a 11-1 record in the 2034 season."
-      editable={false}
-    >
-      <GameList scheduleId={currentTeam.id || 0} games={currentTeam.games} />
-    </SectionWrapper>
-  )
-}
-
-export default GameSummary
+export default GameItem

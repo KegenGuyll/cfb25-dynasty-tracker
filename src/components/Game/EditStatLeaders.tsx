@@ -9,7 +9,7 @@ import getPlayerOptions from '@/queries/players/getPlayerOptions'
 import { OptionType } from '../SearchableSelect'
 import PlayerSelect from '../Player/inputs/PlayerSelect'
 import CreateNewPlayer from '../Player/CreateNewPlayer'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { db } from '@/db/db.model'
 import { determineOpponent } from '@/utils/teamSchedule'
 

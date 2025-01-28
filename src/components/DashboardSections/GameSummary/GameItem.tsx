@@ -41,12 +41,12 @@ const weekName = (week: number): string => {
 }
 
 type GameItemSectionProps = {
-  game: Game
+  game?: Game
   title: string
   children: React.ReactNode
-  setSelectedGame: (game: Game) => void
-  setEditStatLeaders: Dispatch<SetStateAction<boolean>>
-  weekName: string
+  setSelectedGame?: (game: Game) => void
+  setEditStatLeaders?: Dispatch<SetStateAction<boolean>>
+  weekName?: string
 }
 
 const commonStatColumns: TableColumn<any>[] = [
@@ -60,6 +60,11 @@ const commonStatColumns: TableColumn<any>[] = [
         {data.player?.information.firstName} {data.player?.information.lastName}
       </Link>
     ),
+  },
+  {
+    key: 'player.information.position',
+    title: 'Pos',
+    allowSort: true,
   },
   {
     key: 'teamId',
@@ -145,27 +150,36 @@ const GameItemSection: React.FC<GameItemSectionProps> = ({
 }: GameItemSectionProps) => {
   const [hover, setHover] = useState(false)
 
+  const clickable = setEditStatLeaders && setSelectedGame && game
+
+  const handleOnClick = () => {
+    if (!setEditStatLeaders || !setSelectedGame || !game) return
+
+    setEditStatLeaders(true)
+    setSelectedGame(game)
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      <button
-        className="text-left "
-        aria-labelledby={`edit stat leaders for ${weekName}`}
-        onClick={() => {
-          setEditStatLeaders(true)
-          setSelectedGame(game)
-        }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-      >
-        <h4 className="font-bold text-lg">
-          {title}{' '}
-          {hover && (
-            <span className="pl-4">
-              <FontAwesomeIcon icon={faPen} />
-            </span>
-          )}
-        </h4>
-      </button>
+      {clickable && (
+        <button
+          className="text-left "
+          aria-labelledby={`edit stat leaders for ${weekName}`}
+          onClick={handleOnClick}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+        >
+          <h4 className="font-bold text-lg">
+            {title}{' '}
+            {hover && (
+              <span className="pl-4">
+                <FontAwesomeIcon icon={faPen} />
+              </span>
+            )}
+          </h4>
+        </button>
+      )}
+      {!clickable && <h4 className="font-bold text-lg">{title}</h4>}
       <div>{children}</div>
     </div>
   )
@@ -219,6 +233,18 @@ const GameItem: React.FC<GameItemProps> = ({
           <h4>POTG</h4>
           <p>Summary text about the player of the game and a stat line.</p>
         </div>
+        <GameItemSection title="Score Summary">
+          <div className=" max-w-96">
+            {game.scoreSummary && game.homeTeam && game.awayTeam && (
+              <ScoreSummaryTable
+                homeTeam={game.homeTeam}
+                awayTeam={game.awayTeam}
+                scoreSummary={game.scoreSummary}
+                overtime={game.overtime}
+              />
+            )}
+          </div>
+        </GameItemSection>
         <GameItemSection
           game={game}
           weekName={weekName(game.week)}
@@ -286,19 +312,6 @@ const GameItem: React.FC<GameItemProps> = ({
               )}
           </div>
         </GameItemSection>
-        <div className="flex flex-col gap-4">
-          <h4>Score Summary</h4>
-          <div className=" max-w-96">
-            {game.scoreSummary && game.homeTeam && game.awayTeam && (
-              <ScoreSummaryTable
-                homeTeam={game.homeTeam}
-                awayTeam={game.awayTeam}
-                scoreSummary={game.scoreSummary}
-                overtime={game.overtime}
-              />
-            )}
-          </div>
-        </div>
         <div>
           <h4>Game Notes</h4>
           <p>Summary text about the player of the game and a stat line.</p>

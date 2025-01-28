@@ -259,9 +259,6 @@ const GameItem: React.FC<GameItemProps> = ({
                   topContent={
                     <div>
                       <h5 className="text-bold text-sm uppercase">Passing</h5>
-                      <p className="text-tiny font-light">
-                        Summary text about the passing stats and a stat line.
-                      </p>
                     </div>
                   }
                   columns={passingStatColumns}
@@ -278,9 +275,6 @@ const GameItem: React.FC<GameItemProps> = ({
                   topContent={
                     <div>
                       <h5 className="text-bold text-sm uppercase">Rushing</h5>
-                      <p className="text-tiny font-light">
-                        Summary text about the passing stats and a stat line.
-                      </p>
                     </div>
                   }
                   columns={rushingStatColumns}
@@ -297,9 +291,6 @@ const GameItem: React.FC<GameItemProps> = ({
                   topContent={
                     <div>
                       <h5 className="text-bold text-sm uppercase">Receiving</h5>
-                      <p className="text-tiny font-light">
-                        Summary text about the passing stats and a stat line.
-                      </p>
                     </div>
                   }
                   columns={receivingStatColumns}

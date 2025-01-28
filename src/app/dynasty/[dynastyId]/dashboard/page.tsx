@@ -106,7 +106,7 @@ const DynastyDashboardPage: React.FC<DynastyDashboardPageProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-6 w-full bg-content1 p-2 rounded max-w-[600px]">
+    <div className="flex flex-col gap-6 w-full bg-default-100 p-2 rounded max-w-[600px]">
       {!data && <Spinner />}
       {data && (
         <div className="flex flex-col gap-6 w-full">
@@ -117,7 +117,7 @@ const DynastyDashboardPage: React.FC<DynastyDashboardPageProps> = ({
             </div>
             <Dropdown>
               <DropdownTrigger>
-                <Button variant="ghost">
+                <Button className="text-foreground-700" isIconOnly>
                   <FontAwesomeIcon icon={faEllipsisVertical} />
                 </Button>
               </DropdownTrigger>

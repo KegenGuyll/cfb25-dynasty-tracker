@@ -17,11 +17,11 @@ const AvailableDynasties: React.FC<
       <div className="grid grid-cols-12 gap-4">
         {data?.map((dynasty) => (
           <Link
-            className="col-span-4 h-60 w-full text-white"
+            className="col-span-4 h-60 w-full text-foreground-700"
             key={dynasty.id}
             href={`/dynasty/${dynasty.id}/dashboard`}
           >
-            <div className="bg-content1 p-2 rounded h-full w-full flex flex-col justify-center items-center">
+            <div className="bg-default-100 p-2 rounded h-full w-full flex flex-col justify-center items-center">
               <h2 className="text-lg font-bold">{dynasty.name}</h2>
               <p className="text-sm font-light">{dynasty.description}</p>
             </div>

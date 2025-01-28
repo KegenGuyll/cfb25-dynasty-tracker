@@ -169,7 +169,7 @@ const AllAmericansPage: React.FC<AllAmericansPageProps> = ({
   })
 
   return (
-    <div className="flex flex-col gap-8 max-w-screen-xl bg-content1 p-4 rounded">
+    <div className="flex flex-col gap-8 max-w-screen-xl bg-default-100 p-4 rounded">
       <div>
         <h1 className="text-4xl font-bold">All Americans</h1>
         <p className="text-small font-light">

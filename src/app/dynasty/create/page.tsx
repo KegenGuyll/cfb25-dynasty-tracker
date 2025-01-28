@@ -32,7 +32,7 @@ const CreateDynastyPage: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-col gap-12 w-full max-w-[600px] h-[400px] bg-content1 p-4 rounded">
+    <div className="flex flex-col gap-12 w-full max-w-[600px] h-[400px] bg-default-100 p-4 rounded">
       <div className="space-y-2 pt-6">
         <h1 className="text-4xl font-semibold">Create Dynasty</h1>
         <p className="font-light text-small">

@@ -32,7 +32,7 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
 
   return (
     <>
-      <div className="flex flex-col gap-16 bg-content1 p-2 rounded h-[600px]">
+      <div className="flex flex-col gap-16 bg-default-100 p-2 rounded h-[600px]">
         {!teamInfo ? (
           <div className="h-full flex items-center justify-center">
             <Spinner />
@@ -46,28 +46,36 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
               aria-label="edit-team-info"
               variant="ghost"
             >
-              <h3 className="text-center text-lg font-bold">{`${year} ${teamInfo?.data?.school} ${teamInfo?.data?.nickname}`}</h3>
+              <h3 className="text-center text-lg font-bold text-foreground-700">{`${year} ${teamInfo?.data?.school} ${teamInfo?.data?.nickname}`}</h3>
               {hover && <FontAwesomeIcon icon={faPen} />}
             </Button>
             <ul className="w-full flex flex-col gap-4">
               <li className="flex justify-between">
-                <span className="font-bold">Program Prestige</span>
+                <span className="font-bold text-foreground-700 ">
+                  Program Prestige
+                </span>
                 <span>{'⭐'.repeat(Number(teamInfo.programPrestige))}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Conference</span>
+                <span className="font-bold text-foreground-700">
+                  Conference
+                </span>
                 <span>{teamInfo?.conference}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">AP Poll Ranking</span>
+                <span className="font-bold text-foreground-700">
+                  AP Poll Ranking
+                </span>
                 <span>{teamInfo.apPollRanking}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Coaches Poll Ranking</span>
+                <span className="font-bold text-foreground-700">
+                  Coaches Poll Ranking
+                </span>
                 <span>{teamInfo.coachesPollRanking}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Record</span>
+                <span className="font-bold text-foreground-700">Record</span>
                 <div className="flex gap-2">
                   <span>
                     {teamInfo?.teamWins} - {teamInfo.teamLosses}
@@ -78,23 +86,33 @@ const TeamOverview: React.FC<TeamOverviewProps> = ({
                 </div>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Head Coach</span>
+                <span className="font-bold text-foreground-700">
+                  Head Coach
+                </span>
                 <span>{teamInfo.headCoach}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Off Coordinator</span>
+                <span className="font-bold text-foreground-700">
+                  Off Coordinator
+                </span>
                 <span>{teamInfo.offensiveCoordinator}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Def Coordinator</span>
+                <span className="font-bold text-foreground-700">
+                  Def Coordinator
+                </span>
                 <span>{teamInfo.defensiveCoordinator}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Off Playbook</span>
+                <span className="font-bold text-foreground-700">
+                  Off Playbook
+                </span>
                 <span>{teamInfo.offPlaybook}</span>
               </li>
               <li className="flex justify-between">
-                <span className="font-bold">Def Playbook</span>
+                <span className="font-bold text-foreground-700">
+                  Def Playbook
+                </span>
                 <span>{teamInfo.defPlaybook}</span>
               </li>
             </ul>

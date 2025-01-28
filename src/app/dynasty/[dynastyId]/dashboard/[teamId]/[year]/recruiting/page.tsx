@@ -437,7 +437,7 @@ const RecruitingPage: React.FC<RecruitingPageProps> = ({
   return (
     <Form
       onSubmit={handleSubmit(handleSave)}
-      className="bg-content1 p-4 rounded flex flex-col gap-4 divide-y"
+      className="bg-default-100 p-4 rounded flex flex-col gap-4 divide-y"
     >
       <section className="flex flex-col gap-2">
         <h2 className="text-xl">Class Ranking</h2>

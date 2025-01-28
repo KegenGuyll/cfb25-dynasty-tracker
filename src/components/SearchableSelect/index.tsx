@@ -162,8 +162,8 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
               isInvalid ? '!bg-danger-50' : '!bg-default-100'
             }  text-black w-full !border-0`,
           option: (state) =>
-            state.isSelected ? 'bg-default-200' : 'bg-content1',
-          menu: () => 'bg-content1',
+            state.isSelected ? 'bg-default-200' : 'bg-default-100',
+          menu: () => 'bg-default-100',
           menuPortal: () => 'z-50',
           menuList: () => 'z-50',
         }}

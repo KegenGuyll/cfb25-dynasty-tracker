@@ -60,7 +60,7 @@ const GameItem: React.FC<GameItemProps> = ({
             </h3>
           </button>
           <div className="flex-grow" />
-          <span className="bg-content1 p-2 rounded">
+          <span className="bg-default-100 text-foreground-700 font-bold p-2 rounded">
             {determineGameResultWithScore(game)}
           </span>
         </div>

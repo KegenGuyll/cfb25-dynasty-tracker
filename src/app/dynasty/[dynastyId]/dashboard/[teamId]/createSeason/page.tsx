@@ -106,7 +106,7 @@ const CreateSeasonPage: React.FC<CreateSeasonPageProps> = ({
   }
 
   return (
-    <div className="flex flex-col gap-4 w-full bg-content1 rounded p-4 items-center max-w-[800px]">
+    <div className="flex flex-col gap-4 w-full bg-default-100 rounded p-4 items-center max-w-[800px]">
       <div className="w-1/2">
         <h1 className="text-3xl font-semibold">Creating a new season</h1>
         {team && (
